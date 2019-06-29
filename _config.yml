@@ -25,19 +25,13 @@ defaults:
 
 
 
-title: "λ lambda"
-email: sincerebravefight@gmail.com
-description: ""
+title: "Yuqin Wang"
+email: w17600296313@gmail.com
+description: "你赤手空拳来到人间，为找到那片海不顾一切。"
 github:
-  username: bit-ranger
-swiftype:
-  searchId: iXZyPokVfxFaBTvi64Y6
-gitment:
-    repo: blog
-    client_id: a6fb73b3e790e234bab8
-    client_secret: cc10aaff53a03d05ab2ee002dbf401dd7627c7a3
-
-url: "https://bit-ranger.github.io/blog"
+  username: yukia-yuqin
+  
+url: "https://yukia-yuqin.github.io/blog"
 imgrepo: "https://bit-ranger.github.io/blog/static/img"
 
 
