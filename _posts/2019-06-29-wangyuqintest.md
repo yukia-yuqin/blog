@@ -7,4 +7,4 @@ categories: common
 
 test by wangyuqin
 
-![avatar](../img/download.png)
+![avatar](https://raw.githubusercontent.com/yukia-yuqin/blog/master/img/download.png)
