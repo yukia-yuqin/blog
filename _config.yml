@@ -37,7 +37,7 @@ imgrepo: "https://bit-ranger.github.io/blog/static/img"
 gitment:
   enable:true
   githubID:yukia-yuqin
-  repo:blog.github.io
+  repo:yukia-yuqin.github.io
   ClientID:7d1a455a0adbb5a545f0
   ClientSecret:4bc0585ad123c1851b66a27e7b758103227ff2ba
   lazy:false
