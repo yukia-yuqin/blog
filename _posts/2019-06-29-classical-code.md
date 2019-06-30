@@ -1,23 +1,23 @@
 ---
 layout: post
-title: ³£ÓÃ´úÂë
+title: ï¿½ï¿½ï¿½Ã´ï¿½ï¿½ï¿½
 tags: interview common
 categories: interview
 ---
-¼ÇÂ¼Ò»ÏÂÍøÉÏ°ÇÏÂÀ´µÄÒÔ¼°×Ô¼ºµÄÃæÊÔ¾­Àú¡£<br>
+è®°å½•ä¸€ä¸‹ç½‘ä¸Šæ‰’ä¸‹æ¥çš„ä»¥åŠè‡ªå·±çš„é¢è¯•ç»å†ã€‚<br>
 
 ### C#
-- Ğ´byte[]ÈëÎÄµµ
+- å†™byte[]æ•°ç»„åˆ°æ–‡ä»¶ä¸­
 ```C# 
 byte[] amr = File.ReadAllBytes(@"123.amr");
 var astring = String.Join(",", amr);
 File.WriteAllText(@"222.txt", astring);
 ```
-- Ñ­»·
+- å¾ªç¯
 ```C# 
 foreach (string s in pinyinSeq ){}
 ```
-- ×Ö·û´®ÇĞ·Ö
+- æ‹†åˆ†å­—ç¬¦ä¸²
 ```C#
 string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmptyEntries);
 ```
