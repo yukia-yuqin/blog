@@ -1,6 +1,6 @@
 ---
 layout: post
-title: ���ô���
+title: 经典代码
 tags: interview common
 categories: interview
 ---
