@@ -4,6 +4,7 @@ title: 计算机基础知识
 tags: interview
 categories: interview
 ---
+记录一下网上扒下来的以及自己的面试经历。<br>
 ### 资料
 - 王道程序员面试宝典
 ### 技术问题

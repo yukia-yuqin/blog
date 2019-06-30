@@ -1,9 +1,10 @@
 ---
 layout: post
 title: 常用代码
-tags: interview
+tags: interview common
 categories: interview
 ---
+记录一下网上扒下来的以及自己的面试经历。<br>
 
 ### C#
 - 写byte[]入文档

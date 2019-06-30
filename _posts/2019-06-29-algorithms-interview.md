@@ -1,9 +1,11 @@
 ---
 layout: post
 title: 计算机基础知识
-tags: interview
+tags: interview cs
 categories: interview
 ---
+记录一下网上扒下来的以及自己的面试经历。<br>
+
 ### 资料
 - leetcode高频题、lintcode高频题、剑指offer，大概这三样准备好就够了，校招前保证100多道题的积累量，面试时候写code应该就手到擒来了。
 ### 技术问题
@@ -20,3 +22,4 @@ categories: interview
 - 最长公共子序列
 - 海量数据topk问题
 - 蓄水池抽样算法
+- Dijkstra最短路径算法
