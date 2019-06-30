@@ -36,7 +36,7 @@ gitment:
   ClientSecret: 4bc0585ad123c1851b66a27e7b758103227ff2ba
   
 url: "https://yukia-yuqin.github.io/blog"
-imgrepo: "https://yukia-yuqin.github.io/blog/img"
+imgrepo: "https://yukia-yuqin.github.io/blog/static/img"
 
 
 
