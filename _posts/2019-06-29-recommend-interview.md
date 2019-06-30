@@ -4,12 +4,15 @@ title: 推荐算法面试
 tags: interview
 categories: interview
 ---
+记录一下网上扒下来的以及自己的面试经历。<br>
+
 ### 能力要求
 - 数据分析、数据挖掘能力
 - 大数据处理技术（spark、Hadoop）
 - 扎实的算法基础：机器学习与推荐算法相关的LR、SVM、GBDT、DNN
 - 丰富的Python、C开发经验
 - 项目经验
+
 ### 技术面问题
 #### 关于简历内容部分
 - FM的公式，求导
@@ -27,6 +30,7 @@ categories: interview
 - hmm
 - fast rcnn
 - 一定要看《统计学习方法》
+
 #### 结合实际场景部分
 - 协同过滤(基于物品和基于用户)原理，ItermCF,UserCF,SVD矩阵分解 
 - 实际场景的解决方案
