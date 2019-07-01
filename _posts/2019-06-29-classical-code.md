@@ -21,3 +21,25 @@ foreach (string s in pinyinSeq ){}
 ```C#
 string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmptyEntries);
 ```
+
+### C++
+- C++ 分割字符串 变为stringstream
+```C++
+stringstream ss(path);
+	while(getline(ss,tmp,'/')) {
+		if (tmp == "" or tmp == ".") continue;
+```
+### python
+- 随机分隔
+```python
+from numpy.random import RandomState
+rand_state = RandomState(0)
+rand_state.shuffle(ratings)
+可以重复实现在0随机数下的结果
+train_pct = 0.9
+rand_state = RandomState(0)
+rand_state.shuffle(ratings)
+train_size = int(train_pct * ratings.shape[0])
+train = ratings[:train_size]
+validation = ratings[train_size:]
+```
