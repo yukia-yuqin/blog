@@ -16,6 +16,8 @@ categories: interview
 - lgb
 - 神经网络embedding层和w2v中的embedding的实现区别
 - L1、L2的区别，L1为什么可以保证稀疏？
+   - L1会让更多的参数变得稀疏，当参数很小时，这个参数的平方就可以被忽略，模型并不会进一步将这个参数调整为0
+   - L1不可导，L2可导
 - 深度学习的优化方法有哪些？ sgd、adam、adgrad区别？ adagrad详细说一下？为什么adagrad适合处理稀疏梯度？ 
 - DL常用的激活函数有哪些？ 
 - relu和sigmoid有什么区别，优点有哪些？ 
@@ -35,13 +37,52 @@ categories: interview
 - 贝叶斯法则
 - MLE 的假设（在机器学习判别模型中，假设所有的x都是均匀的，算极大似然的时候p(x,y)=P(x)p(y|x)，所以可以直接算P(y|x)。？（兰艳艳说的，对吗?））
 - [机器学习面试题总结][机器学习面试题总结]
+- 交叉熵
+- 梯度下降法的问题(不能全局最优，计算时间太长)
+- SGD的问题(可能不能局部最优)
+- 滑动平均模型
+- KKT条件
+- [SVM 约束 求解 SMO 没看完][SVM约束]
 
 
 ### 深度学习
 - [bottleneck1][bottleneck1]  [bottleneck2][bottleneck2] 
 - [Mobilenetv2][mobileNetV2]
 - BP [BP1]
-
+- 模型压缩
+   - **压缩预训练模型。**获得小型网络的一个办法是减小、分解或压缩预训练网络，例如量化压缩(product quantization)、哈希(hashing )、剪枝(pruning)、矢量编码( vector quantization)和霍夫曼编码(Huffman coding)等；此外还有各种分解因子(various factorizations )用来加速预训练网络；还有一种训练小型网络的方法叫蒸馏(distillation )，使用大型网络指导小型网络。
+   - 直接训练小型模型。 例如Flattened networks利用完全的因式分解的卷积网络构建模型，显示出完全分解网络的潜力；Factorized Networks引入了类似的分解卷积以及拓扑连接的使用；Xception network显示了如何扩展深度可分离卷积到Inception V3 networks；Squeezenet 使用一个bottleneck用于构建小型网络。
+   - MobileNet网络架构，允许模型开发人员专门选择与其资源限制(延迟、大小)匹配的小型模型，MobileNets主要注重于优化延迟同时考虑小型网络，从深度可分离卷积的角度重新构建模型
+   - 深度可分离卷积干的活是：把标准卷积分解成深度卷积(depthwise convolution)和逐点卷积(pointwise convolution)。
+   - MobileNetVI的创新点在于用深度可分离卷积（depthwiseseparableconvolution)代替传统的卷积操作，这样可以减少参数的数量和操作，但同时会使特征丢失导致精度下降。为了解决上述问题，MobileNet\/2在深度可分离卷积的基础上，使用倒残差(InvertedResidual)和线性瓶fi(LinearBottleneck）技术来保持模型的表征能力。
+- Batch-normalization
+- 多通道卷积 (分别相乘再求和)
+- 视频语义分割
+   - PSP-net使用了resnet101作为网络的backbone,提出了使用pyramidpoolingmodu|e即特征网络金子塔结构作为conte×tmode|ing来获取不同尺度的信息
+   - Deeplabv3同样使用resnetl01作为网络的backbone,提出了ASPP的结构，通过不同dilationrate的卷积操作来获取不同尺度的context的信息以及结合全局的context(图中ImagePooling)的融合进一步地提高特征的表征能力。
+- 目标检测的二阶段模型
+   - R-CNN:R-CNN系列的开山之作
+   - FastR-CNN:共享卷积运算
+   - FasterR-CNN： 两阶段模型的深度化
+   - SSD:Single Shot Multibox Detector
+- [Deeplabv3+][Deeplabv3+]
+   - 论文提出的DeepLabv3+是encoder-decoder架构，其中encoder架构采用DeepLabv3，decoder采用一个简单却有效的模块用于恢复目标边界细节。并可使用扩张卷积在指定计算资源下控制feature的分辨率。
+	- 论文探索了Xception和深度分离卷积在模型上的使用，进一步提高模型的速度和性能。模型在VOC2012上获得了新的state-of-the-art表现。
+- 1*1卷积核有什么用
+   - 卷积核的个数就对应输出的通道数（channels），这里需要说明的是对于输入的每个通道，输出每个通道上的卷积核是不一样的。比如输入是28x28x192(WxDxK,K代表通道数)，然后在3x3的卷积核，卷积通道数为128，那么卷积的参数有3x3x192x128，其中前两个对应的每个卷积里面的参数，后两个对应的卷积总的个数（一般理解为，卷积核的权值共享只在每个单独通道上有效，至于通道与通道间的对应的卷积核是独立不共享的，所以这里是192x128）。
+- CNN 为什么能给物品分类？
+   - 学习到的核权重倾向于将相似的对象映射到同一个区域。学习到的锚向量 A 将所有代表猫特征的向量 X_cat 映射为 Y_cat，而其它代表狗特征的向量 X_dog 或代表车特征的向量 X_car 将永远不会出现在这个区域。这就是 CNN 能够有效识别不同对象的原因。
+   - 	通常 CNN 被分解为两个子网络：特征提取(FE)子网络和决策(DM)子网络。FE 子网络由多个卷积层组成，而 DM 子网络由几个完全连接层组成。简而言之，FE 子网络通过一系列 RECOS 变换以形成用于聚类的新表征。DM 子网络将数据表征与决策标签联系起来，它的作用与 MLP 的分类作用类似。
+   -  CNN 可以自动提取特征并且基于这些特征学习分类输入数据，而随机森林(RF)和支持向量机(SVM)则非常依赖于特征工程，而这种特征工程往往很难操作。
+- 图像上采样
+   - 几乎都是采用内插值法，即在原有图像像素的基础上，在像素点值之间采用合适的插值算法插入新的元素；
+   - 反卷积方法（Deconvolution），又称转置卷积法(Transposed Convolution)；反转置矩阵 4*16  的矩阵乘以 16*1 得到 4*1 得到下采样的矩阵
+   - 反池化方法（Unpooling）。
+- 交叉熵
+   - 交叉熵损失是每一个样本（或者图像中每一个像素的交叉熵的和）
+- Softmax+交叉熵
+   - 神经网络最后一层得到每个类别的得分scores，该得分经过softma×转换为概率输出，模型预测的类别概率输出与真实类别的。onehot形式进行crossentropy损失函数的计算。
+   
 ### 无监督学习
 - 无监督学习的优势
    - Raw data cheap. Labeled data expensive.
@@ -108,7 +149,24 @@ categories: interview
 ### 数据挖掘
 - [数据挖掘十大算法][数据挖掘十大算法]
 - [KNN][KNN]
-   - 
+
+### NLP
+- 机器阅读
+   - 几乎所有做SQuAD的模型都可以概括为同一种框架：Embed层，Encode层，Interaction层和Answer层。Embed层负责将原文和问题中的tokens映射为向量表示；Encode层主要使用RNN来对原文和问题进行编码，这样编码后每个token的向量表示就蕴含了上下文的语义信息；Interaction层是大多数研究工作聚焦的重点，该层主要负责捕捉问题和原文之间的交互关系，并输出编码了问题语义信息的原文表示，即query-aware的原文表示；最后Answer层则基于query-aware的原文表示来预测答案范围。
+- Match-LSTM
+   -在模型实现上，Match-LSTM的主要步骤如下：
+   - 1）Embed层使用词向量表示原文和问题，
+   - 2）Encode层使用单向LSTM编码原文和问题embedding,
+   - 3）Interaction层对原文中每个词，计算其关于问题的注意力分布，并使用该注意力分布汇总问题表示，将原文该词表示和对应问题表示输入另一个LSTM编码，得到该词的query-aware表
+   - 4）在反方向重复步骤2，获得双向query-aware表示；
+   - 5）Answer层基于双向query-aware表示使用SequenceModel或BoundaryModel预测答案范围。
+- 模型之间的比较
+   -	双层Interaction优于单层interaction机制，因为在原文-问题交互层之上的原文自交互层在部分程度上解决了长文本的长时依赖问题
+	- 多轮推理机制，对于回答复杂问题具有一定的帮助，多轮推理机制可以不断缩小答案范围，最终定位正确的答案位置。
+   - 对问题敏感的问题类型表示方法能更好的model各类问题，并根据问题类型聚焦原文中特定的词语
+- Attention 
+   
+
 ### 其他
 - [MLE LSE MAP之间的关系][MLE LSE MAP之间的关系]
 - [距离度量方法][距离度量方法]
@@ -132,3 +190,5 @@ categories: interview
 [KNN]:https://www.cnblogs.com/lesleysbw/p/6074662.html
 [KNN1]:https://blog.csdn.net/pipisorry/article/details/53156836
 [距离度量方法]:http://sklearn.apachecn.org/cn/latest/modules/generated/sklearn.neighbors.DistanceMetric.html#sklearn.neighbors.DistanceMetric
+[SVM约束]:https://cloud.tencent.com/developer/article/1109404
+[Deeplabv3+]:https://blog.csdn.net/u011974639/article/details/79518175

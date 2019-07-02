@@ -17,9 +17,26 @@ categories: interview
 ### 技术面问题
 #### 关于简历内容部分
 - FM的公式，求导
+    - [FM1][FM1] 
+    - 上面几种深度学习模型基本是在一个固有的DNN结构上，在输入层加东西或者在隔壁加额外层来结合FNN和PNN算法在特征组合与深度学习的结合上都给出了不少启发，但是毕竟Google出品，必属精品，无疑是使用更加广泛，当然在目前机器资源越来越好的情况下，Wide&Deep也将会有更多更加复杂的深度模型将会取尝试。同时也有经验表明，在不断上各种复杂模型的前提下，CTR预估的效果还是会不断的提升。
+    - FMS系列算法被广泛应用于ctr预估类的问题中，并且可以取得不错的效果，他最大特征是可以帮助解决特征组合问题
+    - 原始FM算法的运行性能最快，，在工业中被适用最广最简单，其他带上神经网络的FM算法如果想在在线系统中使用得做很多离线计算和分解，比如FFM的现在复杂度是O(kn^2)，将O(n^2）中二阶计算的项尽可能的进行离线计算，在在线的时候进组合
+    - FM的二阶项部分很容易使用TensorF10w进行实现，这也意味了在实验上也很容易很其他复杂算法进行组合
+- [FM实战,ICME2019 & 字节跳动][FM实战]
+- DeepFM
+    - 基尼不纯度(一个随机事件变成它的对立事件的概率) Gini指数越小表示集合中被选中的样本被分错的概率越小，也就是说集合的纯度越高，反之，集合越不纯。
+    - 基尼指数（基尼不纯度）= 样本被选中的概率 * 样本被分错的概率
+- [Xgboost][Xgboost]
 - 特征选择的方法 filter, wrapper, bedding 选择
 - word2vec, CBOW 和 Skip-gram 模型,两种模型的适用场景, Negative Sampling, Hierarchical Softmax
    * [skipgram在大数据集上效果好][word2vec] 
+- [DeepFM][DeepFM1]
+    - 深度学习本身的好处：理论上可以拟合任何函数，表征能力很强；无需特征工程（传统的用特征交叉）；处理非结构数据非常好；准确的学到Item和user的非线性表示（矩阵分解是线性的）。
+    - 借助FNN的思想，利用FM进行embedding，之后的wide和deep模型共享embedding之后的结果。DNN的输入完全和FNN相同（这里不用预训练，直接把embedding层看作一层的NN），而通过一定方式组合后，模型在wide上完全模拟出了FM的效果（至于为什么，论文中没有详细推导，本文会稍后给出推导过程），最后将DNN和FM的结果组合后激活输出。
+    - [针对交叉（高阶）特征学习提出的DeepFM是一个end-to-end模型][DeepFM2]
+    - [DeepFM在训练过程中不需要特征工程][DeepFM3] DeepFM的结构中包含了因子分解机部分以及深度神经网络部分，分别负责低阶特征的提取和高阶特征的提取。
+
+
 #### 其他基础部分
 - [SVM原理][svm]
 - SVM与MF的区别 (第一个角度是是否需要满足矩阵是全填充的，另一个角度从计算复杂度上进行介绍的)
@@ -41,6 +58,7 @@ categories: interview
 - [用 EM 算法推导解释 Kmeans。][会长ZZZ]
 - [用过哪些聚类算法，解释密度聚类算法。][会长ZZZ]
 - [常见的机器学习&数据挖掘知识点][一只鸟的天空]
+- [XGBDT][XGBDT]
 - 了解最近MF与深度学习结合的东西吗 (何向南的神经协同过滤)
 - hmm
 - fast rcnn
@@ -54,6 +72,7 @@ categories: interview
 - 什么是泛化误差？
 - 泊松分布
     - 泊松分布适合于描述单位时间（或空间）内随机事件发生的次数。如某一服务设施在一定时间内到达的人数，电话交换机接到呼叫的次数，汽车站台的候客人数，机器出现的故障数，自然灾害发生的次数，一块产品上的缺陷数，显微镜下单位分区内的细菌分布数等等。
+
 
 #### 结合实际场景部分
 - 协同过滤(基于物品和基于用户)原理，ItermCF,UserCF,SVD矩阵分解 
@@ -86,3 +105,10 @@ categories: interview
 [霍夫丁不等式]:https://blog.csdn.net/z_x_1996/article/details/73564926
 [斯坦福大学机器学习课程个人笔记]:https://www.academia.edu/30905795/%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%AF%BE%E7%A8%8B%E4%B8%AA%E4%BA%BA%E7%AC%94%E8%AE%B0
 [归一化能不能提高梯度下降法求解最优解的速度？]:https://blog.csdn.net/weixin_38111819/article/details/79729444
+[FM实战]:https://github.com/JiDong-CS/icme2019-bytedance-grand-challenge
+[Xgboost]:https://www.jianshu.com/p/7467e616f227
+[DeepFM1]:https://blog.csdn.net/zynash2/article/details/79348540
+[DeepFM2]:https://www.cnblogs.com/akanecode/p/8093742.html
+[DeepFM3]:https://blog.csdn.net/u010159842/article/details/78789711
+[FM1]:http://ju.outofmemory.cn/entry/347921
+[XGBDT]:https://blog.csdn.net/yangxudong/article/details/53872141
