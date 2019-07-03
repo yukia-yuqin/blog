@@ -71,6 +71,9 @@ Portable code is desirable when you intend to write code meant to be used by a l
 
 ### 2019 week13
 - 给数据打标签工具  lableme or others
+- [词性标注][词性标注]
+- [语法分析][语法分析]
+- [研究社交网络的工具包][研究社交网络的工具包]
 - [一亩三分地刷题版][三分地]
 - [炼丹笔记七：卷积神经网络模型设计][炼丹笔记七]
 - [邮局 村庄问题][邮局 村庄问题]
@@ -88,3 +91,6 @@ Portable code is desirable when you intend to write code meant to be used by a l
 [炼丹笔记七]:https://zhuanlan.zhihu.com/p/57738934
 [邮局 村庄问题]:http://leetcode0.blogspot.com/2014/01/blog-post.html
 [动态规划初步·各种子序列问题]:https://pks-loving.blog.luogu.org/junior-dynamic-programming-dong-tai-gui-hua-chu-bu-ge-zhong-zi-xu-lie
+[词性标注]:http://blog.csdn.net/fxjtoday/article/details/5841453
+[语法分析]:https://nlp.stanford.edu/software/lex-parser.shtml
+[研究社交网络的工具包]: http://www.looooker.com/archives/13739

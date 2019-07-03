@@ -34,6 +34,7 @@ categories: interview
 - CNN、RNN、LSTM的基本原理，不同激活函数的差异等等，如果是面的传统机器学习岗的话，DL问的不深，但一定会问。
 - [softmax][softmax]
 - [逻辑斯蒂回归][逻辑斯蒂回归]
+- 逻辑斯蒂与softmax的关系
 - 贝叶斯法则
 - MLE 的假设（在机器学习判别模型中，假设所有的x都是均匀的，算极大似然的时候p(x,y)=P(x)p(y|x)，所以可以直接算P(y|x)。？（兰艳艳说的，对吗?））
 - [机器学习面试题总结][机器学习面试题总结]
@@ -43,7 +44,7 @@ categories: interview
 - 滑动平均模型
 - KKT条件
 - [SVM 约束 求解 SMO 没看完][SVM约束]
-
+- 权重衰减 (代价函数中加入权重衰减项，代价函数变为严格凸函数)
 
 ### 深度学习
 - [bottleneck1][bottleneck1]  [bottleneck2][bottleneck2] 
@@ -82,7 +83,9 @@ categories: interview
    - 交叉熵损失是每一个样本（或者图像中每一个像素的交叉熵的和）
 - Softmax+交叉熵
    - 神经网络最后一层得到每个类别的得分scores，该得分经过softma×转换为概率输出，模型预测的类别概率输出与真实类别的。onehot形式进行crossentropy损失函数的计算。
-   
+- 视频分析
+   -  [视频分析1](https://juejin.im/entry/5a026ec351882572503bfb15)
+
 ### 无监督学习
 - 无监督学习的优势
    - Raw data cheap. Labeled data expensive.
