@@ -85,6 +85,11 @@ categories: interview
    - 神经网络最后一层得到每个类别的得分scores，该得分经过softma×转换为概率输出，模型预测的类别概率输出与真实类别的。onehot形式进行crossentropy损失函数的计算。
 - 视频分析
    -  [视频分析1](https://juejin.im/entry/5a026ec351882572503bfb15)
+   - 视频行为识别 （传统方法 密集采样特征点/轨迹与轨迹描述子/运动描述子， TWO STREAM方法 TWO-STREAM CNN/TSN， C3D方法，RNN方法）
+- 常见图模型
+   - 有向图（静态贝叶斯网络| 动态贝叶斯网络（隐马尔可夫模型|卡尔曼滤波器））
+   - 无向图 （马尔可夫网络（吉布斯|玻尔兹曼机|条件随机场））
+- [dropout][dropout]
 
 ### 无监督学习
 - 无监督学习的优势
@@ -195,3 +200,4 @@ categories: interview
 [距离度量方法]:http://sklearn.apachecn.org/cn/latest/modules/generated/sklearn.neighbors.DistanceMetric.html#sklearn.neighbors.DistanceMetric
 [SVM约束]:https://cloud.tencent.com/developer/article/1109404
 [Deeplabv3+]:https://blog.csdn.net/u011974639/article/details/79518175
+[dropout]:http://www.cnblogs.com/tornadomeet/p/3258122.html

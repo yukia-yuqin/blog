@@ -29,6 +29,17 @@ stringstream ss(path);
 	while(getline(ss,tmp,'/')) {
 		if (tmp == "" or tmp == ".") continue;
 ```
+- C++ make_pair,queue.front().first,return {},pair<TreeNode* ,int>
+```C++
+        if(root == NULL) return {};
+        queue<pair<TreeNode *, int>> q;
+        q.push(make_pair(root,0));
+            TreeNode * t = q.front().first;
+            q.pop();
+                res.push_back({t->val});
+                res[level].insert(res[level].begin(),t->val);
+```
+
 ### python
 - 随机分隔
 ```python
