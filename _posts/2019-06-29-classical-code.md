@@ -39,6 +39,10 @@ stringstream ss(path);
                 res.push_back({t->val});
                 res[level].insert(res[level].begin(),t->val);
 ```
+- C++ 初始化一个数组
+```C++
+int memo[n+1] = {0};
+```
 
 ### python
 - 随机分隔
