@@ -26,6 +26,7 @@ categories: interview
 - 摊还分析 （聚合分析，核算法，势能法）
 - 比较排序（插入，冒泡(n^2) | 归并，堆(n log n) | 快速排序 (avg: nlogn worst:n^2) ）
 - 线性时间排序 （计数排序(k+n)，基数排序d(n+k)，桶排序 avg:n,worst:n^2）
+- [贪心算法][贪心算法]
 
 ### 一些比较少见的算法
 - 随机算法 （[蒙特卡洛算法][蒙特卡洛算法]，[拉斯维加斯算法][拉斯维加斯算法],[舍伍德算法][舍伍德算法]）
@@ -82,4 +83,4 @@ categories: interview
 [蒙特卡洛算法]:https://yq.aliyun.com/articles/10282
 [拉斯维加斯算法]:http://blog.csdn.net/liufeng_king/article/details/9245585
 [舍伍德算法]:http://www.cnblogs.com/hxsyl/p/3219621.html
-[主定理的证明]:
+[贪心算法](https://www.itcodemonkey.com/article/4128.html)
