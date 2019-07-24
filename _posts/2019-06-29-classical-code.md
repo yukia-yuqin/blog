@@ -4,7 +4,7 @@ title: 经典代码
 tags: interview common
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+经典流传<br>
 
 ### C#
 - 写byte[]数组到文件中

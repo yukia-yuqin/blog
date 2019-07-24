@@ -4,7 +4,7 @@ title: 推荐算法总结
 tags: interview
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+推荐<br>
 
 ### 能力要求
 - 数据分析、数据挖掘能力

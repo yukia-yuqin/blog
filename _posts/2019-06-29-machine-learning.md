@@ -4,7 +4,7 @@ title: 机器学习总结
 tags: interview
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+学习机器学习<br>
 
 ### 技术面问题
 - GBDT的原理(理论基础）

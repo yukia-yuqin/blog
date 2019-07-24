@@ -4,7 +4,7 @@ title: java总结
 tags: interview java
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+来杯咖啡吧~~<br>
 
 ### 技术面问题
 - 
