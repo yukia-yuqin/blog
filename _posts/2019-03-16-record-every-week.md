@@ -7,7 +7,11 @@ tags: week
 record for myself.<br>
 
 
-
+### 2019 week28
+- [Apache Spark Jobs 性能调优](https://www.zybuluo.com/xiaop1987/note/102894)
+- [spark OOM](https://blog.csdn.net/yhb315279058/article/details/51035631)
+- [spark 基本原理和架构](https://www.cnblogs.com/tgzhu/p/5818374.html)
+- [MongoDB](https://zhuanlan.zhihu.com/p/58632184)
 ### 2019 week25
 - Stubs & Mocks
    - Stubs provide canned answers to calls made during the test, usually not responding at all to anything outside what's programmed in for the test. Stubs may also record information about calls, such as an email gateway stub that remembers the messages it 'sent', or maybe only how many messages it 'sent'.

@@ -7,10 +7,17 @@ categories: interview
 记录一下网上扒下来的以及自己的面试经历。<br>
 
 ### 技术面问题
+- GBDT的原理(理论基础）
+- 决策树节点分裂时如何选择特征，写出Giniindex和InformationGain的公式并举例说明（理论基础）
+- 分类树和回归树的区别是什么？（理论基础）
+- ×GBoost的参数调优有哪些经验（工程能力）
+- × GBoost 的 正 则 化 是 如 何 实 现 的 （ 工 程 能 力 ）
+- × GBoost 的 并 行 化 部 分 是 如 何 实 现 的 （ 工 程 能 力 ） 
+
 - fast rcnn
 - adaboost 
 - gbdt 
-- XGBOOST 
+- [XGBOOST](https://www.jianshu.com/p/7467e616f227) 
    - xgboost，在求解速度，对异常值处理上要比gbdt要快
 - random forest
 - lgb
@@ -45,6 +52,14 @@ categories: interview
 - KKT条件
 - [SVM 约束 求解 SMO 没看完][SVM约束]
 - 权重衰减 (代价函数中加入权重衰减项，代价函数变为严格凸函数)
+- SVM的原理，SVM里面的核
+- K-means，如何用hadoop实现k-means
+- naive bayes和logistic regression的区别
+- LDA的原理和推导
+- 做广告点击率预测，用哪些数据什么算法
+- 
+
+
 
 ### 深度学习
 - [bottleneck1][bottleneck1]  [bottleneck2][bottleneck2] 
@@ -194,6 +209,7 @@ categories: interview
 ### 其他
 - [MLE LSE MAP之间的关系][MLE LSE MAP之间的关系]
 - [距离度量方法][距离度量方法]
+- 给一个函数，返回 0 和 1，概率为 p 和 1-p，请你实现一个函数，使得返回 01 概率一样。
    
 ### 链接<br>
 [随机森林(Random forests)]:https://en.wikipedia.org/wiki/Random_forest

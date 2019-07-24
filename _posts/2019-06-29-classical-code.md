@@ -43,6 +43,97 @@ stringstream ss(path);
 ```C++
 int memo[n+1] = {0};
 ```
+###java
+- 单例模式
+```java
+class WordVec2DocVec{
+    private static volatile WordVec2DocVec instance = null;
+
+    public static WordVec2DocVec getInstance() {
+        if (instance == null) {
+            synchronized (WordVec2DocVec.class) {
+                if (instance == null) {
+                    instance = new WordVec2DocVec();
+                }
+            }
+        }
+        return instance;
+    }
+}
+ WordVec2DocVec.getInstance()
+```
+- 列表排序
+```java
+	List<Pair<String, Double>> cidSore = Lists.newArrayList();
+	cidSore.add(Pair.of(fid, tsum));
+	 cidSore.sort((o1, o2) -> o2.getRight().compareTo(o1.getRight()));
+	
+	List<Pair<String, Integer>> lst = Lists.newArrayList();
+	lst.add(Pair.of(entry.getKey(), entry.getValue()));
+	lst.sort((x, y) -> Integer.compare(y.getValue(), x.getValue()));
+```
+- map排序
+```java
+	private static Map<String, Float> sortByValue(Map<String, Float> unsortMap) {
+	        List<Map.Entry<String, Float>> list =
+	                new LinkedList<Map.Entry<String, Float>>(unsortMap.entrySet());
+	        Collections.sort(list, new Comparator<Map.Entry<String, Float>>() {
+	            public int compare(Map.Entry<String, Float> o1,
+	                               Map.Entry<String, Float> o2) {
+	                return (o2.getValue()).compareTo(o1.getValue());
+	            }
+	        });
+	        Map<String, Float> sortedMap = new LinkedHashMap<String, Float>();
+	        for (Map.Entry<String, Float> entry : list) {
+	            sortedMap.put(entry.getKey(), entry.getValue());
+	        }
+	        return sortedMap;
+	    }
+```
+```java
+Comparator<Pair<String, Double>> OrderIsdn = new Comparator<Pair<String, Double>>() {
+    public int compare(Pair<String, Double> o1, Pair<String, Double> o2) {
+        // TODO Auto-generated method stub
+        double numbera = o1.getRight();
+        double numberb = o2.getRight();
+        if (numberb < numbera) {
+            return 1;
+        } else if (numberb > numbera) {
+            return -1;
+        } else {
+            return 0;
+        }
+        Queue<Pair<String, Double>> priorityQueue = new PriorityQueue<>(100, OrderIsdn);
+        ListIterator<Pair<String, Double>> lit = recList.listIterator();
+            while (lit.hasNext()) {
+                lit.next();
+            }
+        while (lit.hasPrevious()) {
+                Pair<String, Double> litCur = lit.previous();
+        }
+    }
+}
+```
+- 写文件
+```java
+FileOutputStream fos = new FileOutputStream("../data/" + fname);
+OutputStreamWriter osw = new OutputStreamWriter(fos);
+BufferedWriter bw = new BufferedWriter(osw);
+bw.write(mapper.writeValueAsString());
+```
+- 解析json
+```java
+JSONObject jsonObj = new JSONObject(retOpt.get().toString());
+    if (jsonObj.has("result")) {
+        String result = jsonObj.get("result").toString();
+        JSONObject posObj = new JSONObject(result.substring(1, result.length() - 1));
+        if (posObj.has("pos_content")) {
+            String posContent = posObj.get("pos_content").toString();
+            return getArticleFeature(posContent);
+        }
+    }
+```
+
 
 ### python
 - 随机分隔
