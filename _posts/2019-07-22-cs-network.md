@@ -4,7 +4,7 @@ title: 计算机网络
 tags: interview
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+一网打尽天下。<br>
 
 ### 计算机网络
 ## [概述](https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E6%A6%82%E8%BF%B0?id=isp)
@@ -70,7 +70,11 @@ categories: interview
 - 应用层
     - 域名系统
     - 文件传送协议 - FTP 使用 TCP 进行连接，它需要两个连接来传送一个文件：
-
+    - 动态主机配置协议
+    - 远程登录协议
+    - 电子邮件协议 - SMTP - POP3 - IMAP
+    - Web 页面请求过程
+        - DHCP 配置主机信息
 
 
 

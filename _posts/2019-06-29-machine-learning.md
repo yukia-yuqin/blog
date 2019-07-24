@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 机器学习面试
+title: 机器学习总结
 tags: interview
 categories: interview
 ---
@@ -105,6 +105,9 @@ categories: interview
    - 有向图（静态贝叶斯网络| 动态贝叶斯网络（隐马尔可夫模型|卡尔曼滤波器））
    - 无向图 （马尔可夫网络（吉布斯|玻尔兹曼机|条件随机场））
 - [dropout][dropout]
+- attention
+   - Attention机制其实就是一系列注意力分配系数，也就是一系列权重参数罢了。
+
 
 ### 无监督学习
 - 无监督学习的优势
