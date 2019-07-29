@@ -1,12 +1,18 @@
 ---
 layout: post
-title: java面试
+title: java总结
 tags: interview java
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+
+来杯咖啡吧~~<br>
+<br>
 
 ### 技术面问题
+- 
+- [知名公司的java面试题](https://www.techug.com/post/java-volatile-keyword.html)
+- JMM主要就是围绕着如何在并发过程中如何处理原子性、可见性和有序性这3个特征来建立的，通过解决这三个问题，可以解除缓存不一致的问题。而volatile跟可见性和有序性都有关。
+- [经典的133个问题列表]()
 - 乐观锁
 - java buffer机制
 - mapreduce

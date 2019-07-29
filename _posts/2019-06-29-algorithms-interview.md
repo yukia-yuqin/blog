@@ -4,7 +4,9 @@ title: 计算机基础知识
 tags: interview cs
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历<br>
+
+30分钟3个算法题，30分钟内解决它们。经典问题<br>
+<br>
 
 ### 资料
 - leetcode高频题、lintcode高频题、剑指offer，大概这三样准备好就够了，校招前保证100多道题的积累量，面试时候写code应该就手到擒来了
@@ -109,4 +111,4 @@ categories: interview
 [蒙特卡洛算法]:https://yq.aliyun.com/articles/10282
 [拉斯维加斯算法]:http://blog.csdn.net/liufeng_king/article/details/9245585
 [舍伍德算法]:http://www.cnblogs.com/hxsyl/p/3219621.html
-[主定理的证明]:
+[贪心算法](https://www.itcodemonkey.com/article/4128.html)

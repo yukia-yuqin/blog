@@ -1,16 +1,25 @@
 ---
 layout: post
-title: 机器学习面试
+title: 机器学习总结
 tags: interview
 categories: interview
 ---
-记录一下网上扒下来的以及自己的面试经历。<br>
+
+学习机器学习<br>
+<br>
 
 ### 技术面问题
+- GBDT的原理(理论基础）
+- 决策树节点分裂时如何选择特征，写出Giniindex和InformationGain的公式并举例说明（理论基础）
+- 分类树和回归树的区别是什么？（理论基础）
+- ×GBoost的参数调优有哪些经验（工程能力）
+- × GBoost 的 正 则 化 是 如 何 实 现 的 （ 工 程 能 力 ）
+- × GBoost 的 并 行 化 部 分 是 如 何 实 现 的 （ 工 程 能 力 ） 
+
 - fast rcnn
 - adaboost 
 - gbdt 
-- XGBOOST 
+- [XGBOOST](https://www.jianshu.com/p/7467e616f227) 
    - xgboost，在求解速度，对异常值处理上要比gbdt要快
 - random forest
 - lgb
@@ -106,6 +115,9 @@ categories: interview
    - 有向图（静态贝叶斯网络| 动态贝叶斯网络（隐马尔可夫模型|卡尔曼滤波器））
    - 无向图 （马尔可夫网络（吉布斯|玻尔兹曼机|条件随机场））
 - [dropout][dropout]
+- attention
+   - Attention机制其实就是一系列注意力分配系数，也就是一系列权重参数罢了。
+
 
 ### 无监督学习
 - 无监督学习的优势
