@@ -39,6 +39,31 @@ stringstream ss(path);
                 res.push_back({t->val});
                 res[level].insert(res[level].begin(),t->val);
 ```
+### java
+```java
+// 字典序数据结构
+private static class TrieTree {
+    TrieTree[] next = new TrieTree[2];
+    int count = 1;
+}
+
+Scanner sc = new Scanner(System.in);
+    while (sc.hasNext()) {
+            //* Scans the next token of the input as an <tt>int</tt>.
+        int n = sc.nextInt();
+        int m = sc.nextInt();
+        int[] a = new int[n];
+        for (int i = 0; i < n; i++) {
+            a[i] = sc.nextInt();
+        }
+        System.out.println(solve(a, m));
+    }
+// 取出int型数据的每一位，从高位到低位
+int a;
+for (int j = 31; j >= 0; j--) {
+                int digit = (a >> j) & 1; 
+}
+```
 
 ### python
 - 随机分隔
@@ -58,6 +83,8 @@ validation = ratings[train_size:]
 ### docker
 - 一些没有用上的
 ```shell
+docker rmi $(docker images -f "dangling=true" -q)
+where some.txt  %查找当前目录下有没有这个文件
 .\certutil.exe -addstore -f "my" "MtutorKVcert.cer"
 .\certutil.exe -p Mtutorkv@47 -importPFX -f "my" "MtutorKVcert.pfx" 
 .\certutil.exe -store "my"
@@ -90,6 +117,9 @@ docker exec -it dmtutor cmd
 ```shell
 dir .|  find "Microsoft.WindowsAzure.ServiceRuntime.dll"
 dir .|  find "System.Web.Http.WebHost.dll"
+
+
+depends /c /ot:.\out1.txt .\MTutor.Service.UniSoundSpeechLib.dll 
 
 D:\code\mTutor\main\service\csx\DevDeploy\roles\MTutor.Service.Web\
 D:\code\dockervolume\

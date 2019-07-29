@@ -6,7 +6,33 @@ tags: week
 
 record for myself.<br>
 
+### 2019 week 29
+- 阅读专业书籍后如何转化成自己的知识，如何高效做读书笔记？有时候去面试碰上一个问题一个知识点明明是看过的，但是自己就是说不上来。
+   -  谢谢小姐姐非常有必要的习惯，预计时间是正常阅读时间的1.5倍，前两个小时看30面，把不会的理解有误的勾下来，最后一个小时记笔记，有逻辑性，小节标题做辅助。每章一条笔记。C+primer 10 多条 面试之前全部看一遍。
+- 如何平衡知识广度和深度问题，比如说体系结构和计算机算法以及工程性问题。	并不是一个tradeoff的关系。能有多广有多广，能有多深有多深。
+- 早晨7点半起床，8点出门，9-17:30点自己学习，看书+公开课，晚上自己的时间，锻炼+coding。
+- Leetcode周赛 
+- code : code forces 晚上做比赛 白天清掉 半年，（废）
+- 读编程类经典书籍，比如《java核心技术卷一》重点是复现书上的代码示例还是把书上的重点文字用笔记记录下来？目的是理解记忆然后之后使用:-D？
+   - 理解高层次的思想，用文字记录下来，常归纳总结，有新的体会啊。复现代码用处并不大。
+- 一句话总结自己：一个实习经验丰富有Paper的coder.
+-  外企招聘特点 
+   -   职位：general hire（software developer） 2. 考察：算法为主 3. 流程：官申/内推->OA->电面->onsite->AA->offer 4. 时间：晚、慢（面试9月->offer11月）
+8成以上题目是算法题。内推。Hiho coder 微软。9月BAT 的offer 拿满。
+-  针对5家企业的时间线，链接。模拟题。快速，准确。
+   - Airbnb 8月初 官网申请 8月底 hr电话沟通 9月中 [3轮现场技术面](http://poj.org/problem?id=2739 http://poj.org/problem?id=2823 http://poj.org/problem?id=3050) 10月初 2轮远程文化面 10月中 口头offer 10月底 offer
+   - 技术面非常难，现场运行代码。文化面：我是好人，我热爱旅游，热爱世界和平。
+   - Amazon 8月中 官网申请 8月中 [在线笔试](https://leetcode.com/contest/leetcode-weekly-contest-46) 8月中 [2轮现场技术面](https://leetcode.com/problems/trim-a-binary-search-tree https://leetcode.com/problems/implement-magic-dictionary) 8月底 口头offer 9月底 offer 中国：购物，本地化，Kindle。题目相对简单。
+   - Google 3月初 申请实习生 3月中 [实习电面](http://poj.org/problem?id=2115) 4月初 实习onsite （http://poj.org/problem?id=3669） 4月底 实习offer 9月中 2轮转正技术面 （http://poj.org/problem?id=3614 https://leetcode.com/problems/design-tinyurl） 11月初 通过hiring committee 11月中 team match 12月底 offer 实习好进！正式：4轮算法面试。
+   - Hulu 8月初 内推 9月中 技术电面 （http://poj.org/problem?id=3258 http://poj.org/problem?id=2229） 9月底 3轮技术onsite （http://poj.org/problem?id=2236 http://poj.org/problem?id=1862） 10月中 总监终面 11月中 offer 技术氛围特别好。常年招聘实习生。面试难度大。
+   - Microsoft 3月底 在线笔试 （http://hihocoder.com/contests/past） 4月中 3轮实习技术面 （http://poj.org/problem?id=3009 http://poj.org/problem?id=1258） 5月中 实习offer 8月底 夏令营2轮技术面 9月初 转申美国岗 10月底 4轮技术面 11月初 offer 最难的是在线笔试。特别看重CS 基本功，10面，2面算法，8面 potential，开放思维，联想到缓存，调度问题，面向对象程序设计，操作系统，线程进程特别深。
 
+
+
+### 2019 week 28
+- 复杂度
+   - 	一秒CPU差不多能进行八次方的运算，通过时间复杂度估算，超九次方绝逼不过，七次方及以内一般比较轻松，但有时还要看你常数的
+- 1e1+7 = 17 e1为10的1次方  1e9+7 = 1,000,000,007 
 
 ### 2019 week25
 - Stubs & Mocks
