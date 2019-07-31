@@ -8,6 +8,47 @@ categories: interview
 来杯咖啡吧~~<br>
 <br>
 
+###真题
+- 阿里真题
+    - java类加载器有哪些
+        -Java 中的类加载器大致可以分成两类，一类是系统提供的，另外一类则是由 Java 应用开发人员编写的。系统提供的类加载器主要有下面三个
+            - 启动（Bootstrap）类加载器  扩展（Extension）类加载器  系统（System）类加载器
+            - 代理模式:双亲委派模型的工作过程如下：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都会传送到顶层的启动类加载器中，只有当父类加载器反馈自己无法完成这个加载请求（它的搜索范围内没找到这个类）时，自加载器才会尝试自己加载。
+            - 代理模式:双亲委派模型是为了保证 Java 核心库的类型安全。所有 Java 应用都至少需要引用 java.lang.Object类，也就是说在运行的时候，java.lang.Object这个类需要被加载到 Java 虚拟机中。如果这个加载过程由 Java 应用自己的类加载器来完成的话，很可能就存在多个版本的 java.lang.Object类，而且这些类之间是不兼容的。通过双亲委派模型，对于 Java 核心库的类的加载工作由启动类加载器来统一完成，保证了 Java 应用所使用的都是同一个版本的 Java 核心库的类，是互相兼容的。
+            - Class.forName是一个静态方法，同样可以用来加载类。该方法有两种形式：Class.forName(String name, boolean initialize, ClassLoader loader)和 Class.forName(String className)。第一种形式的参数 name表示的是类的全名；initialize表示是否初始化类；loader表示加载时使用的类加载器。第二种形式则相当于设置了参数 initialize的值为 true，loader的值为当前类的类加载器。
+            - 
+    - java反射机制及应用
+        - 反射则是一开始并不知道我要初始化的类对象是什么，自然也无法使用 new 关键字来创建对象了。
+        - 反射就是在运行时才知道要操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。
+        - 获取反射中的Class对象
+            - 第一种，使用 Class.forName 静态方法。当你知道该类的全路径名时，你可以使用该方法获取 Class 类对象。
+            - 第二种，使用 .class 方法。
+            - 第三种，使用类对象的 getClass() 方法。
+        - 通过反射创建类对象   Class 对象的 newInstance() 方法   Constructor 对象的 newInstance() 方法
+        - 通过反射获取类属性、方法、构造器
+            - getFields() 方法 ;  getDeclaredFields() 
+    - synchronized 底层实现，4种锁
+        - Java中提供了两种实现同步的基础语义：synchronized方法和synchronized块
+        - 重量级锁  重量级锁是我们常说的传统意义上的锁，其利用操作系统底层的同步机制去实现Java中的线程同步。
+        - 轻量级锁 
+    - FullGC,MinorGC
+    - redis主从复制
+    - thrift RPC原理
+    - Cookie和session的区别
+    - 如果登陆了如何其他服务器知道
+    - SSO原理，应用场景
+    - springboot 和 springmvc 和 spring 区别
+    - 缓存一致性
+    - 类加载机制
+    - arryalist和linkedlist的区别
+    - 公平锁原理
+    - 联合索引
+    - concurrentHashMap实现原理 全部锁住的情况
+    - 红黑树的规则
+    - AQS 结合 公平锁
+    - hashmap扩容
+    - 反问
+
 ### 技术面问题
 
 - 面试题
@@ -64,7 +105,47 @@ categories: interview
 - [知名公司的java面试题](https://www.techug.com/post/java-volatile-keyword.html)
 - JMM主要就是围绕着如何在并发过程中如何处理原子性、可见性和有序性这3个特征来建立的，通过解决这三个问题，可以解除缓存不一致的问题。而volatile跟可见性和有序性都有关。
 - [经典的133个问题列表]()
-- 乐观锁
+- [乐观锁](https://www.cnblogs.com/Mainz/p/3546347.html)
+    - [两种锁的使用场景 和 ](https://juejin.im/post/5b4977ae5188251b146b2fc8)
+    从上面对两种锁的介绍，我们知道两种锁各有优缺点，不可认为一种好于另一种，像乐观锁适用于写比较少的情况下（多读场景），即冲突真的很少发生的时候，这样可以省去了锁的开销，加大了系统的整个吞吐量。但如果是多写的情况，一般会经常产生冲突，这就会导致上层应用会不断的进行retry，这样反倒是降低了性能，所以一般多写的场景下用悲观锁就比较合适。
+- 请你解释Object若不重写hashCode()的话，hashCode()如何计算出来的？
+    - Object 的 hashcode 方法是本地方法，也就是用 c 语言或 c++ 实现的，该方法直接返回对象的 内存地址。
+- 请你解释为什么重写equals还要重写hashcode？
+    - 因为自定义的类的hashcode()方法继承于Object类，其hashcode码为默认的内存地址，这样即便有相同含义的两个对象，比较也是不相等的
+- 请你介绍一下map的分类和常见的情况
+    - java为数据结构中的映射定义了一个接口java.util.Map;它有四个实现类,分别是HashMap Hashtable LinkedHashMap 和TreeMap.
+    - Hashmap 是一个最常用的Map,它根据键的HashCode值存储数据,根据键可以直接获取它的值，具有很快的访问速度，遍历时，取得数据的顺序是完全随机的。 HashMap最多只允许一条记录的键为Null;允许多条记录的值为 Null;HashMap不支持线程的同步，即任一时刻可以有多个线程同时写HashMap;可能会导致数据的不一致。如果需要同步，可以用 Collections的synchronizedMap方法使HashMap具有同步的能力，或者使用ConcurrentHashMap。
+    - Hashtable与 HashMap类似,它继承自Dictionary类，不同的是:它不允许记录的键或者值为空;它支持线程的同步，即任一时刻只有一个线程能写Hashtable,因此也导致了 Hashtable在写入时会比较慢。
+    - HashMap是一个最常用的Map，它根据键的hashCode值存储数据，根据键可以直接获取它的值，具有很快的访问速度。HashMap最多只允许一条记录的键为NULL，允许多条记录的值为NULL。
+    - HashMap不支持线程同步，即任一时刻可以有多个线程同时写HashMap，可能会导致数据的不一致性。如果需要同步，可以用Collections的synchronizedMap方法使HashMap具有同步的能力。
+    - Hashtable与HashMap类似，不同的是：它不允许记录的键或者值为空；它支持线程的同步，即任一时刻只有一个线程能写Hashtable，因此也导致了Hashtable在写入时会比较慢。
+    - LinkedHashMap保存了记录的插入顺序，在用Iterator遍历LinkedHashMap时，先得到的记录肯定是先插入的。
+    在遍历的时候会比HashMap慢.
+    - TreeMap能够把它保存的记录根据键排序，默认是按升序排序，也可以指定排序的比较器。当用Iterator遍历TreeMap时，得到的记录是排过序的。
+- final
+    - 对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象。
+-  请你谈谈关于Synchronized和lock 
+    - synchronized是Java的关键字，当它用来修饰一个方法或者一个代码块的时候，能够保证在同一时刻最多只有一个线程执行该段代码。JDK1.5以后引入了自旋锁、锁粗化、轻量级锁，偏向锁来有优化关键字的性能。
+    Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。
+- 请你介绍一下Syncronized锁，如果用这个关键字修饰一个静态方法，锁住了什么？如果修饰成员方法，锁住了什么？
+    - synchronized修饰静态方法以及同步代码块的synchronized (类.class)用法锁的是类，线程想要执行对应同步代码，需要获得类锁。synchronized修饰成员方法，线程获取的是当前调用该方法的对象实例的对象锁。
+- [若对一个类不重写，它的equals()方法是如何比较的？][若对一个类不重写，它的equals()方法是如何比较的？]
+- [请解释hashCode()和equals()方法有什么联系？][若对一个类不重写，它的equals()方法是如何比较的？]
+- 内存置换算法 FIFO LRU LFU OPT clock
+- 缓存系统如何提高命中率
+- TCP/IP 三四 滑动窗口协议
+- 数据库索引数据结构  哈希，B+树索引，优劣及应用比较，时间复杂度分析
+- IO多路复用，五大IO模型，
+- 你知道java8的新特性吗，请简单介绍一下
+    - Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。
+    - Optional 类 − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。
+
+
+
+- 
+
+
+[若对一个类不重写，它的equals()方法是如何比较的？](https://www.nowcoder.com/tutorial/94/965a74a5195b4904a9106aee097a9a3a)
 - java buffer机制
 - mapreduce
 - 进程通信
