@@ -9,7 +9,58 @@ categories: interview
 <br>
 
 ### 技术面问题
-- 
+
+- 面试题
+    - 阿里一面（一个小时左右）
+        - 排序算法
+        - 简单二叉树
+        - 大数相关
+        - 实现接口与继承类的区别
+        - Object的方法都有哪些
+        - 怎么判断两个对象相等？
+        - equals和hashCode
+        - hash冲突
+        - 一致性哈希
+        - HashMap的底层模型
+        - ConcurrentHashMap
+        - 刚才提到了segment继承于ReetrantLock，那谈谈Synchronized和Lock的区别
+        - CAS
+        - 死锁举例
+        - JVM类加载机制
+        - tcp三次握手四次挥手
+        - mysql引擎 B+树
+        - MyISAM和InnoDB区别
+        - Java final volatile 关键字 volatile指令重排序 举个重排序例子
+        - JVM对Java做了什么 堆和栈 垃圾回收算法
+        - 网络 打开网页 怎么用拥塞控制 路由寻路 TCP UDP区别
+        - 数据结构 树的变种 b+和红黑树
+        - 操作系统 线程和进程 为什么切换进程消耗小 什么时候进程什么时候线程 虚拟内存 页式存储
+        - 数据库 事务 隔离级别
+        - 什么是分布式事务 怎么做
+        - 分布式锁
+        - 场景题 额度调整不加锁
+        - 项目分析 场景
+        - spring ioc aop springboot差别
+        - 分布式理解 心得
+        - paxos和raft
+        - 有什么想问我
+        - [https](https://my.oschina.net/u/1778933/blog/421775)
+    - 阿里二面
+        - 了解设计模式吗？
+        - HTTP协议和IP协议
+        - GC是如何做到的，哪些作为GC root
+        - JavaNIO和IO区别，如果分别用他们实现QQ有什么区别
+        - HashMap线程安全吗，多线程什么问题
+        - ArrayList多线程什么问题
+        - 线程池知道吗？为什么用线程池，有什么好处
+        - 栈上的空间什么时候分配的
+        - 实现分布式锁
+        - 聊聊ZK和Consul
+        - ZK的实现，他是用来干嘛的
+        - 你们部门的业务处于公司怎样的一个环节
+        - 评价下自己，平时有什么爱好
+        - 如何做好一件事情
+- [史上最全阿里面试题](https://zhuanlan.zhihu.com/p/46144296)
 - [知名公司的java面试题](https://www.techug.com/post/java-volatile-keyword.html)
 - JMM主要就是围绕着如何在并发过程中如何处理原子性、可见性和有序性这3个特征来建立的，通过解决这三个问题，可以解除缓存不一致的问题。而volatile跟可见性和有序性都有关。
 - [经典的133个问题列表]()

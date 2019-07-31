@@ -25,6 +25,13 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
 ```
 
 ### C++
+- sort 内部写一个比较器
+```C++
+sort(numbers.begin(),numbers.end(),[](const int s1,const int s2){
+            return to_string(s1)+to_string(s2) < to_string(s2) + to_string(s1);
+        });
+```
+
 - C++ 分割字符串 变为stringstream
 ```C++
 stringstream ss(path);
@@ -151,6 +158,10 @@ train_size = int(train_pct * ratings.shape[0])
 train = ratings[:train_size]
 validation = ratings[train_size:]
 ```
+
+### Spark
+```scala
+
 
 ### docker
 - 一些没有用上的
