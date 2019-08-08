@@ -31,6 +31,8 @@ categories: interview
         - Java中提供了两种实现同步的基础语义：synchronized方法和synchronized块
         - 重量级锁  重量级锁是我们常说的传统意义上的锁，其利用操作系统底层的同步机制去实现Java中的线程同步。
         - 轻量级锁 
+        - 自旋锁、锁粗化、轻量级锁，偏向锁
+    
     - FullGC,MinorGC
     - redis主从复制
     - thrift RPC原理
@@ -101,6 +103,238 @@ categories: interview
         - 你们部门的业务处于公司怎样的一个环节
         - 评价下自己，平时有什么爱好
         - 如何做好一件事情
+- 请你谈谈StringBuffer和StringBuilder有什么区别，底层实现上呢？
+    - StringBuffer线程安全，StringBuilder线程不安全，底层实现上的话，StringBuffer其实就是比StringBuilder多了Synchronized修饰符。
+- 方法覆盖是基于运行时动态绑定的，而static方法是编译时静态绑定的。
+- 请列举你所知道的Object类的方法并简要说明。
+    - Object()默认构造方法。clone() 创建并返回此对象的一个副本。equals(Object obj) 指示某个其他对象是否与此对象“相等”。finalize()当垃圾回收器确定不存在对该对象的更多引用时，由对象的垃圾回收器调用此方法。getClass()返回一个对象的运行时类。hashCode()返回该对象的哈希码值。 notify()唤醒在此对象监视器上等待的单个线程。 notifyAll()唤醒在此对象监视器上等待的所有线程。toString()返回该对象的字符串表示。wait()导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法。wait(long timeout)导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者超过指定的时间量。wait(long timeout, int nanos) 导致当前的线程等待，直到其他线程调用此对象的 notify() 方法或 notifyAll() 方法，或者其他某个线程中断当前线程，或者已超过某个实际时间量。
+- 请你说明concurrenthashmap有什么优势以及1.7和1.8区别？
+    - Concurrenthashmap线程安全的，1.7是在jdk1.7中采用Segment + HashEntry的方式进行实现的，lock加在Segment上面。1.7size计算是先采用不加锁的方式，连续计算元素的个数，最多计算3次：1、如果前后两次计算结果相同，则说明计算出来的元素个数是准确的；2、如果前后两次计算结果都不同，则给每个Segment进行加锁，再计算一次元素的个数；
+    - 1.8中放弃了Segment臃肿的设计，取而代之的是采用Node + CAS + Synchronized来保证并发安全进行实现，1.8中使用一个volatile类型的变量baseCount记录元素的个数，当插入新数据或则删除数据时，会通过addCount()方法更新baseCount，通过累加baseCount和CounterCell数组中的数量，即可得到元素的总个数；
+- 阐述ArrayList、Vector、LinkedList的存储性能和特性
+    - ArrayList 和Vector都是使用数组方式存储数据，此数组元素数大于实际存储的数据以便增加和插入元素，它们都允许直接按序号索引元素，但是插入元素要涉及数组元素移动等内存操作，所以索引数据快而插入数据慢，Vector中的方法由于添加了synchronized修饰，因此Vector是线程安全的容器，但性能上较ArrayList差，因此已经是Java中的遗留容器。LinkedList使用双向链表实现存储（将内存中零散的内存单元通过附加的引用关联起来，形成一个可以按序号索引的线性结构，这种链式存储方式与数组的连续存储方式相比，内存的利用率更高），按序号索引数据需要进行前向或后向遍历，但是插入数据时只需要记录本项的前后项即可，所以插入速度较快。Vector属于遗留容器（Java早期的版本中提供的容器，除此之外，Hashtable、Dictionary、BitSet、Stack、Properties都是遗留容器），已经不推荐使用，但是由于ArrayList和LinkedListed都是非线程安全的，如果遇到多个线程操作同一个容器的场景，则可以通过工具类Collections中的synchronizedList方法将其转换成线程安全的容器后再使用（这是对装潢模式的应用，将已有对象传入另一个类的构造器中创建新的对象来增强实现）。
+
+
+- java 8 vs java 9 vs java 7
+    - 在 Java 8 中，String 内部使用 char 数组存储数据。
+    - 在 Java 9 之后，String 类的实现改用 byte 数组存储字符串，同时使用 coder 来标识使用了哪种编码。
+    - 在 Java 7 之前，String Pool 被放在运行时常量池中，它属于永久代。而在 Java 7，String Pool 被移到堆中。这是因为永久代的空间有限，在大量使用字符串的场景下会导致 OutOfMemoryError 错误。
+    - 从 Java 7 开始，可以在 switch 条件判断语句中使用 String 对象。switch 不支持 long，是因为 switch 的设计初衷是对那些只有少数的几个值进行等值判断，如果值过于复杂，那么还是用 if 比较合适。
+    - 接口是抽象类的延伸，在 Java 8 之前，它可以看成是一个完全抽象的类，也就是说它不能有任何的方法实现。从 Java 8 开始，接口也可以拥有默认的方法实现，这是因为不支持默认方法的接口的维护成本太高了。在 Java 8 之前，如果一个接口想要添加新的方法，那么要修改所有实现了该接口的类。
+    - Annontation是Java5开始引入的新特征，中文名称叫注解。它提供了一种安全的类似注释的机制，用来将任何的信息或元数据（metadata）与程序元素（类、方法、成员变量等）进行关联。为程序的元素（类、方法、成员变量）加上更直观更明了的说明，这些说明信息是与程序的业务逻辑无关，并且供指定的工具或框架使用。Annontation像一种修饰符一样，应用于包、类型、构造方法、方法、成员变量、参数及本地变量的声明语句中。
+    - 从 JDK 1.8 开始，在hashmap中，一个桶存储的链表长度大于 8 时会将链表转换为红黑树。
+    - JDK 1.7 使用分段锁机制来实现并发更新操作，核心类为 Segment，它继承自重入锁 ReentrantLock，并发度与 Segment 数量相等。JDK 1.8 使用了 CAS 操作来支持更高的并发度，在 CAS 操作失败时使用内置锁 synchronized。并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
+    - [Java8之后的ConcurrentHashMap, 舍弃分段锁,您好 分段锁技术是在java8以前使用的，在java8已经弃用了，更新为synchronized+cas](https://www.wanaright.com/2018/09/30/java10-concurrenthashmap-no-segment-lock/) 
+    - java8 新特性
+        - Lambda Expressions
+        - Pipelines and Streams
+        - Date and Time API
+        - Default Methods
+        - Type Annotations
+        - Nashhorn JavaScript Engine
+        - Concurrent Accumulators
+        - Parallel operations
+        - PermGen Error Removed
+    - java7 新特性
+        - Strings in Switch Statement
+        - Type Inference for Generic Instance Creation
+        - Multiple Exception Handling
+        - Support for Dynamic Languages
+        - Try with Resources
+        - Java nio Package
+        - Binary Literals, Underscore in literals
+        - Diamond Syntax
+
+- 字符串
+    -  string 不可变的好处
+        - 可以缓存 hash 值
+        - String Pool 的需要
+        - String 不可变性天生具备线程安全，可以在多个线程中安全地使用。
+        - String 不可变，因此是线程安全的;StringBuilder 不是线程安全的;StringBuffer 是线程安全的，内部使用 synchronized 进行同步
+    - 当一个字符串调用 intern() 方法时，如果 String Pool 中已经存在一个字符串和该字符串值相等（使用 equals() 方法进行确定），那么就会返回 String Pool 中字符串的引用；否则，就会在 String Pool 中添加一个新的字符串，并返回这个新字符串的引用。
+- 访问权限
+    - Java 中有三个访问权限修饰符：private、protected 以及 public，如果不加访问修饰符，表示包级可见。
+    - 字段决不能是公有的，因为这么做的话就失去了对这个字段修改行为的控制，客户端可以对其随意修改。例如下面的例子中，AccessExample 拥有 id 公有字段，如果在某个时刻，我们想要使用 int 存储 id 字段，那么就需要修改所有的客户端代码。
+    - 接口和抽象类
+        - 从设计层面上看，抽象类提供了一种 IS-A 关系，那么就必须满足里式替换原则，即子类对象必须能够替换掉所有父类对象。而接口更像是一种 LIKE-A 关系，它只是提供一种方法实现契约，并不要求接口和实现接口的类具有 IS-A 关系。
+        - 从使用上来看，一个类可以实现多个接口，但是不能继承多个抽象类。
+        - 接口的字段只能是 static 和 final 类型的，而抽象类的字段没有这种限制。
+        - 接口的成员只能是 public 的，而抽象类的成员可以有多种访问权限。
+- 重写与重载
+    - 为了满足里式替换原则，重写有以下三个限制：    
+        - 子类方法的访问权限必须大于等于父类方法；
+        - 子类方法的返回类型必须是父类方法返回类型或为其子类型。
+        - 子类方法抛出的异常类型必须是父类抛出异常类型或为其子类型。
+        - 使用 @Override 注解，可以让编译器帮忙检查是否满足上面的三个限制条件。
+    - 重载（Overload）
+        - 存在于同一个类中，指一个方法与已经存在的方法名称上相同，但是参数类型、个数、顺序至少有一个不同。应该注意的是，返回值不同，其它都相同不算是重载。
+- 基础知识
+    - 对于基本类型，== 判断两个值是否相等，基本类型没有 equals() 方法。
+    - toString()默认返回 ToStringExample@4554617c 这种形式，其中 @ 后面的数值为散列码的无符号十六进制表示。
+    - clone方法
+        - 应该注意的是，clone() 方法并不是 Cloneable 接口的方法，而是 Object 的一个 protected 方法。Cloneable 接口只是规定，如果一个类没有实现 Cloneable 接口又调 用了 clone() 方法，就会抛出 CloneNotSupportedException。
+    - clone替代方案
+        - 使用 clone() 方法来拷贝一个对象即复杂又有风险，它会抛出异常，并且还需要类型转换。Effective Java 书上讲到，最好不要去使用 clone()，可以使用拷贝构造函数或者拷贝工厂来拷贝一个对象。
+    - static
+        - 静态变量/ 静态方法 /  静态语句块 / 静态内部类
+        - 静态内部类不能访问外部类的非静态的变量和方法。
+        - 静态导包 import static com.xxx.ClassName.* 在使用静态变量和方法时不用再指明 ClassName，从而简化代码，但可读性大大降低。
+        - 初始化顺序 ： 静态变量和静态语句块优先于实例变量和普通语句块，静态变量和静态语句块的初始化顺序取决于它们在代码中的顺序。
+    - 反射
+        - 类加载相当于 Class 对象的加载，类在第一次使用时才动态加载到 JVM 中。也可以使用 Class.forName("com.mysql.jdbc.Driver") 这种方式来控制类的加载，该方法会返回一个 Class 对象。
+        - 反射的优点：
+            - 可扩展性 ：应用程序可以利用全限定名创建可扩展对象的实例，来使用来自外部的用户自定义类。
+            - 类浏览器和可视化开发环境 ：一个类浏览器需要可以枚举类的成员。可视化开发环境（如 IDE）可以从利用反射中可用的类型信息中受益，以帮助程序员编写正确的代码。
+            - 调试器和测试工具 ： 调试器需要能够检查一个类里的私有成员。测试工具可以利用反射来自动地调用类里定义的可被发现的API 定义，以确保一组测试中有较高的代码覆盖率。
+        - 反射的缺点
+            - 性能开销 ：反射涉及了动态类型的解析，所以 JVM 无法对这些代码进行优化。因此，反射操作的效率要比那些非反射操作低得多。我们应该避免在经常被执行的代码或对性能要求很高的程序中使用反射。
+            - 安全限制 ：使用反射技术要求程序必须在一个没有安全限制的环境中运行。如果一个程序必须在有安全限制的环境中运行，如 Applet，那么这就是个问题了。
+            - 内部暴露 ：由于反射允许代码执行一些在正常情况下不被允许的操作（比如访问私有的属性和方法），所以使用反射可能会导致意料之外的副作用，这可能导致代码功能失调并破坏可移植性。反射代码破坏了抽象性，因此当平台发生改变的时候，代码的行为就有可能也随着变化。
+    - 异常
+        - Throwable 可以用来表示任何可以作为异常抛出的类，分为两种： Error 和 Exception。其中 Error 用来表示 JVM 无法处理的错误，Exception 分为两种：
+    - Java的泛型是如何工作的 ? 什么是类型擦除 ?
+        - 泛型是通过类型擦除来实现的，编译器在编译时擦除了所有类型相关的信息，所以在运行时不存在任何类型相关的信息。例如List<String>在运行时仅用一个List来表示。这样做的目的，是确保能和Java 5之前的版本开发二进制类库进行兼容。你无法在运行时访问到类型参数，因为编译器已经把泛型类型转换成了原始类型。
+    - [10道java泛型题目](https://cloud.tencent.com/developer/article/1033693)
+    -　你可以把List<String>传递给一个接受List<Object>参数的方法吗？
+        - 不可以。因为List<Object>可以存储任何类型的对象包括String, Integer等等，而List<String>却只能用来存储Strings。　
+    - Array中可以用泛型吗?
+        - 　　这可能是Java泛型面试题中最简单的一个了，当然前提是你要知道Array事实上并不支持泛型，这也是为什么Joshua Bloch在Effective Java一书中建议使用List来代替Array，因为List可以提供编译期的类型安全保证，而Array却不能。
+- java 容器
+    - 容器主要包括 Collection 和 Map 两种，Collection 存储着对象的集合，而 Map 存储着键值对（两个对象）的映射表。
+    - Collection
+        - 1. Set
+        - TreeSet：基于红黑树实现，支持有序性操作，例如根据一个范围查找元素的操作。但是查找效率不如 HashSet，HashSet 查找的时间复杂度为 O(1)，TreeSet 则为 O(logN)。
+        - HashSet：基于哈希表实现，支持快速查找，但不支持有序性操作。并且失去了元素的插入顺序信息，也就是说使用 Iterator 遍历 HashSet 得到的结果是不确定的。
+        - LinkedHashSet：具有 HashSet 的查找效率，且内部使用双向链表维护元素的插入顺序。
+        - 2. List
+        - ArrayList：基于动态数组实现，支持随机访问。
+        - Vector：和 ArrayList 类似，但它是线程安全的。
+        - LinkedList：基于双向链表实现，只能顺序访问，但是可以快速地在链表中间插入和删除元素。不仅如此，LinkedList 还可以用作栈、队列和双向队列。
+        - 3. Queue
+        - LinkedList：可以用它来实现双向队列。
+        - PriorityQueue：基于堆结构实现，可以用它来实现优先队列。
+    - Map
+        - TreeMap：基于红黑树实现。
+        - HashMap：基于哈希表实现。
+        - HashTable：和 HashMap 类似，但它是线程安全的，这意味着同一时刻多个线程可以同时写入 HashTable 并且不会导致数据不一致。它是遗留类，不应该去使用它。现在可以使用 ConcurrentHashMap 来支持线程安全。
+        - LinkedHashMap：使用双向链表来维护元素的顺序，顺序为插入顺序或者最近最少使用（LRU）顺序。
+    - 迭代器模式
+    - 适配器模式
+        - java.util.Arrays#asList() 可以把数组类型转换为 List 类型。
+    - Vector
+        - Vector 是同步的，因此开销就比 ArrayList 要大，访问速度更慢。最好使用 ArrayList 而不是 Vector，因为同步操作完全可以由程序员自己来控制；Vector 每次扩容请求其大小的 2 倍空间，而 ArrayList 是 1.5 倍。
+        - 可以使用 Collections.synchronizedList(); 得到一个线程安全的 ArrayList。 List<String> synList = Collections.synchronizedList(list); 也可以使用 concurrent 并发包下的 CopyOnWriteArrayList 类。List<String> list = new CopyOnWriteArrayList<>();
+            - CopyOnWriteArrayList
+                - 读写分离;写操作在一个复制的数组上进行，读操作还是在原始数组中进行，读写分离，互不影响。写操作需要加锁，防止并发写入时导致写入数据丢失。写操作结束之后需要把原始数组指向新的复制数组。
+    - HashMap 允许插入键为 null 的键值对。但是因为无法调用 null 的 hashCode() 方法，也就无法确定该键值对的桶下标，只能通过强制指定一个桶下标来存放。HashMap 使用第 0 个桶存放键为 null 的键值对。
+    - 扩容-重新计算桶下标：假设原数组长度 capacity 为 16，扩容之后 new capacity 为 32：它的哈希值如果在第 5 位上为 0，那么取模得到的结果和之前一样；如果为 1，那么得到的结果为原来的结果 +16。
+    - LRU 缓存
+        - [以下是使用 LinkedHashMap 实现的一个 LRU 缓存](https://cyc2018.github.io/CS-Notes/#/notes/Java%20%E5%AE%B9%E5%99%A8)
+    - WeakHashMap
+        - WeakHashMap 的 Entry 继承自 WeakReference，被 WeakReference 关联的对象在下一次垃圾回收时会被回收
+    - ConcurrentCache
+        - ConcurrentCache Tomcat 中的 ConcurrentCache 使用了 WeakHashMap 来实现缓存功能。
+        - ConcurrentCache 采取的是分代缓存：
+    - 基础线程机制
+        - Executor 管理多个异步任务的执行，而无需程序员显式地管理线程的生命周期。这里的异步是指多个任务的执行互不干扰，不需要进行同步操作。CachedThreadPool：一个任务创建一个线程；     ExecutorService executorService = Executors.newCachedThreadPool();         executorService.execute(new MyRunnable());
+        - Daemon
+        - yield()
+            - 对静态方法 Thread.yield() 的调用声明了当前线程已经完成了生命周期中最重要的部分，可以切换给其它线程来执行。该方法只是对线程调度器的一个建议，而且也只是建议具有相同优先级的其它线程可以运行。
+    - 中断
+        - 调用 Executor 的 shutdown() 方法会等待线程都执行完毕之后再关闭，但是如果调用的是 shutdownNow() 方法，则相当于调用每个线程的 interrupt() 方法。如果只想中断 Executor 中的一个线程，可以通过使用 submit() 方法来提交一个线程，它会返回一个 Future<?> 对象，通过调用该对象的 cancel(true) 方法就可以中断线程。
+    - 五、互斥同步
+        - Java 提供了两种锁机制来控制多个线程对共享资源的互斥访问，第一个是 JVM 实现的 synchronized，而另一个是 JDK 实现的 ReentrantLock。
+        - synchronized 
+            - 1. 同步一个代码块 .它只作用于同一个对象，如果调用两个对象上的同步代码块，就不会进行同步。        synchronized (this) {
+            - 2. 同步一个方法 public synchronized void func () {
+            - 3. 同步一个类     synchronized (SynchronizedExample.class) { 作用于整个类，也就是说两个线程调用同一个类的不同对象上的这种同步语句，也会进行同步。
+            - 4. 同步一个静态方. 作用于整个类。
+        - ReentrantLock
+            - ReentrantLock 是 java.util.concurrent（J.U.C）包中的锁。
+                -     private Lock lock = new ReentrantLock();         lock.lock();             lock.unlock(); // 确保释放锁，从而避免发生死锁。
+        - 比较
+            - synchronized 是 JVM 实现的，而 ReentrantLock 是 JDK 实现的。
+            - 新版本 Java 对 synchronized 进行了很多优化，例如自旋锁等，synchronized 与 ReentrantLock 大致相同。
+            - 当持有锁的线程长期不释放锁的时候，正在等待的线程可以选择放弃等待，改为处理其他事情。ReentrantLock 可中断，而 synchronized 不行。
+            - 公平锁是指多个线程在等待同一个锁时，必须按照申请锁的时间顺序来依次获得锁。synchronized 中的锁是非公平的，ReentrantLock 默认情况下也是非公平的，但是也可以是公平的。
+            - 一个 ReentrantLock 可以同时绑定多个 Condition 对象。
+            - 除非需要使用 ReentrantLock 的高级功能，否则优先使用 synchronized。这是因为 synchronized 是 JVM 实现的一种锁机制，JVM 原生地支持它，而 ReentrantLock 不是所有的 JDK 版本都支持。并且使用 synchronized 不用担心没有释放锁而导致死锁问题，因为 JVM 会确保锁的释放。
+    - 线程之间的协作
+        - join() 对于以下代码，虽然 b 线程先启动，但是因为在 b 线程中调用了 a 线程的 join() 方法，b 线程会等待 a 线程结束才继续执行，因此最后能够保证 a 线程的输出先于 b 线程的输出。   
+        - wait() notify() notifyAll()；它们都属于 Object 的一部分，而不属于 Thread。
+        - await() signal() signalAll()
+    - 七、J.U.C - AQS
+        - CountDownLatch
+        - CyclicBarrier。CyclicBarrier 有两个构造函数，其中 parties 指示计数器的初始值，barrierAction 在所有线程都到达屏障的时候会执行一次。
+        - FutureTask
+        - BlockingQueue
+            - java.util.concurrent.BlockingQueue 接口有以下阻塞队列的实现：FIFO 队列 ：LinkedBlockingQueue、ArrayBlockingQueue（固定长度） 优先级队列 ：PriorityBlockingQueue 提供了阻塞的 take() 和 put() 方法：如果队列为空 take() 将阻塞，直到队列中有内容；如果队列为满 put() 将阻塞，直到队列有空闲位置。
+        - ForkJoin
+    - 十、Java 内存模型
+        - 1. 原子性
+            - 使用 AtomicInteger 重写之前线程不安全的代码之后得到以下线程安全实现。
+                -     private AtomicInteger cnt = new AtomicInteger()         
+                - cnt.incrementAndGet();
+            - 除了使用原子类之外，也可以使用 synchronized 互斥锁来保证操作的原子性。它对应的内存间交互操作为：lock 和 unlock，在虚拟机实现上对应的字节码指令为 monitorenter 和 monitorexit。
+        - 2. 可见性
+            - volatile
+            - synchronized，对一个变量执行 unlock 操作之前，必须把变量值同步回主内存。
+            - final，被 final 关键字修饰的字段在构造器中一旦初始化完成，并且没有发生 this 逃逸（其它线程通过 this 引用访问到初始化了一半的对象），那么其它线程就能看见 final 字段的值。
+            - 对前面的线程不安全示例中的 cnt 变量使用 volatile 修饰，不能解决线程不安全问题，因为 volatile 并不能保证操作的原子性。
+        - 3. 有序性
+            - volatile 关键字通过添加内存屏障的方式来禁止指令重排，即重排序时不能把后面的指令放到内存屏障之前。
+            - 也可以通过 synchronized 来保证有序性，它保证每个时刻只有一个线程执行同步代码，相当于是让线程顺序执行同步代码。
+        - 先行发生原则
+            -  1. 单一线程原则
+            - 2. 管程锁定规则
+            - 3. volatile 变量规则
+            - 4. 线程启动规则
+            - 5. 线程加入规则
+            - 6. 线程中断规则
+        - 线程安全有以下几种实现方式：
+            - 不可变
+            - 互斥同步
+            - 非阻塞同步
+                - CAS 乐观并发策略.先进行操作，如果没有其它线程争用共享数据，那操作就成功了，否则采取补偿措施（不断地重试，直到成功为止）。乐观锁需要操作和冲突检测这两个步骤具备原子性，这里就不能再使用互斥同步来保证了，只能靠硬件来完成。硬件支持的原子性操作最典型的是：比较并交换（Compare-and-Swap，CAS）。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。
+                - 2. AtomicInteger。J.U.C 包里面的整数原子类 AtomicInteger 的方法调用了 Unsafe 类的 CAS 操作。    return unsafe.getAndAddInt(this, valueOffset, 1) + 1;可以看到 getAndAddInt() 在一个循环中进行，发生冲突的做法是不断的进行重试。
+                - 3. ABA
+            - 无同步方案
+                - 1. 栈封闭。多个线程访问同一个方法的局部变量时，不会出现线程安全问题，因为局部变量存储在虚拟机栈中，属于线程私有的。
+                - 2. 线程本地存储（Thread Local Storage）
+                - 3. 可重入代码（Reentrant Code）
+        - 锁优化，指 JVM 对 synchronized 的优化。
+            - 自旋。互斥同步进入阻塞状态的开销都很大，应该尽量避免。在许多应用中，共享数据的锁定状态只会持续很短的一段时间。自旋锁的思想是让一个线程在请求一个共享数据的锁时执行忙循环（自旋）一段时间，如果在这段时间内能获得锁，就可以避免进入阻塞状态。自旋锁虽然能避免进入阻塞状态从而减少开销，但是它需要进行忙循环操作占用 CPU 时间，它只适用于共享数据的锁定状态很短的场景。在 JDK 1.6 中引入了自适应的自旋锁。自适应意味着自旋的次数不再固定了，而是由前一次在同一个锁上的自旋次数及锁的拥有者的状态来决定。
+            - 锁消除.锁消除主要是通过逃逸分析来支持，如果堆上的共享数据不可能逃逸出去被其它线程访问到，那么就可以把它们当成私有数据对待，也就可以将它们的锁进行消除。
+            - 锁粗化。上一节的示例代码中连续的 append() 方法就属于这类情况。如果虚拟机探测到由这样的一串零碎的操作都对同一个对象加锁，将会把加锁的范围扩展（粗化）到整个操作序列的外部。对于上一节的示例代码就是扩展到第一个 append() 操作之前直至最后一个 append() 操作之后，这样只需要加锁一次就可以了。
+            - 轻量级锁
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - [史上最全阿里面试题](https://zhuanlan.zhihu.com/p/46144296)
 - [知名公司的java面试题](https://www.techug.com/post/java-volatile-keyword.html)
 - JMM主要就是围绕着如何在并发过程中如何处理原子性、可见性和有序性这3个特征来建立的，通过解决这三个问题，可以解除缓存不一致的问题。而volatile跟可见性和有序性都有关。
