@@ -64,7 +64,9 @@ IQ 感人 TOT<br>
          - 宽依赖（依赖多个分区）和窄依赖（只依赖一个分区）)
          - [Transformation：](ttps://qindongliang.iteye.com/blog/2405698) 代表的是转化操作就是我们的计算流程，返回是RDD，可以是一个链式的转化，并且是延迟触发的。 Action：代表是一个具体的行为，返回的值非RDD类型，可以一个object，或者是一个数值，也可以为Unit代表无返回值，并且action会立即触发job的执行。
          - [map 和 mapPartition的区别](https://yezhwi.github.io/bigdata/2018/05/03/Spark%E5%B8%B8%E7%94%A8%E7%AE%97%E5%AD%90%E5%AE%9E%E8%B7%B5%E6%80%BB%E7%BB%93/)
-
+   - 视频传输的项目
+      - [深度分离卷积 - 还要再看看](https://zhuanlan.zhihu.com/p/65377955)
+         - 
 
 
 [.NET Core 全面扫盲贴](https://www.zybuluo.com/wddpct/note/442464)

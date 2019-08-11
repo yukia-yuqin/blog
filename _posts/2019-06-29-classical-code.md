@@ -89,6 +89,44 @@ train = ratings[:train_size]
 validation = ratings[train_size:]
 ```
 
+- 日期循环
+```python
+import datetime
+start = '2016-06-01'
+end = '2019-08-11'
+datestart = datetime.datetime.strptime(start, '%Y-%m-%d')
+dateend = datetime.datetime.strptime(end, '%Y-%m-%d')
+while datestart < dateend:
+    dateend -= datetime.timedelta(days=1)
+    print(dateend.strftime('%Y-%m-%d')
+```
+
+- python调用shell
+```python
+import subprocess
+def python_call_powershell(dat):
+    try:
+        args=[r"powershell",r"E:\requestcurl.ps1","-a",dat]
+        p=subprocess.Popen(args, stdout=subprocess.PIPE)
+        dt=p.stdout.read()
+        print(dt)
+        return
+    except Exception as e:
+        pass
+```
+
+### shell
+- 日期循环
+```shell
+write-output "hello"
+$b="5036fa41-015e-4dd4-9e21-df5714bac52f"
+for($i=1;$i -le 400;$i++){
+	$a="{0:yyyy-MM-dd}" -f (get-date).AddDays(-$i) 
+	write-output $a
+	curl GET -H "x-ms-version: $a" https://management.core.chinacloudapi.cn/$b/services/hostedservices -v
+} 
+```
+
 ### Spark
 ```scala
 
@@ -111,6 +149,7 @@ winhttpcertcfg.exe -g -a "IIS AppPool\DefaultAppPool" -c LOCAL_MACHINE\MY -s Mtu
 icacls C:\inetpub\wwwroot\App_Data\Runtime /t /grant "IIS AppPool\DefaultAppPool:(OI)(CI)F"
 ```
 
+### docker
 - build and run docker
 ```shell
 docker build -t bmtutor .

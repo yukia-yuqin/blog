@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 计算机基础知识
+title: 算法题
 tags: interview cs
 categories: interview
 ---
@@ -11,8 +11,11 @@ categories: interview
 ### 资料
 - leetcode高频题、lintcode高频题、剑指offer，大概这三样准备好就够了，校招前保证100多道题的积累量，面试时候写code应该就手到擒来了
 
+### 微软真题
+	- 设计一个并发的Cache系统
+
 ### 真题
-	- 逆序数
+	- 逆序数]
 	- 二叉树节点最远距离
 	- 完全二叉树有多少个节点
 	- 平均数 Longlong
