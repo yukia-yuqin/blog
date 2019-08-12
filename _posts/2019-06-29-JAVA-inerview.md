@@ -12,6 +12,9 @@ categories: interview
 - 阿里真题
     - 自己的面试的真题
     - https的加密方式，原理
+        - HTTPS 协议（HyperText Transfer Protocol over Secure Socket Layer）：可以理解为HTTP+SSL/TLS， 即 HTTP 下加入 SSL 层，HTTPS 的安全基础是 SSL，因此加密的详细内容就需要 SSL，用于安全的 HTTP 数据传输。
+        - 加密算法：1、对称加密。 有流式、分组两种，加密和解密都是使用的同一个密钥。2、非对称加密。例如：RSA、DSA、ECDSA、 DH、ECDHE。3、哈希算法。例如：MD5、SHA-1、SHA-2、SHA-256 等。4、数字签名
+        - 相比 HTTP 协议，HTTPS 协议增加了很多握手、加密解密等流程，虽然过程很复杂，但其可以保证数据传输的安全。所以在这个互联网膨胀的时代，其中隐藏着各种看不见的危机，为了保证数据的安全，维护网络稳定，建议大家多多推广HTTPS。HTTPS 缺点：（1）SSL 证书费用很高，以及其在服务器上的部署、更新维护非常繁琐（2）HTTPS 降低用户访问速度（多次握手）（3）网站改用HTTPS 以后，由HTTP 跳转到 HTTPS 的方式增加了用户访问耗时（多数网站采用302跳转）（4）HTTPS 涉及到的安全算法会消耗 CPU 资源，需要增加大量机器（https访问过程需要加解密）
     - hashmap的结构，hash一致性
     - concurrenthash在hashmap之上的改变
     - jvm的GC机制
