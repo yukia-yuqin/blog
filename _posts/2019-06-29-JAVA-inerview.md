@@ -30,7 +30,8 @@ categories: interview
         - 加密算法 https://zhuanlan.zhihu.com/p/27395037 
         - http缺点 http://cycle263.github.io/blogs/http/articles/https.html
         - HTTPS 协议（HyperText Transfer Protocol over Secure Socket Layer）：可以理解为HTTP+SSL/TLS， 即 HTTP 下加入 SSL 层，HTTPS 的安全基础是 SSL，因此加
-        - 使用了对称加密+非对称加密+证书三种方式进行加密，
+        - 使用了对称加密+非对称加密（交换密钥）+CA证书三种方式进行加密
+        - https://www.jianshu.com/p/b894a7e1c779
     - tcp三次握手与可靠传输 
         - tcp 头部  https://www.cnblogs.com/li-hao/archive/2011/12/07/2279912.html
             - 有ACK/SYN/PIN/序号/确认序号/窗口大小等内容
@@ -72,44 +73,39 @@ categories: interview
             - 并且 JDK 1.8 的实现也在链表过长时会转换为红黑树。
         - - CAS
             - CAS（Compare-and-Swap），即比较并替换，是一种实现并发算法时常用到的技术，Java并发包中的很多类都使用了CAS技术。
-            - CompareAndSwap的缩写，中文意思是：比较并替换。CAS需要有3个操作数：内存地址V，旧的预期值A，即将要更新的目标值B。CAS指令执行时，当且仅当内存地址V的值与预期值A相等时，将内存地址V的值修改为B，否则就什么都不做。整个比较并替换的操作是一个原子操作。
-            - CAS的缺点
-                - 循环时间长开销很大：我们可以看到getAndAddInt方法执行时，如果CAS失败，会一直进行尝试。如果CAS长时间一直不成功，可能会给CPU带来很大的开销。
-                - 只能保证一个共享变量的原子操作：当对一个共享变量执行操作时，我们可以使用循环CAS的方式来保证原子操作，但是对多个共享变量操作时，循环CAS就无法保证操作的原子性，这个时候就可以用锁来保证原子性。
-                - 什么是ABA问题？ABA问题怎么解决？
-                    如果内存地址V初次读取的值是A，并且在准备赋值的时候检查到它的值仍然为A，那我们就能说它的值没有被其他线程改变过了吗？
-                    如果在这段期间它的值曾经被改成了B，后来又被改回为A，那CAS操作就会误认为它从来没有被改变过。这个漏洞称为CAS操作的“ABA”问题。Java并发包为了解决这个问题，提供了一个带有标记的原子引用类“AtomicStampedReference”，它可以通过控制变量值的版本来保证CAS的正确性。因此，在使用CAS前要考虑清楚“ABA”问题是否会影响程序并发的正确性，如果需要解决ABA问题，改用传统的互斥同步可能会比原子类更高效。
-
-
-   
-    - jvm的GC机制
-    - jvm调优的方法
-    - CMS的STW在哪
-        - 
-    - https 
-        
-    - 一致性hash
-        - 就是说，”一致性哈希，就是提供一个hashtable,它能在节点加入离开时不会导致映射关系的重大变化“
+            - CompareAndSwap的缩写，中文意思是：比较并替换。CAS 指令需要有 3 个操作数，分别是内存地址 V、旧的预期值 A 和新值 B。当执行操作时，只有当 V 的值等于 A，才将 V 的值更新为 B。整个比较并替换的操作对一个操作数来说是一个原子操作。
+            - CAS的缺点 3点 https://www.cnblogs.com/loveLands/articles/9703474.html
+    -  一致性hash
+        - 一致性哈希，就是提供一个hashtable,它能在节点加入离开时不会导致映射关系的重大变化
         - 分布式一致性hash。如果Server的哈希等于Key的哈希，则把Key存放在该Server上；否则，寻找第一个大于Key哈希的Server，用于存放Key。但有Server增加、删除时，只要变动周边的Server映射关系即可，不用全部重新哈希。之所以有这样优良的特性是因为，Server和Key采用了同样的值域。还有最后一个问题，虚节点是如何产生的呢？也非常简单，就是在每个Server加个后缀，在做MD5哈希，取其32位。
-    - MD5哈希
-        - MD5的结果为一个160bit的数字，取其前32位作为一个Integer
+        - MD5哈希; MD5的结果为一个160bit的数字，取其前32位作为一个Integer
 
-    - cms停顿了几次？为什么要有这些停顿？ https://zhuanlan.zhihu.com/p/42934904
-        - CMS并非没有暂停，而是用两次短暂停来替代串行标记整理算法的长暂停，它的收集周期是这样：初始标记(CMS-initial-mark) -> 并发标记(CMS-concurrent-mark) -> 重新标记(CMS-remark) -> 并发清除(CMS-concurrent-sweep) ->并发重设状态等待下次CMS的触发(CMS-concurrent-reset)。其中的1，3两个步骤需要暂停所有的应用程序线程的。第一次暂停从root对象开始标记存活的对象，这个阶段称为初始标记；第二次暂停是在并发标记之后， 暂停所有应用程序线程，重新标记并发标记阶段遗漏的对象（在并发标记阶段结束后对象状态的更新导致）。第一次暂停会比较短，第二次暂停通常会比较长，并且 remark这个阶段可以并行标记。
-
-    - https加密 https://www.jianshu.com/p/b894a7e1c779
-        - 如果和你建立安全连接的人带着这些人的签名，那么认为这个安全连接是安全的，没有遭到中间人攻击。通过 对称加密 + 非对称加密 + CA认证 这三个技术混合在一起，才使得 HTTP 的后面加上了一个 S —— Security。实际上 HTTPS 的协议比我这里描述的更复杂一些，我这里说的主要是基本的实现原理。因为其中任何一环稍有闪失，就会使得整个加密都将变得不安全。这也是为什么 HTTPS 的加密协议从SSL 1.0 升级到 SSL 3.0 再被 TLS 1.0 现在被 TLS 1.2 取代，其背后都是一环环细节上的修改，以防任何地方的闪失。这是因为 非对称加密 的密码对生成和加密的消耗时间比较长，为了节省双方的计算时间，通常只用它来交换密钥，而非直接用来传输数据。
-
-
+- jvm
+    - jvm调优的方法
+        - 栈进行动态扩展时如果无法申请到足够内存，会抛出 OutOfMemoryError 异常。可以通过 -Xss 这个虚拟机参数来指定每个线程的 Java 虚拟机栈内存大小，在 JDK 1.4 中默认为 256K，而在 JDK 1.5+ 默认为 1M：
+        - 堆不需要连续内存，并且可以动态增加其内存，增加失败会抛出 OutOfMemoryError 异常。可以通过 -Xms 和 -Xmx 这两个虚拟机参数来指定一个程序的堆内存大小，第一个参数设置初始值，第二个参数设置最大值。
+        - 和堆一样不需要连续的内存，并且可以动态扩展，动态扩展失败一样会抛出 OutOfMemoryError 异常。用于存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码等数据。
+        - 运行时常量池： Class 文件中的常量池（编译器生成的字面量和符号引用）会在类加载后被放入这个区域。
+        - 调优参数 https://zhuanlan.zhihu.com/p/58896619
+        - 调优过程 https://youzhixueyuan.com/jvm-performance-optimization.html
+    - 直接内存 NIO nativeIO, 搞得像C++
+        - 在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
+        - 因为DirectByteBuffer是通过虚引用(Phantom Reference)来实现堆外内存的释放的。      
+    - jvm的GC机制   
+        - cms停顿了几次？为什么要有这些停顿？ https://zhuanlan.zhihu.com/p/42934904
+            - CMS并非没有暂停，而是用两次短暂停来替代串行标记整理算法的长暂停，它的收集周期是这样：初始标记(CMS-initial-mark) -> 并发标记(CMS-concurrent-mark) -> 重新标记(CMS-remark) -> 并发清除(CMS-concurrent-sweep) ->并发重设状态等待下次CMS的触发(CMS-concurrent-reset)。其中的1，3两个步骤需要暂停所有的应用程序线程的。第一次暂停从root对象开始标记存活的对象，这个阶段称为初始标记；第二次暂停是在并发标记之后， 暂停所有应用程序线程，重新标记并发标记阶段遗漏的对象（在并发标记阶段结束后对象状态的更新导致）。第一次暂停会比较短，第二次暂停通常会比较长，并且 remark这个阶段可以并行标记。
+        - FullGC,MinorGC https://youzhixueyuan.com/the-difference-between-minor-gc-major-gc-full-gc.html
+        - Minor GC和Major GC其实就是年轻代GC和年老年GC的俗称。而在Hotspot VM具体实现的收集器：Serial GC, Parallel GC, CMS, G1 GC中，大致可以对应到某个Young GC和Old GC算法组合。
+        - Survivor的存在意义，就是减少被送到老年代的对象，进而减少Full GC的发生，Survivor的预筛选保证，只有经历16次Minor GC还能在新生代中存活的对象，才会被送到老年代。永远有一个survivor space是空的，另一个非空的survivor space无碎片。
+        - Full GC定义是相对明确的，就是针对整个新生代、老生代、元空间（metaspace，java8以上版本取代perm gen）的全局范围的GC。
+        - 深入详解JVM内存模型与JVM参数详细配置  https://youzhixueyuan.com/jvm-memory-model-and-parameter-configuration.html
+        - 垃圾回收算法： https://youzhixueyuan.com/jvm-garbage-collection-algorithm.html
     - java类加载器有哪些
-        -Java 中的类加载器大致可以分成两类，一类是系统提供的，另外一类则是由 Java 应用开发人员编写的。系统提供的类加载器主要有下面三个（https://www.ibm.com/developerworks/cn/java/j-lo-classloader/index.html）
-            - 基本上所有的类加载器都是 java.lang.ClassLoader类的一个实例。下面详细介绍这个 Java 类。表 1. ClassLoader 中与加载类相关的方法:getParent();loadClass(String name);findClass(String name);findLoadedClass(String name);defineClass(String name, byte[] b, int off, int len);resolveClass(Class<?> c)	
-            -  方法 loadClass()抛出的是 java.lang.ClassNotFoundException异常；方法 defineClass()抛出的是 java.lang.NoClassDefFoundError异常。
-            - 启动（Bootstrap）类加载器  扩展（Extension）类加载器  系统（System）类加载器
-            - 代理模式:双亲委派模型的工作过程如下：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都会传送到顶层的启动类加载器中，只有当父类加载器反馈自己无法完成这个加载请求（它的搜索范围内没找到这个类）时，自加载器才会尝试自己加载。
-            - 代理模式:双亲委派模型是为了保证 Java 核心库的类型安全。所有 Java 应用都至少需要引用 java.lang.Object类，也就是说在运行的时候，java.lang.Object这个类需要被加载到 Java 虚拟机中。如果这个加载过程由 Java 应用自己的类加载器来完成的话，很可能就存在多个版本的 java.lang.Object类，而且这些类之间是不兼容的。通过双亲委派模型，对于 Java 核心库的类的加载工作由启动类加载器来统一完成，保证了 Java 应用所使用的都是同一个版本的 Java 核心库的类，是互相兼容的。
-            - Class.forName是一个静态方法，同样可以用来加载类。该方法有两种形式：Class.forName(String name, boolean initialize, ClassLoader loader)和 Class.forName(String className)。第一种形式的参数 name表示的是类的全名；initialize表示是否初始化类；loader表示加载时使用的类加载器。第二种形式则相当于设置了参数 initialize的值为 true，loader的值为当前类的类加载器。
-            - 
+        -  方法 loadClass()抛出的是 java.lang.ClassNotFoundException异常；方法 defineClass()抛出的是 java.lang.NoClassDefFoundError异常。
+        - 启动（Bootstrap）类加载器  扩展（Extension）类加载器  系统（System）类加载器
+        - 代理模式:双亲委派模型的工作过程如下：如果一个类加载器收到了类加载的请求，它首先不会自己去尝试加载这个类，而是把这个请求委派给父类加载器去完成，每一个层次的类加载器都是如此，因此所有的加载请求最终都会传送到顶层的启动类加载器中，只有当父类加载器反馈自己无法完成这个加载请求（它的搜索范围内没找到这个类）时，自加载器才会尝试自己加载。
+        - 代理模式:双亲委派模型是为了保证 Java 核心库的类型安全。所有 Java 应用都至少需要引用 java.lang.Object类，也就是说在运行的时候，java.lang.Object这个类需要被加载到 Java 虚拟机中。如果这个加载过程由 Java 应用自己的类加载器来完成的话，很可能就存在多个版本的 java.lang.Object类，而且这些类之间是不兼容的。通过双亲委派模型，对于 Java 核心库的类的加载工作由启动类加载器来统一完成，保证了 Java 应用所使用的都是同一个版本的 Java 核心库的类，是互相兼容的。
+        - Class.forName是一个静态方法，同样可以用来加载类。该方法有两种形式：Class.forName(String name, boolean initialize, ClassLoader loader)和 Class.forName(String className)。第一种形式的参数 name表示的是类的全名；initialize表示是否初始化类；loader表示加载时使用的类加载器。第二种形式则相当于设置了参数 initialize的值为 true，loader的值为当前类的类加载器。
     - java反射机制及应用
         - 反射则是一开始并不知道我要的类对象是什么，自然也无法使用 new 关键字来创建对象了。反射就是在运行时才知道要初始化/操作的类是什么，并且可以在运行时获取类的完整构造，并调用对应的方法。
         - 获取反射中的Class对象
@@ -120,54 +116,25 @@ categories: interview
         - 反射的功能：通过反射获取类属性、成员变量和方法、构造器，在运行时创建对象，在运行时调用对象的方法
             - getFields() 方法 ;  getDeclaredFields() 
     - synchronized 底层实现，4种锁。https://blog.csdn.net/javazejian/article/details/72828483
-        - 为什么会有线程安全问题：一是存在共享数据(也称临界资源)，二是存在多条线程共同操作共享数据。当存在多个线程操作共享数据时，需要保证同一时刻有且只有一个线程在操作共享数据，其他线程必须等到该线程处理完数据后再进行，这种方式叫互斥锁，当一个共享数据被当前正在访问的线程加上互斥锁后，在同一个时刻，其他线程只能处于等待的状态，直到当前线程处理完毕释放该锁。在 Java 中，关键字 synchronized可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，同时我们还应该注意到synchronized另外一个重要的作用，synchronized可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，完全可以替代Volatile功能），这点确实也是很重要的。
-        - synchronized底层语义原理：Java 虚拟机中的同步(Synchronization)基于进入和退出管程(Monitor)对象实现， 无论是显式同步(有明确的 monitorenter 和 monitorexit 指令,即同步代码块)还是隐式同步都是如此。同步方法 并不是由 monitorenter 和 monitorexit 指令来实现同步的，而是由方法调用指令读取运行时常量池中方法的 ACC_SYNCHRONIZED 标志来隐式实现的。对于顶部，则是Java头对象，它实现synchronized的锁对象的基础。synchronized使用的锁对象是存储在Java对象头里的，jvm中采用2个字来存储对象头(如果对象是数组则会分配3个字，多出来的1个字记录的是数组长度。其中Mark Word在默认情况下存储着对象的HashCode、分代年龄、锁标记位等以下是32位JVM的Mark Word默认存储结构
-
-
+        - synchronized可以保证在同一个时刻，只有一个线程可以执行某个方法或者某个代码块(主要是对方法或者代码块中存在共享数据的操作)，同时synchronized可保证一个线程的变化(主要是共享数据的变化)被其他线程所看到（保证可见性，完全可以替代Volatile功能），这点确实也是很重要的。
+        - synchronized底层语义原理：Java 虚拟机中的同步(Synchronization)代码块基于进入和退出管程(Monitor)对象实现， 同步方法并不是调用指令读取运行时常量池中方法的 ACC_SYNCHRONIZED 标志来隐式实现的。
+        - 存在哪？ java对象头 https://www.jianshu.com/p/a1e8170ed63c
         - Java中提供了两种实现同步的基础语义：synchronized方法和synchronized块
-        - 重量级锁  重量级锁是我们常说的传统意义上的锁，其利用操作系统底层的同步机制去实现Java中的线程同步。synchronized的对象锁，锁标识位为10，每个对象都存在着一个 monitor 与之关联，对象与其 monitor 之间的关系有存在多种实现方式，如monitor可以与对象一起创建销毁或当线程试图获取对象锁时自动生成，但当一个 monitor 被某个线程持有后，它便处于锁定状态。在Java虚拟机(HotSpot)中，monitor是由ObjectMonitor实现的
-            - synchronized代码块底层原理。字节码中可知同步语句块的实现使用的是monitorenter 和 monitorexit 指令，其中monitorenter指令指向同步代码块的开始位置，monitorexit指令则指明同步代码块的结束位置。
-            - synchronized方法底层原理。方法级的同步是隐式，即无需通过字节码指令来控制的，它实现在方法调用和返回操作之中。JVM可以从方法常量池中的方法表结构(method_info Structure) 中的 ACC_SYNCHRONIZED 访问标志区分一个方法是否同步方法。同时我们还必须注意到的是在Java早期版本中，synchronized属于重量级锁，效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的Mutex Lock来实现的，而操作系统实现线程之间的切换时需要从用户态转换到核心态，这个状态之间的转换需要相对比较长的时间，时间成本相对较高，这也是为什么早期的synchronized效率低的原因。庆幸的是在Java 6之后Java官方对从JVM层面对synchronized较大优化，所以现在的synchronized锁效率也优化得很不错了，Java 6之后，为了减少获得锁和释放锁所带来的性能消耗，引入了轻量级锁和偏向锁，
-        - 锁的状态总共有四种，无锁状态、偏向锁、轻量级锁和重量级锁。随着锁的竞争，锁可以从偏向锁升级到轻量级锁，再升级的重量级锁，但是锁的升级是单向的，也就是说只能从低到高升级，不会出现锁的降级。
-        - 偏向锁
-            - 偏向锁是Java 6之后加入的新锁，它是一种针对加锁操作的优化手段，经过研究发现，在大多数情况下，锁不仅不存在多线程竞争，而且总是由同一线程多次获得，因此为了减少同一线程获取锁(会涉及到一些CAS操作,耗时)的代价而引入偏向锁。偏向锁的核心思想是，如果一个线程获得了锁，那么锁就进入偏向模式，此时Mark Word 的结构也变为偏向锁结构，当这个线程再次请求锁时，无需再做任何同步操作，即获取锁的过程，这样就省去了大量有关锁申请的操作，从而也就提供程序的性能。所以，对于没有锁竞争的场合，偏向锁有很好的优化效果，毕竟极有可能连续多次是同一个线程申请相同的锁。但是对于锁竞争比较激烈的场合，偏向锁就失效了，因为这样场合极有可能每次申请锁的线程都是不相同的，因此这种场合下不应该使用偏向锁，否则会得不偿失，需要注意的是，偏向锁失败后，并不会立即膨胀为重量级锁，而是先升级为轻量级锁。下面我们接着了解轻量级锁。
-        - 轻量级锁
-            - 倘若偏向锁失败，虚拟机并不会立即升级为重量级锁，它还会尝试使用一种称为轻量级锁的优化手段(1.6之后加入的)，此时Mark Word 的结构也变为轻量级锁的结构。轻量级锁能够提升程序性能的依据是“对绝大部分的锁，在整个同步周期内都不存在竞争”，注意这是经验数据。需要了解的是，轻量级锁所适应的场景是线程交替执行同步块的场合，如果存在同一时间访问同一锁的场合，就会导致轻量级锁膨胀为重量级锁。
-        - 自旋锁
-            - 虚拟机会让当前想要获取锁的线程做几个空循环(这也是称为自旋的原因)，一般不会太久，可能是50个循环或100循环，在经过若干次循环后，如果得到锁，就顺利进入临界区。如果还不能获得锁，那就会将线程在操作系统层面挂起，这就是自旋锁的优化方式，这种方式确实也是可以提升效率的。最后没办法也就只能升级为重量级锁了。
-        - 锁消除
+        - synchronized锁的状态；共有四种，只能从低到高升级，不会出现锁的降级。
+            - 偏向锁
+                - 为了减少同一线程获取锁(会涉及到一些CAS操作,耗时)的代价而引入偏向锁。如果一个线程获得了锁，那么锁就进入偏向模式，此时Mark Word 的结构也变为偏向锁结构，当这个线程再次请求锁时，无需再做任何同步操作，即获取锁的过程。但是对于锁竞争比较激烈的场合，偏向锁就失效了。
+            - 轻量级锁(1.6之后加入的)
+                - 倘若偏向锁失败，虚拟机并不会立即升级为重量级锁，此时Mark Word 的结构也变为轻量级锁的结构。轻量级锁能够提升程序性能的依据是“对绝大部分的锁，在整个同步周期内都不存在竞争”，注意这是经验数据。需要了解的是，轻量级锁所适应的场景是线程交替执行同步块的场合，如果存在同一时间访问同一锁的场合，就会导致轻量级锁膨胀为重量级锁。
+            - 自旋锁
+                - 虚拟机让当前想要获取锁的线程做几个空循环(这也是称为自旋的原因)，一般不会太久，可能是50个循环或100循环，在经过若干次循环后，如果得到锁，就顺利进入临界区。如果还不能获得锁，那就会将线程在操作系统层面挂起，这就是自旋锁的优化方式，这种方式确实也是可以提升效率的。最后没办法也就只能升级为重量级锁了。
+            - 重量级锁  
+                - 效率低下，因为监视器锁（monitor）是依赖于底层的操作系统的Mutex Lock来实现的，而操作系统实现线程之间的切换时需要从用户态转换到核心态，这个状态之间的转换需要相对比较长的时间。
+                - https://juejin.im/post/5bfe6ddee51d45491b0163eb#heading-3
         - synchronized的可重入性
-            - 从互斥锁的设计上来说，当一个线程试图操作一个由其他线程持有的对象锁的临界资源时，将会处于阻塞状态，但当一个线程再次请求自己持有对象锁的临界资源时，这种情况属于重入锁，请求将会成功，在java中synchronized是基于原子性的内部锁机制，是可重入的，因此在一个线程调用synchronized方法的同时在其方法体内部调用该对象另一个synchronized方法，也就是说一个线程得到一个对象锁后再次请求该对象锁，是允许的，这就是synchronized的可重入性
-    
-    - FullGC,MinorGC https://youzhixueyuan.com/the-difference-between-minor-gc-major-gc-full-gc.html
-        - 年轻代是所有新对象产生的地方。当年轻代内存空间被用完时，就会触发垃圾回收。这个垃圾回收叫做Minor GC。年轻代被分为3个部分——Enden区和两个Survivor区。
-        - Minor GC和Major GC其实就是年轻代GC和年老年GC的俗称。而在Hotspot VM具体实现的收集器：Serial GC, Parallel GC, CMS, G1 GC中，大致可以对应到某个Young GC和Old GC算法组合。
-        - 当Eden区被对象填满时，就会执行Minor GC。并把所有存活下来的对象转移到其中一个survivor区。
-        - Minor GC同样会检查存活下来的对象，并把它们转移到另一个survivor区。这样在一段时间内，总会有一个空的survivor区。
-        - 经过多次GC周期后，仍然存活下来的对象会被转移到年老代内存空间。通常这是在年轻代有资格提升到年老代前通过设定年龄阈值来完成的。
-        - Survivor的存在意义，就是减少被送到老年代的对象，进而减少Full GC的发生，Survivor的预筛选保证，只有经历16次Minor GC还能在新生代中存活的对象，才会被送到老年代。永远有一个survivor space是空的，另一个非空的survivor space无碎片。
-        - Full GC定义是相对明确的，就是针对整个新生代、老生代、元空间（metaspace，java8以上版本取代perm gen）的全局范围的GC。
-        - 下图中的Perm代表的是永久代，但是注意永久代并不属于堆内存中的一部分，同时jdk1.8之后永久代已经被移除。
-        - 方法区也称”永久代“，它用于存储虚拟机加载的类信息、常量、静态变量、是各个线程共享的内存区域。
-        -  -Xms设置堆的最小空间大小。
-        -  -Xmx设置堆的最大空间大小。
-        -  -Xmn:设置年轻代大小。
-        -  -XX:NewSize设置新生代最小空间大小。
-        -  -XX:MaxNewSize设置新生代最大空间大小。
-        -  -XX:PermSize设置永久代最小空间大小。
-        -  -XX:MaxPermSize设置永久代最大空间大小。
-        -  -Xss设置每个线程的堆栈大小。
-        -  -XX:+UseParallelGC:选择垃圾收集器为并行收集器。此配置仅对年轻代有效。即上述配置下,年轻代使用并发收集,而年老代仍旧使用串行收集。
-        -  -XX:ParallelGCThreads=20:配置并行收集器的线程数,即:同时多少个线程一起进行垃圾回收。此值最好配置与处理器数目相等
-        - 深入详解JVM内存模型与JVM参数详细配置  https://youzhixueyuan.com/jvm-memory-model-and-parameter-configuration.html
-        - 垃圾回收算法：1.标记清除 https://youzhixueyuan.com/jvm-garbage-collection-algorithm.html
-        - 4.分代收集算法。分代收集算法就是目前虚拟机使用的回收算法，它解决了标记整理不适用于老年代的问题，将内存分为各个年代。一般情况下将堆区划分为老年代（Tenured Generation）和新生代（Young Generation），在堆区之外还有一个代就是永久代（Permanet Generation）。在不同年代使用不同的算法，从而使用最合适的算法，新生代存活率低，可以使用复制算法。而老年代对象存活率搞，没有额外空间对它进行分配担保，所以只能使用标记清除或者标记整理算法。 
-        - 1.新生代的收集器包括：Serial/PraNew/Parallel Scavenge。 https://youzhixueyuan.com/jvm-garbage-collector.html
-        - 2.老年代的收集器包括：Serial Old/Parallel Old/CMS
-        - 3.回收整个Java堆(新生代和老年代)：G1收集器
-        - jvm调优过程
-            - https://youzhixueyuan.com/jvm-performance-optimization.html
-
+            - 当一个线程再次请求自己持有对象锁的临界资源时，这种情况属于重入锁，请求将会成功，在java中synchronized是基于原子性的内部锁机制，是可重入的，因此在一个线程调用synchronized方法的同时在其方法体内部调用该对象另一个synchronized方法，是允许的。
+   
+ 
+- 开源框架
     - redis主从复制
         - redis: https://segmentfault.com/a/1190000017339258
         - 主从复制是为了数据备份
@@ -177,19 +144,7 @@ categories: interview
         - set 的内部实现是一个 value永远为null的HashMap，实际就是通过计算hash的方式来快速排重的，这也是set能提供判断一个成员是否在集合内的原因。
         - Redis sorted set的内部使用HashMap和跳跃表(SkipList)来保证数据的存储和有序，HashMap里放的是成员到score的映射，而跳跃表里存放的是所有的成员，排序依据是HashMap里存的score,使用跳跃表的结构可以获得比较高的查找效率，并且在实现上比较简单。
     - thrift RPC原理
-    - Cookie和session的区别
-        - cookie和session的共同之处在于：cookie和session都是用来跟踪浏览器用户身份的会话方式。
-        - 和session的区别是：cookie数据保存在客户端，session数据保存在服务器端。
-        - Cookie：
-        - 1.Cookie是将会话状态保存在浏览器的技术；
-        - 2.Cookie中的数据保存时间较长(可调)；
-        - 3.Cookie数据的安全性和稳定性较差(原因是数据保存在用户手中，用户可进行任意修改，病毒可轻易攻击)；
-        - 4.Cookie的大小有限制，大小约为4kb。
-        - Session
-        - 1.Session是将会话状态保存在服务器的技术；
-        - 2.Session中的数据保存时间较短，约为30分钟(可调)；
-        - 3.Session数据的安全性和稳定性较高(服务器的安全性高，数据存在服务器上安全性高)；
-        - 4.Session的大小无限制，理论上可无限大(Session是存在服务器的内存中的，当Session的大小超出内存可承受范- 围，就会自动存储到服务器的硬盘中)
+    
     - 如果登陆了如何其他服务器知道
     - SSO原理，应用场景
         - 单点登录SSO（Single Sign On）说得简单点就是在一个多系统共存的环境下，用户在一处登录后，就不用在其他系统中登录，也就是用户的一次登录能得到其他所有系统的信任。
