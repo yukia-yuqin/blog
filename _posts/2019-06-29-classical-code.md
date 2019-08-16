@@ -25,6 +25,61 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
 ```
 
 ### C++
+- C++明明规范 google https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/
+    - 函数命名, 变量命名, 文件命名要有描述性;
+    - 文件名要全部小写, 可以包含下划线 (_) 或连字符 (-), 依照项目的约定. 如果没有约定, 那么 “_” 更好.
+    - 类型名称的每个单词首字母均大写, 不包含下划线: MyExcitingClass, MyExcitingEnum.
+    - 变量 (包括函数参数) 和数据成员名一律小写, 单词之间用下划线连接. 类的成员变量以下划线结尾, 但结构体的就不用, 如: a_local_variable, a_struct_data_member, a_class_data_member_.
+    - 不管是静态的还是非静态的, 类数据成员都可以和普通变量一样, 但要接下划线。  string table_name_;  // 好 - 后加下划线. string tablename_;   // 好.static Pool<TableInfo>* pool_;  // 好.
+    - 结构体变量 
+    - 常量命名 const int kDaysInAWeek = 7; 声明为 constexpr 或 const 的变量, 或在程序运行期间其值始终保持不变的, 命名时以 “k” 开头, 大小写混合. 例如:
+    - 函数命名。常规函数使用大小写混合, 取值和设值函数则要求与变量名匹配: MyExcitingFunction(), MyExcitingMethod(), my_exciting_member_variable(), set_my_exciting_member_variable().
+    - 7.7. 命名空间命名
+- 常用C++ code 在线编程
+```C++
+    auto it = lower_bound(res.begin(), res.end(), i); 
+    if (it == res.end()) {
+    #define A(i) nums[(1+2*(i)) % (n|1)]  // 天哪，神来之笔，，，，
+    
+
+```
+- C++格式
+    - 若用引用捕获, 在变量名和 & 之间不留空格.auto add_to_x = [&x](int n) { x += n; };
+    - if (condition) {  // 好 - IF 和 { 都与空格紧邻.
+    - :左边 ;左边 (右边 )左边
+    ``` C++
+    if (b) {          // if 条件语句和循环语句关键字后均有空格.
+    } else {          // else 前后有空格.
+    }
+    while (test) {}   // 圆括号内部不紧邻空格.
+    for (int i = 0; i < 5; ++i) {
+    switch (i) {
+    case 1:         // switch case 的冒号前无空格.
+        ...
+    case 2: break;  // 如果冒号有代码, 加个空格.
+    x = 0;     // 赋值运算符前后总是有空格.
+    // 其它二元操作符也前后恒有空格, 不过对于表达式的子式可以不加空格.
+    // 圆括号内部没有紧邻空格.
+    v = w * x + y / z;
+    v = w * (x + z);
+    // 在参数和一元操作符之间不加空格.
+    x = -5;
+    ++x;
+    if (x && !y)
+    // 尖括号(< and >) 不与空格紧邻, < 前没有空格, > 和 ( 之间也没有.
+    vector<string> x;
+    y = static_cast<char*>(x);
+    // 在类型与指针操作符之间留空格也可以, 但要保持一致.
+    vector<char *> x;
+    ```
+    - ./-> 操作符前后不留空格, */& 不要前后都留, 一个就可, 靠左靠右依各人喜好;
+
+
+
+
+
+
+
 - sort 内部写一个比较器
 ```C++
 sort(numbers.begin(),numbers.end(),[](const int s1,const int s2){
