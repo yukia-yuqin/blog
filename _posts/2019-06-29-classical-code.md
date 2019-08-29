@@ -74,6 +74,64 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
     ```
     - ./-> 操作符前后不留空格, */& 不要前后都留, 一个就可, 靠左靠右依各人喜好;
 
+- C++ 常用容器
+```C++
+    // 无序集合
+    unordered_set<string> d(wordList.begin(), wordList.end());
+    d.erase(head);
+    // 双端队列
+    deque<string> dq;
+    string head = dq.front();
+    dq.pop_front();        
+```
+- 并查集 https://www.jianshu.com/p/def7767982ac
+```C++
+    private int count;
+    private int[] parents;
+    
+    //初始化并查集
+    public void initUnionFind(int m, int n, char[][] grid){
+        parents = new int[m*n];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j] == '1'){
+                    count++;
+                }
+                parents[i*n+j] = i*n+j;
+            }
+        }
+    }
+    
+    public int find(int idx){
+        while(idx != parents[idx]){
+            //在查找的过程中压缩路径,减少查找的次数
+            parents[idx] = parents[parents[idx]];
+            idx = parents[idx];
+        }
+        return idx;
+    }
+ 
+    public void union(int p, int q){
+        int pRoot = find(p);
+        int qRoot = find(q);
+        //两个元素的根不同,则合并
+        if(pRoot != qRoot){
+            parents[qRoot] = pRoot;
+            count--;
+        }
+    }
+    
+    public boolean isConnected(int p, int q){
+        int pRoot = find(p);
+        int qRoot = find(q);
+        
+        //两点不连通
+        if(pRoot != qRoot){
+            return false;
+        }
+        return false;
+    }
+```
 
 
 
