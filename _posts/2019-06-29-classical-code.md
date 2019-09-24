@@ -23,6 +23,73 @@ foreach (string s in pinyinSeq ){}
 ```C#
 string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmptyEntries);
 ```
+``` C#
+#工厂方法
+        public static Type GetClassType(string type)
+        {
+            string[] parts = type.Split(',');
+            if (parts.Length == 2 && parts[1].EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+            {
+                Assembly assem = Assembly.LoadFrom(parts[1]);
+                return assem.GetType(parts[0], true);
+            }
+            else
+            {
+                return Type.GetType(type, true);
+            }
+        }
+
+            public static INamedLoadable CreateNamedLoadable(DependencyLoadingSetting setting, IModuleManager moduleManager)
+        {
+            var type = GetClassType(setting.Class);
+            ConstructorInfo ci = type.GetConstructor(new Type[] { typeof(string), typeof(IModuleManager) });
+            if (ci == null)
+            {
+                ci = type.GetConstructor(new Type[] { typeof(string)});
+                if (ci == null)
+                {
+                    ci = type.GetConstructor(new Type[] { typeof(IModuleManager) });
+                    if (ci == null)
+                    {
+                        return (INamedLoadable)Activator.CreateInstance(type);
+                    }
+                    else
+                    {
+                        return (INamedLoadable)ci.Invoke(new object[] { moduleManager });
+                    }
+                }
+                else
+                {
+                    return (INamedLoadable)ci.Invoke(new object[] { setting.InitializeData });
+                }
+            }
+            else
+            {
+                return (INamedLoadable)ci.Invoke(new object[] { setting.InitializeData, moduleManager });
+            }
+        }
+
+
+    public static T Create<T>(TypeLoadingSetting setting)
+    {
+        var type = GetClassType(setting.Class);
+        ConstructorInfo ci = type.GetConstructor(new Type[] { typeof(string) });
+        if (ci == null)
+        {
+            return (T)Activator.CreateInstance(type);
+        }
+        else
+        {
+            return (T)ci.Invoke(new object[] { setting.InitializeData });
+        }
+    }
+
+    public static IMejisStorageProvider CreateMejisStorageProvider(MejisStorageProviderSetting setting)
+        {
+            return Create<IMejisStorageProvider>(setting);
+        }
+
+```
 
 ### C++
 - C++明明规范 google https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/

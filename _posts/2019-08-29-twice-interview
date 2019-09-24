@@ -1,13 +1,3 @@
----
-layout: post
-title: java总结
-tags: interview java
-categories: interview
----
-
-来杯咖啡吧~~<br>
-<br>
-
 ###真题
 - 自己的面试的真题
 - 4、面试内容
@@ -23,18 +13,55 @@ categories: interview
 
 - 网络相关
     - https的加密方式，原理
+        - 使用了对称加密+非对称加密（交换密钥）+CA证书(SSL层验证)三种方式进行加密。SSL层就负责加密解密
+        - https://zhuanlan.zhihu.com/p/25976060  - https://www.jianshu.com/p/b894a7e1c779
+        - ssh(和https的不同？) https://blog.csdn.net/liubo2012/article/details/8894143 
+        - 加密算法 https://zhuanlan.zhihu.com/p/27395037 
+        - http缺点 http://cycle263.github.io/blogs/http/articles/https.html
+        - HTTPS 协议（HyperText Transfer Protocol over Secure Socket Layer）：可以理解为HTTP+SSL/TLS， 即 HTTP 下加入 SSL 层，HTTPS 的安全基础是 SSL
     - tcp为什么三次握手和四次挥手
+        -  - tcp 头部  https://www.cnblogs.com/li-hao/archive/2011/12/07/2279912.html
+        - 有ACK/SYN/PIN/序号/确认序号/窗口大小等内容
+        - tcp为什么三次握手和四次挥手 https://juejin.im/post/5b1e9c65f265da6e26099bf3
+        - 三次握手可以很好的避免网络超时导致的丢包情况，服务器和客户端都要分别收到正确的ACK之后才能表示连接建立，如果未收到，就会启用超时重传机制。当然如果网络确实比较差，导致连接无法建立，也不可能一直重传。操作系统中会有设置重传次数这个字段，以避免无效重转。
+        - 至于为啥是四次挥手，本质的原因是咱们的tcp连接是全双工的，在两个方向都需要关闭，所以两个方向都需要发送一个关闭请求和确认请求。
+        - tcp如何保证可靠传输csnote https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E4%BC%A0%E8%BE%93%E5%B1%82?id=tcp-%e5%8f%af%e9%9d%a0%e4%bc%a0%e8%be%93
     - 讲一下OSI7层模型，传输层是干什么的 
+        -        - 超时重传是TCP协议保证数据可靠性的一个重要机制，其原理是在发送某一个数据以后就开启一个计时器，在一定时间内如果没有得到发送的数据报的ACK报文，那么就重新发送数据，直到发送成功为止。三次握手，正常的数据传输，以及四次握手过程中只要出现超时情况，都会触发重传。
+        - 设置重传时间间隔RTO  RTO = RTTs （加权平均往返时间） + 4RTTd（偏差的加权平均值）
+
+        - 传输层 ：为进程提供通用数据传输服务。由于应用层协议很多，定义通用的传输层协议就可以支持不断增多的应用层协议。运输层包括两种协议：传输控制协议 TCP，提供面向连接、可靠的数据传输服务，数据单位为报文段；用户数据报协议 UDP，提供无连接、尽最大努力的数据传输服务，数据单位为用户数据报。TCP 主要提供完整性服务，UDP 主要提供及时性服务。
+        - https://blog.csdn.net/u011774517/article/details/67631439
+        -     csnote https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E6%A6%82%E8%BF%B0?id=_2-osi
+   
     - 讲一下URL之后发生了什么
+        - 1.DNS域名解析；2.建立TCP连接；3.发送HTTP请求；4.服务器处理请求；5.返回响应结果；6.关闭TCP连接；7.浏览器解析HTML；8.浏览器布局渲染；
     - 讲一下TCP和UDP的区别
-    - TCP握手各个阶段的名字
-    - DNS用的什么协议
+        - 1.基于连接与无连接； 
+        - 2.对系统资源的要求（TCP较多，UDP少）； 
+        - 3.UDP程序结构较简单； 
+        - 4.流模式与数据报模式 ；
+        - 5.TCP保证数据正确性，UDP可能丢包，TCP保证数据顺序，UDP不保证。
+    - TCP握手各个阶段的名字 https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E4%BC%A0%E8%BE%93%E5%B1%82?id=tcp-%e7%9a%84%e5%9b%9b%e6%ac%a1%e6%8c%a5%e6%89%8b
+     - DNS用的什么协议
+        - DNS在进行区域传输的时候使用TCP协议，其它时候则使用UDP协议； 
+            - DNS的规范规定了2种类型的DNS服务器，一个叫主DNS服务器，一个叫辅助DNS服务器。在一个区中主DNS服务器从自己本机的数据文件中读取该区的DNS数据信息，而辅助DNS服务器则从区的主DNS服务器中读取该区的DNS数据信息。当一个辅助DNS服务器启动时，它需要与主DNS服务器通信，并加载数据信息，这就叫做区传送（zone transfer）。 
+            - 为什么既使用TCP又使用UDP？ 
+                首先了解一下TCP与UDP传送字节的长度限制： 
+                UDP报文的最大长度为512字节，而TCP则允许报文长度超过512字节。当DNS查询超过512字节时，协议的TC标志出现删除标志，这时则使用TCP发送。通常传统的UDP报文一般不会大于512字节。 
+            - 区域传送时使用TCP，主要有一下两点考虑： 
+                1.辅域名服务器会定时（一般时3小时）向主域名服务器进行查询以便了解数据是否有变动。如有变动，则会执行一次区域传送，进行数据同步。区域传送将使用TCP而不是UDP，因为数据同步传送的数据量比一个请求和应答的数据量要多得多。 
+                2.TCP是一种可靠的连接，保证了数据的准确性。 
+            - 域名解析时使用UDP协议： 
+                客户端向DNS服务器查询域名，一般返回的内容都不超过512字节，用UDP传输即可。不用经过TCP三次握手，这样DNS服务器负载更低，响应更快。虽然从理论上说，客户端也可以指定向DNS服务器查询的时候使用TCP，但事实上，很多DNS服务器进行配置的时候，仅支持UDP查询包。
     - HTTP协议和IP协议
+        - TPC/IP协议是传输层协议，主要解决数据如何在网络中传输，而HTTP是应用层协议，主要解决如何包装数据。关于TCP/IP和HTTP协议的关系，网络有一段比较容易理解的介绍：“我们在传输数据时，可以只使用（传输层）TCP/IP协议，但是那样的话，如果没有应用层，便无法识别数据内容，如果想要使传输的数据有意义，则必须使用到应用层协议，应用层协议有很多，比如HTTP、FTP、TELNET等，也可以自己定义应用层协议。WEB使用HTTP协议作应用层协议，以封装HTTP 文本信息，然后使用TCP/IP做传输层协议将它发到网络上。”
     - TCP 为什么 慢
+        - 网络丢包/服务器超载主动丢包 超时重传，速率降低一半
 
 - java容器
     - ArrayList多线程什么问题
-    - hashmap  
+    - hashmap  https://cyc2018.github.io/CS-Notes/#/notes/Java%20%E5%AE%B9%E5%99%A8?id=_1-%e5%ad%98%e5%82%a8%e7%bb%93%e6%9e%84
         - hashmap是一个数组链表 具体是包含entry数组的table；transient Entry[] table; Entry 存储着键值对。它包含了四个字段 hashcode,key,value,next
         - 链表的插入是以头插法方式进行的.查找计算键值对所在的桶；在链表上顺序查找，时间复杂度显然和链表的长度成正比。
         - hash原理/一致性原理？ 通过移位和异或操作，将高位与地位的特征结合起来降低哈希冲突的概率。 https://www.zhihu.com/question/20733617
