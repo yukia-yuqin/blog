@@ -199,17 +199,29 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
         return false;
     }
 ```
+```位运算
+<!-- 求异或的结果 -->
+    int diff = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
+<!-- 求diff这个数的最末一位不为0的位置 -->
+    diff &= -diff;
 
-
-
-
-
+```
 
 - sort 内部写一个比较器
 ```C++
 sort(numbers.begin(),numbers.end(),[](const int s1,const int s2){
             return to_string(s1)+to_string(s2) < to_string(s2) + to_string(s1);
         });
+or
+struct Comp {
+    bool operator()(const pair<int, string>& lhs, const pair<int, string>& rhs) const {
+        if (lhs.first != rhs.first)
+            return lhs.first < rhs.first;
+        return lhs.second > rhs.second;
+    }
+};       
+priority_queue<pair<int, string>, vector<pair<int, string>>, Comp> Q;
+
 ```
 
 - C++ 分割字符串 变为stringstream
