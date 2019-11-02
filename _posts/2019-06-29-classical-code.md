@@ -311,7 +311,7 @@ stringstream ss(path);
     sort(arr.begin(), arr.end(), sortCom);
 
     // vector , deque, pair 相关
-    vector<vector<int>> dire = {{-1,0}, {1,0}, {0,-1}, {0,1}};
+    // vector<vector<int>> dire = {{-1,0}, {1,0}, {0,-1}, {0,1}};
     deque<pair<int, int>> queue;
     queue.push_back(make_pair(i,j));
     int curi = queue.front().first, curj = queue.front().second;
