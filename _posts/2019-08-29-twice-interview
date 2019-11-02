@@ -1,13 +1,3 @@
----
-layout: post
-title: java总结
-tags: interview java
-categories: interview
----
-
-来杯咖啡吧~~<br>
-<br>
-
 ###真题
 - 自己的面试的真题
 - 4、面试内容
@@ -20,49 +10,58 @@ categories: interview
     - 3）项目经验：描述清楚项目背景，项目的实现与技术难点，自己在项目中的贡献，上述也适用于论文
     - 4）开放题：一般在最后两轮面试会有，主要考察理解能力和反应能力
 - 二面也是技术面，对简历里面的项目再总结一下哈，可以说清楚项目的意义、如何做、碰到的问题与解决方法；再就是一些基础相关的，可以理解原理并思考原因
-    - python 的 id, 垃圾回收(引用计数，标记清除)，深拷贝浅拷贝， == 和 is 哪个是地址那个是内容
-    - java 的 i++ 具体是怎么操作的， sycronized 和 violate的区别，抽象和接口的区别
-    - spark 的 namenode 和 datanode 的 区别，窄依赖和宽依赖的区别
-    - token https://yq.aliyun.com/articles/594217
 
 - 网络相关
     - https的加密方式，原理
-        - [如何保证客户端收到的证书是服务器下发的证书，没有被中间人篡改过 https://zhuanlan.zhihu.com/p/25976060 
-            - 用公钥解密并验证数字签名
-            - 数字证书本身已经提供方案了，数字证书中除了包含加密之后的服务器公钥，权威机构的信息之外，还包含了证书内容的签名(先通过Hash函数计算得到证书数字摘要，然后用权威机构私钥加密数字摘要得到数字签名)，签名计算方法以及证书对应的域名。
-        - https发送的详细包过程 https://zhuanlan.zhihu.com/p/25030869 更详细的 http://www.moserware.com/2009/06/first-few-milliseconds-of-https.html
+        - 使用了对称加密+非对称加密（交换密钥）+CA证书(SSL层验证)三种方式进行加密。SSL层就负责加密解密
+        - https://zhuanlan.zhihu.com/p/25976060  - https://www.jianshu.com/p/b894a7e1c779
         - ssh(和https的不同？) https://blog.csdn.net/liubo2012/article/details/8894143 
         - 加密算法 https://zhuanlan.zhihu.com/p/27395037 
         - http缺点 http://cycle263.github.io/blogs/http/articles/https.html
-        - HTTPS 协议（HyperText Transfer Protocol over Secure Socket Layer）：可以理解为HTTP+SSL/TLS， 即 HTTP 下加入 SSL 层，HTTPS 的安全基础是 SSL，因此加
-        - 使用了对称加密+非对称加密（交换密钥）+CA证书三种方式进行加密
-        - https://www.jianshu.com/p/b894a7e1c779
-        - 非对称加密。这种加密或许理解起来比较困难，这种加密指的是可以生成一对密钥 (k1, k2)。凡是 k1 加密的数据，k1 自身不能解密，而需要 k2 才能解密；凡是 k2 加密的数据，k2 不能解密，需要 k1 才能解密。这种算法事实上有很多，常用的是 RSA。对称加密AES。
-    - tcp三次握手与可靠传输 
-        - tcp 头部  https://www.cnblogs.com/li-hao/archive/2011/12/07/2279912.html
-            - 有ACK/SYN/PIN/序号/确认序号/窗口大小等内容
+        - HTTPS 协议（HyperText Transfer Protocol over Secure Socket Layer）：可以理解为HTTP+SSL/TLS， 即 HTTP 下加入 SSL 层，HTTPS 的安全基础是 SSL
+    - tcp为什么三次握手和四次挥手
+        -  - tcp 头部  https://www.cnblogs.com/li-hao/archive/2011/12/07/2279912.html
+        - 有ACK/SYN/PIN/序号/确认序号/窗口大小等内容
         - tcp为什么三次握手和四次挥手 https://juejin.im/post/5b1e9c65f265da6e26099bf3
-            - 三次握手可以很好的避免网络超时导致的丢包情况，服务器和客户端都要分别收到正确的ACK之后才能表示连接建立，如果未收到，就会启用超时重传机制。当然如果网络确实比较差，导致连接无法建立，也不可能一直重传。操作系统中会有设置重传次数这个字段，以避免无效重转。
-            - 至于为啥是四次挥手，本质的原因是咱们的tcp连接是全双工的，在两个方向都需要关闭，所以两个方向都需要发送一个关闭请求和确认请求。
+        - 三次握手可以很好的避免网络超时导致的丢包情况，服务器和客户端都要分别收到正确的ACK之后才能表示连接建立，如果未收到，就会启用超时重传机制。当然如果网络确实比较差，导致连接无法建立，也不可能一直重传。操作系统中会有设置重传次数这个字段，以避免无效重转。
+        - 至于为啥是四次挥手，本质的原因是咱们的tcp连接是全双工的，在两个方向都需要关闭，所以两个方向都需要发送一个关闭请求和确认请求。
         - tcp如何保证可靠传输csnote https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E4%BC%A0%E8%BE%93%E5%B1%82?id=tcp-%e5%8f%af%e9%9d%a0%e4%bc%a0%e8%be%93
-            - 超时重传是TCP协议保证数据可靠性的一个重要机制，其原理是在发送某一个数据以后就开启一个计时器，在一定时间内如果没有得到发送的数据报的ACK报文，那么就重新发送数据，直到发送成功为止。三次握手，正常的数据传输，以及四次握手过程中只要出现超时情况，都会触发重传。
-            - 设置重传时间间隔RTO  RTO = RTTs （加权平均往返时间） + 4RTTd（偏差的加权平均值）
-    - 讲一下OSI7层模型，传输层是干什么的 csnote https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E6%A6%82%E8%BF%B0?id=_2-osi
+    - 讲一下OSI7层模型，传输层是干什么的 
+        -        - 超时重传是TCP协议保证数据可靠性的一个重要机制，其原理是在发送某一个数据以后就开启一个计时器，在一定时间内如果没有得到发送的数据报的ACK报文，那么就重新发送数据，直到发送成功为止。三次握手，正常的数据传输，以及四次握手过程中只要出现超时情况，都会触发重传。
+        - 设置重传时间间隔RTO  RTO = RTTs （加权平均往返时间） + 4RTTd（偏差的加权平均值）
+
         - 传输层 ：为进程提供通用数据传输服务。由于应用层协议很多，定义通用的传输层协议就可以支持不断增多的应用层协议。运输层包括两种协议：传输控制协议 TCP，提供面向连接、可靠的数据传输服务，数据单位为报文段；用户数据报协议 UDP，提供无连接、尽最大努力的数据传输服务，数据单位为用户数据报。TCP 主要提供完整性服务，UDP 主要提供及时性服务。
         - https://blog.csdn.net/u011774517/article/details/67631439
-
-    - tcp为什么三次握手和四次挥手
-    - 讲一下OSI7层模型，传输层是干什么的 
+        -     csnote https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E6%A6%82%E8%BF%B0?id=_2-osi
+   
     - 讲一下URL之后发生了什么
+        - 1.DNS域名解析；2.建立TCP连接；3.发送HTTP请求；4.服务器处理请求；5.返回响应结果；6.关闭TCP连接；7.浏览器解析HTML；8.浏览器布局渲染；
     - 讲一下TCP和UDP的区别
-    - TCP握手各个阶段的名字
-    - DNS用的什么协议
+        - 1.基于连接与无连接； 
+        - 2.对系统资源的要求（TCP较多，UDP少）； 
+        - 3.UDP程序结构较简单； 
+        - 4.流模式与数据报模式 ；
+        - 5.TCP保证数据正确性，UDP可能丢包，TCP保证数据顺序，UDP不保证。
+    - TCP握手各个阶段的名字 https://cyc2018.github.io/CS-Notes/#/notes/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%20-%20%E4%BC%A0%E8%BE%93%E5%B1%82?id=tcp-%e7%9a%84%e5%9b%9b%e6%ac%a1%e6%8c%a5%e6%89%8b
+     - DNS用的什么协议
+        - DNS在进行区域传输的时候使用TCP协议，其它时候则使用UDP协议； 
+            - DNS的规范规定了2种类型的DNS服务器，一个叫主DNS服务器，一个叫辅助DNS服务器。在一个区中主DNS服务器从自己本机的数据文件中读取该区的DNS数据信息，而辅助DNS服务器则从区的主DNS服务器中读取该区的DNS数据信息。当一个辅助DNS服务器启动时，它需要与主DNS服务器通信，并加载数据信息，这就叫做区传送（zone transfer）。 
+            - 为什么既使用TCP又使用UDP？ 
+                首先了解一下TCP与UDP传送字节的长度限制： 
+                UDP报文的最大长度为512字节，而TCP则允许报文长度超过512字节。当DNS查询超过512字节时，协议的TC标志出现删除标志，这时则使用TCP发送。通常传统的UDP报文一般不会大于512字节。 
+            - 区域传送时使用TCP，主要有一下两点考虑： 
+                1.辅域名服务器会定时（一般时3小时）向主域名服务器进行查询以便了解数据是否有变动。如有变动，则会执行一次区域传送，进行数据同步。区域传送将使用TCP而不是UDP，因为数据同步传送的数据量比一个请求和应答的数据量要多得多。 
+                2.TCP是一种可靠的连接，保证了数据的准确性。 
+            - 域名解析时使用UDP协议： 
+                客户端向DNS服务器查询域名，一般返回的内容都不超过512字节，用UDP传输即可。不用经过TCP三次握手，这样DNS服务器负载更低，响应更快。虽然从理论上说，客户端也可以指定向DNS服务器查询的时候使用TCP，但事实上，很多DNS服务器进行配置的时候，仅支持UDP查询包。
     - HTTP协议和IP协议
+        - TPC/IP协议是传输层协议，主要解决数据如何在网络中传输，而HTTP是应用层协议，主要解决如何包装数据。关于TCP/IP和HTTP协议的关系，网络有一段比较容易理解的介绍：“我们在传输数据时，可以只使用（传输层）TCP/IP协议，但是那样的话，如果没有应用层，便无法识别数据内容，如果想要使传输的数据有意义，则必须使用到应用层协议，应用层协议有很多，比如HTTP、FTP、TELNET等，也可以自己定义应用层协议。WEB使用HTTP协议作应用层协议，以封装HTTP 文本信息，然后使用TCP/IP做传输层协议将它发到网络上。”
     - TCP 为什么 慢
+        - 网络丢包/服务器超载主动丢包 超时重传，速率降低一半
 
 - java容器
     - ArrayList多线程什么问题
-    - hashmap  
+    - hashmap  https://cyc2018.github.io/CS-Notes/#/notes/Java%20%E5%AE%B9%E5%99%A8?id=_1-%e5%ad%98%e5%82%a8%e7%bb%93%e6%9e%84
         - hashmap是一个数组链表 具体是包含entry数组的table；transient Entry[] table; Entry 存储着键值对。它包含了四个字段 hashcode,key,value,next
         - 链表的插入是以头插法方式进行的.查找计算键值对所在的桶；在链表上顺序查找，时间复杂度显然和链表的长度成正比。
         - hash原理/一致性原理？ 通过移位和异或操作，将高位与地位的特征结合起来降低哈希冲突的概率。 https://www.zhihu.com/question/20733617
@@ -119,10 +118,7 @@ categories: interview
     - 刚才提到了segment继承于ReetrantLock，那谈谈Synchronized和Lock的区别
    
     -  请你谈谈关于Synchronized和lock 
-        - synchronized是Java的关键字，当它用来修饰一个方法或者一个代码块的时候，能够保证在同一时刻最多只有一个线程执行该段代码。JDK1.5以后引入了自旋锁、锁粗化、轻量级锁，偏向锁来有优化关键字的性能。
-        - Lock是接口，synchronized是java关键字，内置实现
-        - 在发生异常时，synchronized会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁
-        - Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。
+        - synchronized是Java的关键字，当它用来修饰一个方法或者一个代码块的时候，能够保证在同一时刻最多只有一个线程执行该段代码。JDK1.5以后引入了自旋锁、锁粗化、轻量级锁，偏向锁来有优化关键字的性能。Lock是一个接口，而synchronized是Java中的关键字，synchronized是内置的语言实现；synchronized在发生异常时，会自动释放线程占有的锁，因此不会导致死锁现象发生；而Lock在发生异常时，如果没有主动通过unLock()去释放锁，则很可能造成死锁现象，因此使用Lock时需要在finally块中释放锁；Lock可以让等待锁的线程响应中断，而synchronized却不行，使用synchronized时，等待的线程会一直等待下去，不能够响应中断；通过Lock可以知道有没有成功获取锁，而synchronized却无法办到。
     - 请你介绍一下Syncronized锁，如果用这个关键字修饰一个静态方法，锁住了什么？如果修饰成员方法，锁住了什么？
         - synchronized修饰静态方法以及同步代码块的synchronized (类.class)用法锁的是类，线程想要执行对应同步代码，需要获得类锁。synchronized修饰成员方法，线程获取的是当前调用该方法的对象实例的对象锁。
     - 死锁举例
@@ -140,7 +136,7 @@ categories: interview
         - 一致性哈希，就是提供一个hashtable,它能在节点加入离开时不会导致映射关系的重大变化
         - 分布式一致性hash。如果Server的哈希等于Key的哈希，则把Key存放在该Server上；否则，寻找第一个大于Key哈希的Server，用于存放Key。但有Server增加、删除时，只要变动周边的Server映射关系即可，不用全部重新哈希。之所以有这样优良的特性是因为，Server和Key采用了同样的值域。还有最后一个问题，虚节点是如何产生的呢？也非常简单，就是在每个Server加个后缀，在做MD5哈希，取其32位。
         - MD5哈希; MD5的结果为一个160bit的数字，取其前32位作为一个Integer
-    - arryalist和linkedlist的区别
+    -    arryalist和linkedlist的区别
         - 1.ArrayList是实现了基于动态数组的数据结构，而LinkedList是基于链表的数据结构；
         - 2.对于随机访问get和set，ArrayList要优于LinkedList，因为LinkedList要移动指针；
         - 3.对于添加和删除操作add和remove，一般大家都会说LinkedList要比ArrayList快，因为ArrayList要移动数据。但是实际情况并非这样，对于添加或删除，LinkedList和ArrayList并不能明确说明谁快谁慢，下面会详细分析。
@@ -298,13 +294,11 @@ categories: interview
         - 2.1为何需要分布式锁。效率 https://juejin.im/post/5bbb0d8df265da0abd3533a5
         - 5.1Redis分布式锁简单实现
     - spring ioc aop springboot差别
-    - redis 几种数据结构，内部都是byte[]数组哇
-        - https://zhuanlan.zhihu.com/p/78896005
     - redis主从复制 Remote Dictionary Server
         - azure redis
         - 缓存穿透，缓存与数据库双写一致 https://www.cnblogs.com/Java3y/p/10266306.html
         - 史上最全Redis面试49题(含答案):哨兵+复制+事务+集群+持久化等: https://segmentfault.com/a/1190000017339258
-        - Redis有哪几种数据淘汰策略？
+         -Redis有哪几种数据淘汰策略？
         - 主从复制是为了数据备份
         - Redis是一个基于内存的高性能Key-Value存储系统，它支持存储的value类型很多，包括下面的和有序集合）。这些数据类型都支持push/pop、add/remove以及取交集和并集等丰富的操
         - 数据结构 -- hash：通过 key(用户ID) + field(属性标签) 就可以操作对应属性数据了，既不需要重复存储数据，也不会带来序列化和并发修改控制的问题。很好的解决了问题。 list：Redis list的实现为一个双向链表，Redis内部的很多实现，包括发送缓冲队列等也都是用的这个数据结构。set 的内部实现是一个 value永远为null的HashMap，实际就是通过计算hash的方式来快速排重的，这也是set能提供判断一个成员是否在集合内的原因。Redis sorted set的内部使用HashMap和跳跃表(SkipList)来保证数据的存储和有序，HashMap里放的是成员到score的映射，而跳跃表里存放的是所有的成员，排序依据是HashMap里存的score,使用跳跃表的结构可以获得比较高的查找效率，并且在实现上比较简单。
@@ -327,9 +321,6 @@ categories: interview
     - ZK的实现，他是用来干嘛的
   
 - 数据库相关
-    -  InnoDB索引和MyISAM索引的区别：http://www.voidcn.com/article/p-khushvii-qh.html
-        一是主索引的区别，InnoDB的数据文件本身就是索引文件。而MyISAM的索引和数据是分开的。
-        二是辅助索引的区别：InnoDB的辅助索引data域存储相应记录主键的值而不是地址。而MyISAM的辅助索引和主索引没有多大区别
     - 数据库索引B树和B+树有什么区别，B+树的高度何时发生改变
         - 卫星数据：指的是索引元素所指向的数据记录。比如数据库中的某一行。B树中无论中间节点还是叶子节点都带有卫星数据。B+树中，只有叶子节点带卫星数据，其他中间节点仅仅是索引，没有数据关联。
         - 综合起来，B+树比B-树优势有三个：1、IO次数更少2、查询性能稳定3、范围查询简便。
@@ -349,19 +340,11 @@ categories: interview
         - poll: 1、大量的fd的数组被整体复制于用户态和内核地址空间之间，而不管这样的复制是不是有意义。 2、poll还有一个特点是“水平触发”，如果报告了fd后，没有被处理，那么下次poll时会再次报告该fd
         -  epoll: epoll支持水平触发和边缘触发，最大的特点在于边缘触发，它只告诉进程哪些fd刚刚变为就需态，并且只会通知一次。还有一个特点是，epoll使用“事件”的就绪通知方式，通过epoll_ctl注册fd，一旦该fd就绪，内核就会采用类似callback的回调机制来激活该fd，epoll_wait便可以收到通知
 
-- 多线程
-    - 概念性问答题
-
 - 开放性问题
     - 了解设计模式吗？
     - 场景题 额度调整不加锁?
     - 缓存系统如何提高命中率? https://www.cnblogs.com/dinglang/p/6117309.html
         - 通过缓存预加载（预热）、增加存储容量、调整缓存粒度、缓存的失效和更新策略等手段来提高命中率
-    - 如何设计token？
-        token 加密+ hash
-    - 如何将长链接转为短链接
-        - https://www.cnblogs.com/bluestorm/p/9424858.html
-
 - 反问
     - 公司技术栈
 
@@ -373,6 +356,378 @@ categories: interview
 - [乐观锁](https://www.cnblogs.com/Mainz/p/3546347.html)
     - [两种锁的使用场景 和 ](https://juejin.im/post/5b4977ae5188251b146b2fc8)
     从上面对两种锁的介绍，我们知道两种锁各有优缺点，不可认为一种好于另一种，像乐观锁适用于写比较少的情况下（多读场景），即冲突真的很少发生的时候，这样可以省去了锁的开销，加大了系统的整个吞吐量。但如果是多写的情况，一般会经常产生冲突，这就会导致上层应用会不断的进行retry，这样反倒是降低了性能，所以一般多写的场景下用悲观锁就比较合适。
-- [java面试宝典](https://funtl.com/zh/interview/Java-%E9%9D%A2%E8%AF%95%E5%AE%9D%E5%85%B8-%E8%AF%B4%E8%AF%B4-SQL-%E4%BC%98%E5%8C%96%E4%B9%8B%E9%81%93.html)
-- 这个人写的程序和人生经验，挺好 https://coolshell.cn/
-- 外企 面经 https://www.diycode.cc/topics/220
+- java buffer机制
+- mapreduce
+- 进程通信
+- gc设计模式
+- 面向对象的特征
+- final, finally, finalize 的区别
+- int 和 Integer 有什么区别
+- 重载和重写的区别
+- 
+- 抽象类和接口有什么区别
+- 
+- 说说反射的用途及实现
+- 
+- 说说自定义注解的场景及实现
+- 
+- HTTP 请求的 GET 与 POST 方式的区别
+- 
+- session 与 cookie 区别
+- 
+- session 分布式处理
+- 
+- JDBC 流程
+- 
+- MVC 设计思想
+- 
+- equals 与 == 的区别
+- 
+- 集合
+- List 和 Set 区别
+- 
+- List 和 Map 区别
+- 
+- Arraylist 与 LinkedList 区别
+- 
+- ArrayList 与 Vector 区别
+- 
+- HashMap 和 Hashtable 的区别
+- 
+- HashSet 和 HashMap 区别
+- 
+- HashMap 和 ConcurrentHashMap 的区别
+- 
+- HashMap 的工作原理及代码实现
+- 
+- ConcurrentHashMap 的工作原理及代码实现
+- 
+- 线程
+- 创建线程的方式及实现
+- 
+- sleep() 、join（）、yield（）有什么区别
+- 
+- 说说 CountDownLatch 原理
+- 
+- 说说 CyclicBarrier 原理
+- 
+- 说说 Semaphore 原理
+- 
+- 说说 Exchanger 原理
+- 
+- 说说 CountDownLatch 与 CyclicBarrier 区别
+- 
+- ThreadLocal 原理分析
+- 
+- 讲讲线程池的实现原理
+- 
+- 线程池的几种方式
+- 
+- 线程的生命周期
+- 
+- 锁机制
+- 说说线程安全问题
+- 
+- volatile 实现原理
+- 
+- synchronize 实现原理
+- 
+- synchronized 与 lock 的区别
+- 
+- CAS 乐观锁
+- 
+- ABA 问题
+- 
+- 乐观锁的业务场景及实现方式
+- 
+- 核心篇
+- 数据存储
+- MySQL 索引使用的注意事项
+- 
+- 说说反模式设计
+- 
+- 说说分库与分表设计
+- 
+- 分库与分表带来的分布式困境与应对之策
+- 
+- 说说 SQL 优化之道
+- 
+- MySQL 遇到的死锁问题
+- 
+- 存储引擎的 InnoDB 与 MyISAM
+- 
+- 数据库索引的原理
+- 
+- 为什么要用 B-tree
+- 
+- 聚集索引与非聚集索引的区别
+- 
+- limit 20000 加载很慢怎么解决
+- 
+- 选择合适的分布式主键方案
+- 
+- 选择合适的数据存储方案
+- 
+- ObjectId 规则
+- 
+- 聊聊 MongoDB 使用场景
+- 
+- 倒排索引
+- 
+- 聊聊 ElasticSearch 使用场景
+- 
+- 缓存使用
+- Redis 有哪些类型
+- 
+- Redis 内部结构
+- 
+- 聊聊 Redis 使用场景
+- 
+- Redis 持久化机制
+- 
+- Redis 如何实现持久化
+- 
+- Redis 集群方案与实现
+- 
+- Redis 为什么是单线程的
+- 
+- 缓存奔溃
+- 
+- 缓存降级
+- 
+- 使用缓存的合理性问题
+- 
+- 消息队列
+- 消息队列的使用场景
+- 
+- 消息的重发补偿解决思路
+- 
+- 消息的幂等性解决思路
+- 
+- 消息的堆积解决思路
+- 
+- 自己如何实现消息队列
+- 
+- 如何保证消息的有序性
+- 
+- 框架篇
+- Spring
+- BeanFactory 和 ApplicationContext 有什么区别
+- 
+- Spring Bean 的生命周期
+- 
+- Spring IOC 如何实现
+- 
+- 说说 Spring AOP
+- 
+- Spring AOP 实现原理
+- 
+- 动态代理（cglib 与 JDK）
+- 
+- Spring 事务实现方式
+- 
+- Spring 事务底层原理
+- 
+- 如何自定义注解实现功能
+- 
+- Spring MVC 运行流程
+- 
+- Spring MVC 启动流程
+- 
+- Spring 的单例实现原理
+- 
+- Spring 框架中用到了哪些设计模式
+- 
+- Spring 其他产品（Srping Boot、Spring Cloud、Spring Secuirity、Spring Data、Spring - AMQP 等）
+- 
+- Netty
+- 为什么选择 Netty
+- 
+- 说说业务中，Netty 的使用场景
+- 
+- 原生的 NIO 在 JDK 1.7 版本存在 epoll bug
+- 
+- 什么是TCP 粘包/拆包
+- 
+- TCP粘包/拆包的解决办法
+- 
+- Netty 线程模型
+- 
+- 说说 Netty 的零拷贝
+- 
+- Netty 内部执行流程
+- 
+- Netty 重连实现
+- 
+- 微服务篇
+- 微服务
+- 前后端分离是如何做的
+- 
+- 微服务哪些框架
+- 
+- 你怎么理解 RPC 框架
+- 
+- 说说 RPC 的实现原理
+- 
+- 说说 Dubbo 的实现原理
+- 
+- 你怎么理解 RESTful
+- 
+- 说说如何设计一个良好的 API
+- 
+- 如何理解 RESTful API 的幂等性
+- 
+- 如何保证接口的幂等性
+- 
+- 说说 CAP 定理、 BASE 理论
+- 
+- 怎么考虑数据一致性问题
+- 
+- 说说最终一致性的实现方案
+- 
+- 你怎么看待微服务
+- 
+- 微服务与 SOA 的区别
+- 
+- 如何拆分服务
+- 
+- 微服务如何进行数据库管理
+- 
+- 如何应对微服务的链式调用异常
+- 
+- 对于快速追踪与定位问题
+- 
+- 微服务的安全
+- 
+- 分布式
+- 谈谈业务中使用分布式的场景
+- 
+- Session 分布式方案
+- 
+- 分布式锁的场景
+- 
+- 分布是锁的实现方案
+- 
+- 分布式事务
+- 
+- 集群与负载均衡的算法与实现
+- 
+- 说说分库与分表设计
+- 
+- 分库与分表带来的分布式困境与应对之策
+- 
+- 安全&性能
+- 安全问题
+- 安全要素与 STRIDE 威胁
+- 
+- 防范常见的 Web 攻击
+- 
+- 服务端通信安全攻防
+- 
+- HTTPS 原理剖析
+- 
+- HTTPS 降级攻击
+- 
+- 授权与认证
+- 
+- 基于角色的访问控制
+- 
+- 基于数据的访问控制
+- 
+- 性能优化
+- 性能指标有哪些
+- 
+- 如何发现性能瓶颈
+- 
+- 性能调优的常见手段
+- 
+- 说说你在项目中如何进行性能调优
+- 
+- 工程篇
+- 需求分析
+- 你如何对需求原型进行理解和拆分
+- 
+- 说说你对功能性需求的理解
+- 
+- 说说你对非功能性需求的理解
+- 
+- 你针对产品提出哪些交互和改进意见
+- 
+- 你如何理解用户痛点
+- 
+- 设计能力
+- 说说你在项目中使用过的 UML 图
+- 
+- 你如何考虑组件化
+- 
+- 你如何考虑服务化
+- 
+- 你如何进行领域建模
+- 
+- 你如何划分领域边界
+- 
+- 说说你项目中的领域建模
+- 
+- 说说概要设计
+- 
+- 设计模式
+- 你项目中有使用哪些设计模式
+- 
+- 说说常用开源框架中设计模式使用分析
+- 
+- 说说你对设计原则的理解
+- 
+- 23种设计模式的设计理念
+- 
+- 设计模式之间的异同，例如策略模式与状态模式的区别
+- 
+- 设计模式之间的结合，例如策略模式+简单工厂模式的实践
+- 
+- 设计模式的性能，例如单例模式哪种性能更好。
+- 
+- 业务工程
+- 你系统中的前后端分离是如何做的
+- 
+- 说说你的开发流程
+- 
+- 你和团队是如何沟通的
+- 
+- 你如何进行代码评审
+- 
+- 说说你对技术与业务的理解
+- 
+- 说说你在项目中经常遇到的 Exception
+- 
+- 说说你在项目中遇到感觉最难Bug，怎么解决的
+- 
+- 说说你在项目中遇到印象最深困难，怎么解决的
+- 
+- 你觉得你们项目还有哪些不足的地方
+- 
+- 你是否遇到过 CPU 100% ，如何排查与解决
+- 
+- 你是否遇到过 内存 OOM ，如何排查与解决
+- 
+- 说说你对敏捷开发的实践
+- 
+- 说说你对开发运维的实践
+- 
+- 介绍下工作中的一个对自己最有价值的项目，以及在这个过程中的角色
+- 
+- 软实力
+- 说说你的亮点
+- 
+- 说说你最近在看什么书
+- 
+- 说说你觉得最有意义的技术书籍
+- 
+- 工作之余做什么事情
+- 
+- 说说个人发展方向方面的思考
+- 
+- 说说你认为的服务端开发工程师应该具备哪些能力
+- 
+- 说说你认为的架构师是什么样的，架构师主要做什么
+- 
+- 说说你所理解的技术专家
+- 

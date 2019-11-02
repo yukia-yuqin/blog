@@ -13,8 +13,11 @@ categories: interview
 
 ### 微软真题
 	- 设计一个并发的Cache系统
-
+		- https://codingcompetitions.withgoogle.com/kickstart/submissions/0000000000050edb/eGlhb3d1YzE
+		- 
 ### 真题
+	- 高频题：并查集
+
 	- 逆序数]
 	- 二叉树节点最远距离
 	- 完全二叉树有多少个节点

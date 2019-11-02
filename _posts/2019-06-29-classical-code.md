@@ -23,6 +23,73 @@ foreach (string s in pinyinSeq ){}
 ```C#
 string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmptyEntries);
 ```
+``` C#
+#工厂方法
+        public static Type GetClassType(string type)
+        {
+            string[] parts = type.Split(',');
+            if (parts.Length == 2 && parts[1].EndsWith(".dll", StringComparison.OrdinalIgnoreCase))
+            {
+                Assembly assem = Assembly.LoadFrom(parts[1]);
+                return assem.GetType(parts[0], true);
+            }
+            else
+            {
+                return Type.GetType(type, true);
+            }
+        }
+
+            public static INamedLoadable CreateNamedLoadable(DependencyLoadingSetting setting, IModuleManager moduleManager)
+        {
+            var type = GetClassType(setting.Class);
+            ConstructorInfo ci = type.GetConstructor(new Type[] { typeof(string), typeof(IModuleManager) });
+            if (ci == null)
+            {
+                ci = type.GetConstructor(new Type[] { typeof(string)});
+                if (ci == null)
+                {
+                    ci = type.GetConstructor(new Type[] { typeof(IModuleManager) });
+                    if (ci == null)
+                    {
+                        return (INamedLoadable)Activator.CreateInstance(type);
+                    }
+                    else
+                    {
+                        return (INamedLoadable)ci.Invoke(new object[] { moduleManager });
+                    }
+                }
+                else
+                {
+                    return (INamedLoadable)ci.Invoke(new object[] { setting.InitializeData });
+                }
+            }
+            else
+            {
+                return (INamedLoadable)ci.Invoke(new object[] { setting.InitializeData, moduleManager });
+            }
+        }
+
+
+    public static T Create<T>(TypeLoadingSetting setting)
+    {
+        var type = GetClassType(setting.Class);
+        ConstructorInfo ci = type.GetConstructor(new Type[] { typeof(string) });
+        if (ci == null)
+        {
+            return (T)Activator.CreateInstance(type);
+        }
+        else
+        {
+            return (T)ci.Invoke(new object[] { setting.InitializeData });
+        }
+    }
+
+    public static IMejisStorageProvider CreateMejisStorageProvider(MejisStorageProviderSetting setting)
+        {
+            return Create<IMejisStorageProvider>(setting);
+        }
+
+```
 
 ### C++
 - C++
@@ -136,17 +203,87 @@ class disjoint_set {
     ```
     - ./-> 操作符前后不留空格, */& 不要前后都留, 一个就可, 靠左靠右依各人喜好;
 
+- C++ 常用容器
+```C++
+    // 无序集合
+    unordered_set<string> d(wordList.begin(), wordList.end());
+    d.erase(head);
+    // 双端队列
+    deque<string> dq;
+    string head = dq.front();
+    dq.pop_front();        
+```
+- 并查集 https://www.jianshu.com/p/def7767982ac
+```C++
+    private int count;
+    private int[] parents;
+    
+    //初始化并查集
+    public void initUnionFind(int m, int n, char[][] grid){
+        parents = new int[m*n];
+        for(int i=0; i<m; i++){
+            for(int j=0; j<n; j++){
+                if(grid[i][j] == '1'){
+                    count++;
+                }
+                parents[i*n+j] = i*n+j;
+            }
+        }
+    }
+    
+    public int find(int idx){
+        while(idx != parents[idx]){
+            //在查找的过程中压缩路径,减少查找的次数
+            parents[idx] = parents[parents[idx]];
+            idx = parents[idx];
+        }
+        return idx;
+    }
+ 
+    public void union(int p, int q){
+        int pRoot = find(p);
+        int qRoot = find(q);
+        //两个元素的根不同,则合并
+        if(pRoot != qRoot){
+            parents[qRoot] = pRoot;
+            count--;
+        }
+    }
+    
+    public boolean isConnected(int p, int q){
+        int pRoot = find(p);
+        int qRoot = find(q);
+        
+        //两点不连通
+        if(pRoot != qRoot){
+            return false;
+        }
+        return false;
+    }
+```
+```位运算
+<!-- 求异或的结果 -->
+    int diff = accumulate(nums.begin(), nums.end(), 0, bit_xor<int>());
+<!-- 求diff这个数的最末一位不为0的位置 -->
+    diff &= -diff;
 
-
-
-
-
+```
 
 - sort 内部写一个比较器
 ```C++
 sort(numbers.begin(),numbers.end(),[](const int s1,const int s2){
             return to_string(s1)+to_string(s2) < to_string(s2) + to_string(s1);
         });
+or
+struct Comp {
+    bool operator()(const pair<int, string>& lhs, const pair<int, string>& rhs) const {
+        if (lhs.first != rhs.first)
+            return lhs.first < rhs.first;
+        return lhs.second > rhs.second;
+    }
+};       
+priority_queue<pair<int, string>, vector<pair<int, string>>, Comp> Q;
+
 ```
 
 - C++ 分割字符串 变为stringstream
