@@ -1,3 +1,10 @@
+---
+layout: post
+title: twiceinter
+tags: interview java
+categories: interview
+---
+
 ###真题
 - 自己的面试的真题
 - 4、面试内容
