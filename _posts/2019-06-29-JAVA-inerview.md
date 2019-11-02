@@ -164,11 +164,15 @@ categories: interview
     - 你知道java8的新特性吗，请简单介绍一下
         - Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。
         - Optional 类 − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。
-
 - jvm
+    - jvm中字符全部统一使用UNICODE编码
+    - java中的异常全是throwable, 又分为error和exception。error是程序本身无法解决的，例如内存泄露，死循环等。exception是程序可以解决的，例如内存溢出，无效参数，下标越界，除数为零，数值溢出等。java中一般有两类异常，一个是throw语句，一类是runtimeexception
+
     - Java final volatile 关键字 volatile指令重排序 举个重排序例子
         - final
             - 对于一个final变量，如果是基本数据类型的变量，则其数值一旦在初始化之后便不能更改；如果是引用类型的变量，则在对其初始化之后便不能再让其指向另一个对象。
+            - 在方法的参数中设一个final参数，则该参数如果被修改则会报错，这样防止不小心修改导致调用方法出错。
+            - final方法：已知该方法功能完全满足需求，无需扩展。二是允许编译器将该方法转为inline的调用机制，直接将方法主体插入到调用处，不需要进行例行的压栈等操作。
         - volatile不能保证线程安全 https://blog.csdn.net/chenchaofuck1/article/details/51702388
         - volatile只能保证可见性 可见性指当一个线程修改了一个共享变量的值，其他线程能够立即得知这个修改，volatile的特殊规则就是read、load、use必须连续出现。assign、store、write动作必须连续出现。所以使用volatile变量能够保证必须先从主内存刷新最新的值，每次修改后必须立即同步回主内存当中。无法保证原子性，而自增操作并不是一个原子操作 https://kuaibao.qq.com/s/20180314G08I8P00?refer=spider
         - 禁止指令重排序优化。 
