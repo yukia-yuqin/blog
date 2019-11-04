@@ -4,7 +4,16 @@ title: 每周学到的一点小东西
 tags: week
 ---
 
-record for myself.<br>
+record for myself. since 2019-03-26.<br>
+
+### 2019 week44
+- youtube李永乐
+   - 电磁波 f=2.45GHZ; 水蛋白质脂肪震动摩擦生热；微波无害：γ射线，x射线（频率越高才能致癌，使DNA分子断链），光，微波，中波，长波；金属屏蔽，金属反射电磁波；注意:不能放金属，不能放封闭物品（鸡蛋），不能放普通塑料(产生有害物质) 
+- 使用豆瓣记录自己的看书看电影的历程！良心软件！
+- 学习是个漫长的过程，要相信每天进步一点点，就会有变化，积少成多，不学习是一定不会进步的！什么不懂就要学什么。不要担心学的东西没有用！
+- 最近为了m家的rsde面试，用了一周的时间看了leetcode上的460道题目，主要从youtube的花花酱那里学习，excellent！
+- 最近几个月找工作，没怎么记录。
+
 ### 2019 week30
 - C++rand() https://stackoverflow.com/questions/9878965/rand-between-0-and-1
 - 电磁炉和 微波炉加热原理
@@ -32,11 +41,9 @@ record for myself.<br>
    - Hulu 8月初 内推 9月中 技术电面 （http://poj.org/problem?id=3258 http://poj.org/problem?id=2229） 9月底 3轮技术onsite （http://poj.org/problem?id=2236 http://poj.org/problem?id=1862） 10月中 总监终面 11月中 offer 技术氛围特别好。常年招聘实习生。面试难度大。
    - Microsoft 3月底 在线笔试 （http://hihocoder.com/contests/past） 4月中 3轮实习技术面 （http://poj.org/problem?id=3009 http://poj.org/problem?id=1258） 5月中 实习offer 8月底 夏令营2轮技术面 9月初 转申美国岗 10月底 4轮技术面 11月初 offer 最难的是在线笔试。特别看重CS 基本功，10面，2面算法，8面 potential，开放思维，联想到缓存，调度问题，面向对象程序设计，操作系统，线程进程特别深。
 
-
-
 ### 2019 week 28
 - 复杂度
-   - 	一秒CPU差不多能进行八次方的运算，通过时间复杂度估算，超九次方绝逼不过，七次方及以内一般比较轻松，但有时还要看你常数的
+   - 	一秒CPU差不多能进行八次方的运算，通过时间复杂度估算，超九次方肯定不过，七次方及以内一般比较轻松，但有时还要看你常数的
 - 1e1+7 = 17 e1为10的1次方  1e9+7 = 1,000,000,007 
 
 ### 2019 week25

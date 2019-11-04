@@ -23,6 +23,8 @@ categories: interview
 - hadoop的灾难处理机制
 - hadoop一个节点数据量太大拖垮reduce，怎么办，Hadoop本身的处理机制是怎么样的，手工的话可以怎么调 
 - hadoop数据倾斜问题如何解决 
+- 什么是内存泄漏
+   - 分配的内存没有被释放。
 
 ### 设计模式
 - 单例模式

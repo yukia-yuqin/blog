@@ -197,6 +197,20 @@ categories: interview
         - 在 JDK 1.4 中新引入了 NIO 类，它可以使用 Native 函数库直接分配堆外内存，然后通过 Java 堆里的 DirectByteBuffer 对象作为这块内存的引用进行操作。这样能在一些场景中显著提高性能，因为避免了在堆内存和堆外内存来回拷贝数据。
         - 因为DirectByteBuffer是通过虚引用(Phantom Reference)来实现堆外内存的释放的。      
     - jvm的GC机制   
+        - 引用计数
+            - sys.getrefcount(1000) 就可以找到1000的引用计数。https://www.youtube.com/watch?v=RHcOlcEh5lA
+            - 引用计数加1的共有四种情况：创建对象 引用计数为1，其他变量指向它+1, 传参+1，加入容器+1
+        - 可达性分析
+            - 没有被GCroot引用的对象都是可以被回收的对象。
+            - 哪些是GCroot的对象? 栈中引用的对象，方法区的静态类属性中引用的对象，方法区中的常量引用对象，JNI本地方法引用的对象。
+        - JVM两种垃圾回收算法
+            - 标记-清除；标记-整理；
+        - 常见的垃圾回收器
+            - serial garbage collector: 单线程GC
+            - Parallel garbage collector: 多线程GC
+            - CMS GC
+            - G1：类似标记-整理，jdk7引进的GC，jdk9默认的GC, 多线程，高并发，分代收集(不再严格区分新生代老年代，直接是一块一块的内存区域)，低暂停(因为有可预测的停顿，存一张表)，逐步取代CMS GC。就回答这个GC就可以。
+                - 步骤：初始标记，并发标记，最终标记，筛选回收。
         - cms停顿了几次？为什么要有这些停顿？ https://zhuanlan.zhihu.com/p/42934904
             - CMS并非没有暂停，而是用两次短暂停来替代串行标记整理算法的长暂停，它的收集周期是这样：初始标记(CMS-initial-mark) -> 并发标记(CMS-concurrent-mark) -> 重新标记(CMS-remark) -> 并发清除(CMS-concurrent-sweep) ->并发重设状态等待下次CMS的触发(CMS-concurrent-reset)。其中的1，3两个步骤需要暂停所有的应用程序线程的。第一次暂停从root对象开始标记存活的对象，这个阶段称为初始标记；第二次暂停是在并发标记之后， 暂停所有应用程序线程，重新标记并发标记阶段遗漏的对象（在并发标记阶段结束后对象状态的更新导致）。第一次暂停会比较短，第二次暂停通常会比较长，并且 remark这个阶段可以并行标记。
         - FullGC,MinorGC https://youzhixueyuan.com/the-difference-between-minor-gc-major-gc-full-gc.html
