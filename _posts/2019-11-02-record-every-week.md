@@ -5,6 +5,14 @@ tags: week
 ---
 
 record for myself. since 2019-03-26.<br>
+### 2019 week45
+- 多线程通信方式？被问到过好多次这个问题，仍然不知道最好的答案。
+- 进程和线程的区别？同样被问到好多次这个问题，仍然不知道最好的答案。
+- .bashrc文件与.bash_profile文件的区别
+   - login shell会读取的文件有：/etc/profile、$HOME/.bash_profile,$HOME/.bash_login，$HOME/.profile，按以上顺序读取。
+   - no login shell 在打开的时候，执行的文件是：$HOME/.bashrc，而.bashrc又会执行/etc/bashrc文件。
+   - 在.bash_profile文件中加载.bashrc文件，重新登录终端的时候，就不需要再手动source了。
+
 
 ### 2019 week44
 - youtube李永乐
