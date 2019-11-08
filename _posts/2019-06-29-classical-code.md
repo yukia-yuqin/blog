@@ -98,6 +98,16 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
 rand() 返回一个0至RAND_MAX (stdlib.h) 2147483647间的随机数
 ```
 
+- 一点点
+```
+sort(ins.begin(), ins.end(), [](vector<int> a, vector<int> b){return a[0] < b[0];}
+unique函数返回去重后最后一个元素迭代器
+Trie这么写
+vector<bool> passed(n, false)
+stringstream
+inplace_merge(begin, mid, right);
+```
+
 - C++明明规范 google https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/
     - 函数命名, 变量命名, 文件命名要有描述性;
     - 文件名要全部小写, 可以包含下划线 (_) 或连字符 (-), 依照项目的约定. 如果没有约定, 那么 “_” 更好.
