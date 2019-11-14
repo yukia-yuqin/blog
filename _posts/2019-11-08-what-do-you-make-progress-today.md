@@ -6,6 +6,9 @@ categories: dailystudy
 ---
 
 你今天学到了什么<b>专业知识</b>？since 20191108<br>
+## 2019-11-13 周三
+- C++的多线程和多进程，最主要的区别是多线程是有自己的寄存器，有pc和sp(stack pointer), 而多进程是所有的内容都分离。[同步方法][线程进程同步方法]
+
 ## 2019-11-12 周二
 - C++的mutex类，有两个方法，Lock unlock，是<b>互斥锁</b>。只能有一个线程得到它。
 
@@ -39,3 +42,4 @@ categories: dailystudy
 - emplace 最大的作用是避免产生不必要的临时变量，因为它可以完成 in place 的构 造(http://blog.guorongfei.com/2016/03/16/cppx-stdlib-empalce/)
 
 
+[线程进程同步方法]:https://photos.google.com/share/AF1QipMMoeW8JX5fmSa9rSrC0Cmmq_OnpAMu6hSbuWiaQ8An5cqRz5MtJ6FzJPQZQMGFbQ/photo/AF1QipPRxqN6NFYMJM9kSIhohiIdF8wPESTOihbqdM5h?key=Nm90SEpvY2YtcXlmanhxM1p0SThoc3lRZVdrX1Rn
