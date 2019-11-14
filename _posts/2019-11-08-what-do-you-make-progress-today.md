@@ -6,6 +6,16 @@ categories: dailystudy
 ---
 
 你今天学到了什么<b>专业知识</b>？since 20191108<br>
+## 2019-11-12 周二
+- C++的mutex类，有两个方法，Lock unlock，是<b>互斥锁</b>。只能有一个线程得到它。
+
+## 2019-11-11
+- 全组合的方法dfs。leetcode1256题花花酱
+
+## 2019-11-10
+- VOS
+- FEELVOS: Fast End-to-End Embedding Learning for Video Object Segmentation (CVPR 2019)
+
 ## 2019-11-09
 - 明天想复习一下C++基础知识 2019-11-08 20:59:41
 - 访问控制符
