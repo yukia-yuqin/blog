@@ -11,6 +11,7 @@ categories: dailystudy
 
 ## 2019-11-13 周三
 - C++的多线程和多进程，最主要的区别是多线程是有自己的寄存器，有pc和sp(stack pointer), 而多进程是所有的内容都分离。[同步方法][线程进程同步方法]
+- this is a test.
 
 ## 2019-11-12 周二
 - C++的mutex类，有两个方法，Lock unlock，是<b>互斥锁</b>。只能有一个线程得到它。
