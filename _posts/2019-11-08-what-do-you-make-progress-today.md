@@ -18,7 +18,10 @@ categories: dailystudy
 - static
 
 ## 2019-11-15 周五
-- nothing
+- 
+
+## 2019-11-14 周四
+- 今天啥也没学，收到了intel的offer call.
 
 ## 2019-11-13 周三
 - C++的多线程和多进程，最主要的区别是多线程是有自己的寄存器，有pc和sp(stack pointer), 而多进程是所有的内容都分离。[同步方法][线程进程同步方法]
