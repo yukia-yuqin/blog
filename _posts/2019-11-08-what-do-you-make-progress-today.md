@@ -6,9 +6,16 @@ categories: dailystudy
 ---
 
 你今天学到了什么<b>专业知识</b>？since 20191108<br>
+
+## 2019-11-27 周三
+- 通信  802.11协议的衰减模型[802.11协议的衰减模型]。综上所述，所以802.11不仅定义了不同场景下的信道模型，也根据发送和接收者距离，分别给出了在视距范围内和外的衰减结果。在基本信道模型给定以后，我们可以从理论上去计算一个实际Wi-Fi节点的传输范围，以后我们再具体进行阐述。
+
+## 2019-11-25 周一
+
 ## 2019-11-24 周日
 - volatile是java虚拟机提供的轻量级的同步机制：保证可见性(立即斜晖主内存)，不保证原子性(i++是三步操作)，禁止指令重排序。
 - JMM是java内存模型，是一个标准，具有可见性，原子性，有序性
+
 ## 2019011-22 周五
 - 多维数组在内存中存储的模样
 
@@ -67,3 +74,4 @@ categories: dailystudy
 
 
 [线程进程同步方法]:https://photos.google.com/share/AF1QipMMoeW8JX5fmSa9rSrC0Cmmq_OnpAMu6hSbuWiaQ8An5cqRz5MtJ6FzJPQZQMGFbQ/photo/AF1QipPRxqN6NFYMJM9kSIhohiIdF8wPESTOihbqdM5h?key=Nm90SEpvY2YtcXlmanhxM1p0SThoc3lRZVdrX1Rn
+[802.11协议的衰减模型]https://zhuanlan.zhihu.com/p/24349070
