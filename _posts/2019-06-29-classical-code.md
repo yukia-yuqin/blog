@@ -4,7 +4,7 @@ title: 经典代码
 tags: interview common
 categories: interview
 ---
-
+since 2019-6-29
 经典流传<br>
 <br>
 
@@ -94,10 +94,20 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
 ### C++
 - C++
 ```
+    unordered_set<string> dict(wordDict.cbegin(), wordDict.cend());  //mark
+
+```
+- C++
+```
 #define random(x) (rand()%x) 返回一个[0,x)之间的整数
 rand() 返回一个0至RAND_MAX (stdlib.h) 2147483647间的随机数
 ```
 
+```
+vector<vector<int>> _m;
+_m = vector<vector<int>>(n, vector<int>(n, INT_MIN));  //mark
+
+```
 - 一点点
 ```
 sort(ins.begin(), ins.end(), [](vector<int> a, vector<int> b){return a[0] < b[0];}
