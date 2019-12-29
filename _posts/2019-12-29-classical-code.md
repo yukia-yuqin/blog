@@ -23,9 +23,8 @@ foreach (string s in pinyinSeq ){}
 ```C#
 string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmptyEntries);
 ```
-
+- 工厂方法
 ``` C#
-# 工厂方法
         public static Type GetClassType(string type)
         {
             string[] parts = type.Split(',');
@@ -94,23 +93,24 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
 ### C++
 - 写dp的时候，两重循环，第一层循环控制距离，第二层循环控制行号
 - C++
-```
+```C++
     unordered_set<string> dict(wordDict.cbegin(), wordDict.cend());  //mark
 
 ```
 - C++
-```
+``` C++
 #define random(x) (rand()%x) 返回一个[0,x)之间的整数
 rand() 返回一个0至RAND_MAX (stdlib.h) 2147483647间的随机数
-```
 
 ```
+
+``` C++
 vector<vector<int>> _m;
 _m = vector<vector<int>>(n, vector<int>(n, INT_MIN));  //mark
 
 ```
 - 一点点
-```
+``` C++
 sort(ins.begin(), ins.end(), [](vector<int> a, vector<int> b){return a[0] < b[0];}
 unique函数返回去重后最后一个元素迭代器
 Trie这么写
@@ -119,7 +119,7 @@ stringstream
 inplace_merge(begin, mid, right);
 ```
 
-- C++明明规范 google https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/
+- C++命名规范 [google]
     - 函数命名, 变量命名, 文件命名要有描述性;
     - 文件名要全部小写, 可以包含下划线 (_) 或连字符 (-), 依照项目的约定. 如果没有约定, 那么 “_” 更好.
     - 类型名称的每个单词首字母均大写, 不包含下划线: MyExcitingClass, MyExcitingEnum.
@@ -553,13 +553,9 @@ for($i=1;$i -le 400;$i++){
 } 
 ```
 
-### Spark
-```scala
-
-
 ### docker
 - 一些没有用上的
-```shell
+```powershell
 docker rmi $(docker images -f "dangling=true" -q)
 where some.txt  %查找当前目录下有没有这个文件
 .\certutil.exe -addstore -f "my" "MtutorKVcert.cer"
@@ -611,7 +607,7 @@ docker run -it -v D:\code\codevolume\:C:\inetpub\wwwroot-copy -v D:\code\dockerv
 ```
 
 - dockerfile编写
-```shell
+```powershell
 #Depending on the operating system of the host machines(s) that will build or run the containers, the image specified in the FROM statement may need to be changed.
 #For more information, please see http://aka.ms/containercompat 
 
@@ -659,3 +655,4 @@ XCOPY D:\code\mTutor\main\service\csx\DevDeploy\roles\MTutor.Service.Web\approot
 PAUSE
 ```
 
+[google]:https://zh-google-styleguide.readthedocs.io/en/latest/google-cpp-styleguide/naming/
