@@ -92,6 +92,7 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
 ```
 
 ### C++
+- 写dp的时候，两重循环，第一层循环控制距离，第二层循环控制行号
 - C++
 ```
     unordered_set<string> dict(wordDict.cbegin(), wordDict.cend());  //mark
