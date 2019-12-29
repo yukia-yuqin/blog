@@ -23,8 +23,9 @@ foreach (string s in pinyinSeq ){}
 ```C#
 string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmptyEntries);
 ```
+
 ``` C#
-#工厂方法
+# 工厂方法
         public static Type GetClassType(string type)
         {
             string[] parts = type.Split(',');
@@ -88,7 +89,6 @@ string[] pinyinSeq = pinyinStr.Split(_content_sep, StringSplitOptions.RemoveEmpt
         {
             return Create<IMejisStorageProvider>(setting);
         }
-
 ```
 
 ### C++
