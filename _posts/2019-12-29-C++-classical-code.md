@@ -17,7 +17,6 @@ since 2019-6-29
 - C++
 ```C++
     unordered_set<string> dict(wordDict.cbegin(), wordDict.cend());  //mark
-
 ```
 - C++
 ``` C++
@@ -28,7 +27,6 @@ since 2019-6-29
 ``` C++
     vector<vector<int>> _m;
     _m = vector<vector<int>>(n, vector<int>(n, INT_MIN));  //mark
-
 ```
 - 一点点
 ``` C++
@@ -50,7 +48,7 @@ since 2019-6-29
     - 常量命名 const int kDaysInAWeek = 7; 声明为 constexpr 或 const 的变量, 或在程序运行期间其值始终保持不变的, 命名时以 “k” 开头, 大小写混合. 例如:
     - 函数命名。常规函数使用大小写混合, 取值和设值函数则要求与变量名匹配: MyExcitingFunction(), MyExcitingMethod(), my_exciting_member_variable(), set_my_exciting_member_variable().
     - 7.7. 命名空间命名
-    ```C++
+```C++
     class Solution {
     public:
         int KthSmallest(vector<vector<int>>& matrix, int k) {
@@ -71,7 +69,7 @@ since 2019-6-29
             return le;
         }
     };
-    ```
+```
 - 常用C++ code 在线编程
 ```C++
     auto it = lower_bound(res.begin(), res.end(), i); 
@@ -118,7 +116,8 @@ since 2019-6-29
     - 若用引用捕获, 在变量名和 & 之间不留空格.auto add_to_x = [&x](int n) { x += n; };
     - if (condition) {  // 好 - IF 和 { 都与空格紧邻.
     - :左边 ;左边 (右边 )左边
-    ``` C++
+    - ./-> 操作符前后不留空格, */& 不要前后都留, 一个就可, 靠左靠右依各人喜好;
+``` C++
     if (b) {          // if 条件语句和循环语句关键字后均有空格.
     } else {          // else 前后有空格.
     }
@@ -142,8 +141,7 @@ since 2019-6-29
     y = static_cast<char*>(x);
     // 在类型与指针操作符之间留空格也可以, 但要保持一致.
     vector<char *> x;
-    ```
-    - ./-> 操作符前后不留空格, */& 不要前后都留, 一个就可, 靠左靠右依各人喜好;
+```
 
 - C++ 常用容器
 ```C++
