@@ -9,30 +9,27 @@ since 2019-6-29
 <br>
 
 
-
-
-
 ### C++
 - 写dp的时候，两重循环，第一层循环控制距离，第二层循环控制行号
-- C++
+- unordered_set
 ```C++
     unordered_set<string> dict(wordDict.cbegin(), wordDict.cend());  //mark
 ```
-- C++
-``` C++
+- random
+```C++
     #define random(x) (rand()%x) 返回一个[0,x)之间的整数
     rand() 返回一个0至RAND_MAX (stdlib.h) 2147483647间的随机数
 ```
-
-``` C++
+- vector
+```C++
     vector<vector<int>> _m;
     _m = vector<vector<int>>(n, vector<int>(n, INT_MIN));  //mark
 ```
 - 一点点
-``` C++
+```C++
     sort(ins.begin(), ins.end(), [](vector<int> a, vector<int> b){return a[0] < b[0];}
-    unique函数返回去重后最后一个元素迭代器
-    Trie这么写
+    // unique函数返回去重后最后一个元素迭代器
+    // Trie这么写
     vector<bool> passed(n, false)
     stringstream
     inplace_merge(begin, mid, right);
