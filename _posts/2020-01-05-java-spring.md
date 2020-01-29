@@ -21,7 +21,7 @@ spring boot <br>
 
 ### spring aop（aspect oriented programming with spring）面向切面编程
 
-- 应用(122min- mon87min)
+- 应用
     - 什么叫做aop？
         - 编程需要实现的目标，spring aop是手段，aspectJ也是一种实现方式。
         - 登陆，以传统面向对象，http->controller->service->dao，一些不影响主业务逻辑的方法(事物，异常，日志)叫做横切问题，面向切面编程关注执行的时机和执行的顺序。
@@ -36,7 +36,7 @@ spring boot <br>
     - servlet 技术栈
     - 环绕通知？
         - around 可以对参数进行修改。
-- 源码[89min]
+- 源码
     - spring aop原理
         - spring ioc和aop有什么关系
             - aop一定要放在ioc中
@@ -54,8 +54,23 @@ spring boot <br>
         - jdk目标对象target object 和代理对象proxy object之间一定有一个转换的地方,就是getSingletion中的匿名方法实现了createBean()来创建原始对象和代理对象。
         - BeanDefination包含了class类型，通过反射得到一个对象
     - lookup-method 是ioc的知识。
-    
+   
+- 微服务 spring cloud 框架分析
+    - bean是什么？
+    - 不要用低段位端口，容易和本身的http端口冲突，从1000开始用。
+    - 负载均衡 nginx 没有消息是最好的消息 反向代理，用一个server的映射解决负载均衡。服务器端的负载均衡。upstream backser 反向代理。nginx不适于微服务的负载均衡。spring cloud中的负载均衡使用的是ribbon，在User service中加@LoadBalance就行。非常简单的一句。Nginx不能实现多种类型的微服务一起用。
+    - spring cloud eureka
 
+- spring bean的生命周期
+    - spring-framework 在github上下载源码，在源码上开发，
+    - 什么是spring
+        - spring是一个公司，有许多项目。
+    - 如何产生一个spring bean 和销毁一个spring bean
+        - spring 中有一个工厂，产生bean的。
+        - spring扫描，通过一个for循环，拿到很多类，解析类的名字。
+        - 懒加载，@lazy注释
+        - 过程：有一个beanDefinition,放入单例池，invokeBeanFactoryPostProccessors.
+            - 扫描类，beanFactoryMap
 ### 鲁班学院java高级课程大纲
 - 编程开发
     - 分布式netty
