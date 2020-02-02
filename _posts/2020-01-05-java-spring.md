@@ -23,7 +23,7 @@ spring boot <br>
 
 - 应用
     - 什么叫做aop？
-        - 编程需要实现的目标，spring aop是手段，aspectJ也是一种实现方式。
+        - AOP是编程需要实现的目标，spring aop是手段，aspectJ也是一种实现方式。
         - 登陆，以传统面向对象，http->controller->service->dao，一些不影响主业务逻辑的方法(事物，异常，日志)叫做横切问题，面向切面编程关注执行的时机和执行的顺序。
     - 切面如何理解：
         - join point、point cut（连接点的集合）、target object（原来的对象）、proxy object（增强后的对象）、advise 增强的逻辑和增强的时机
@@ -71,6 +71,7 @@ spring boot <br>
         - 懒加载，@lazy注释
         - 过程：有一个beanDefinition,放入单例池，invokeBeanFactoryPostProccessors.
             - 扫描类，beanFactoryMap
+            
 ### 鲁班学院java高级课程大纲
 - 编程开发
     - 分布式netty
