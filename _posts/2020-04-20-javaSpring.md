@@ -88,4 +88,23 @@ javaEE基础（共49小时的视频，4月20日开始）【上次45小时的6天
 
 5. 60 08h33m 尚硅谷SpringMVC视频教程：BV1mW411M7YA
 - since 2020-04-26周日，共60小节，8.3小时。预期半天学完。学完记得给自己出一张卷子。
-    
+
+6. spring 的 IDEA版本  BV1Sb411s7vP
+
+- since 2020-07-25 周六，共12小时，预期8小时弄完
+- 第一天：spring 框架的概述以及spring中基于xml的IOC配置
+  - spring是什么
+    - 全栈级轻量级的 spring framework 
+    - ![image-20200725222616398](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200725222616398.png)
+  - spring的两大核心 IOC和AOP 
+  - spring的发展历程和优势
+  - spring的体系结构
+  - 曾经案例中的问题
+  - 工厂模式解耦
+  - spring中基于XML的IOC环境搭建
+  - 依赖注入
+  - 学完这个内容能用在什么地方
+- 第二天：spring中基于注解的IOC和IOC案例
+- 第三天：spring中的aop和基于XML以及注解的AOP配置
+- 第四天：spring中的JdbcTemplate以及spring事物控制
+

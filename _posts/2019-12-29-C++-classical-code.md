@@ -8,9 +8,39 @@ since 2019-6-29
 经典流传<br>
 <br>
 
-
 ### C++
+
+- string中的=是复制一份新的字符串，不是共享同一个字符串。
+
+  
+  
+- 初始化priority_queue
+
+  ```
+  const auto cmp = [](pair<int, int> &a, pair<int, int> &b) {
+  	return a.first > b.first;
+  };
+  priority_queue<pair<int, int>, vector<pair<int, int>>, decltype(cmp)> pq(cmp); 
+  ```
+  
+- 通过空格拆分字符串
+
+  ```c++
+  	string str = "dog cat cat dog";
+      istringstream in(str);
+      vector<string> v;
+      string t;
+      while (in >> t) {
+          v.push_back(t);
+      }
+  ```
+
+- 以下用两个例子来说明std::move的用法. 原lvalue值被moved from之后值被转移,所以为空字符串. 摘录自cppreference
+  - unordered_map<string, map<int, string>> s_; 
+  - auto it = m->second.upper_bound(timestamp); if (it == begin(m->second)) return "";
+  
 - 写dp的时候，两重循环，第一层循环控制距离，第二层循环控制行号
+
 - unordered_set
 ```C++
     unordered_set<string> dict(wordDict.cbegin(), wordDict.cend());  //mark
@@ -359,4 +389,4 @@ since 2019-6-29
     * bool param_2 = obj->search(word);
     * bool param_3 = obj->startsWith(prefix);
     */
- ```
+```
