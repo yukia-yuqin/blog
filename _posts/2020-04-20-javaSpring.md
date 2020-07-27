@@ -97,14 +97,70 @@ javaEE基础（共49小时的视频，4月20日开始）【上次45小时的6天
     - 全栈级轻量级的 spring framework 
     - ![image-20200725222616398](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200725222616398.png)
   - spring的两大核心 IOC和AOP 
+    - ![image-20200725223335787](C:\Users\admin\AppData\Roaming\Typora\typora-user-images\image-20200725223335787.png)
+    - 容器存放的是什么？为什么叫容器？
+      - 容器就是map
+        - ClassPathXmlApplicationContext: 它可以加载类路径下的配置文件，要求配置文件必须在类路径下，不在的话，加载不了
+        - FileSystemXmlApplicationContext: 它可以加载磁盘任意路径下的配置文件
+        - AnnotationConfigApplicationContext: 它是用于读取注解创建容器的
+      - 核心容器两个接口
+        - ApplicationContext是立即加载的，一度配置文件马上创建，读配置文件的时候创建对象，（单例对象适用），开发中采用此接口，可以在配置文件中表示是单例立即创建还是多例延迟创建
+        - BeanFactory在构建核心容器的时候，是延迟加载的方式，（多例对象适用）
+    - bean在计算机英语中，有可重用组件的含义
+      - Spring Bean是被实例的，组装的及被Spring 容器管理的Java对象。
+      - 把对象创建交给spring来管理
+        - 创建Bean的三种方式
+          - 使用默认构造函数创建
+          - 使用普通工厂中的方法创建对象
+          - 使用工厂中的静态方法创建对象
+        - Bean对象的作用范围
+          - bean标签的scope属性，用于指定bean的作用范围，单例，prototype多例、request作用于web应用的请求范围，session作用域web应用的会话范围，global-session不是集群环境就是session
+        - bean对象的生命周期
+          - 单例对象
+            - 当容器创建时，对象出生，只要容器在，对象一直活着，容器销毁，对象消亡
+          - 多例对象
+            - 当使用对象时spring框架创建，对象在使用过程中一直活着，当对象长时间不用，且没有别的对象引用时，由java的垃圾回收器回收
   - spring的发展历程和优势
   - spring的体系结构
   - 曾经案例中的问题
   - 工厂模式解耦
   - spring中基于XML的IOC环境搭建
   - 依赖注入
+    - IOC（Inversion of Control）的作用，降低程序间的耦合，依赖关系交给spring管理
+    - 在当前类中需要用到其他类的对象，由spring为我们提供，我们只需要在配置文件中说明
+    - 对依赖关系的维护成为依赖注入
+    - 能注入的类型：
+      - 基本类型和String
+      - 其他bean类型
+      - 复杂类型/集合类型
+    - 注入方式：构造函数/set/注解
+      - 构造函数：【type，Index=0/1, name指定名称参数赋值（常用），三个一样】，value，【缺点，每种参数的组合都需要一个构造函数】 constructor-arg
+      - set方法注入：property【创建对象没有明显的限制，可以直接使用默认的构造函数】，如果某个成员必须右值，则可能没有执行Set方法
+      - 
   - 学完这个内容能用在什么地方
 - 第二天：spring中基于注解的IOC和IOC案例
+  - 注解和xml配置实现的功能是一样的，都是为了解耦合
+  - 注解类型
+    - 创建对象的注解：和xml配置文件中编写一个bean标签的功能一样
+    - 用于注入数据的：和xml配置文件中的Bean标签写一个property标签作用一样
+    - 用于改变作用范围的：在bean标签中使用scope属性实现的功能是一样的
+    - 和生命周期相关的：和bean标签中init-method和destory-method是一样的
+  - 常用注解
+    - Component 注解的作用是把当前类对象存入spring容器，属性value=bean中的id，默认值是当前的类名且首字母改小写,【下面三个和component的作用和属性一模一样】
+      - controller:  一般用在表现层
+      - service: 一般用于业务层，
+      - repository: 一般用于持久层
+    - Autowired
+      - 类、方法
+      - 自动按照类型注入，只要有唯一一个bean对象和要注入的变量类型匹配
+      - qulifier和autowired一起使用，按照bean的Id注入
+    - Resource
+      - 直接按照Bean的Id注入，可以独立使用
+    - Value：用于注入基本数据类型和String类型的数据，value用于指定数据的值
+    - Scope：指定bean的作用范围，value：singletion prototype
+    - predestory \ postConstructor
+  - 存在于Jar包中的类，用xml配省事；如果类是自己写的，那么用注解省事
+  - junit单元测试没有main方法也能执行，是集成了一个main方法。junit无论是否使用spring都可以用@Test去执行测试。所以需要导入spring-junit整合的jar包。
 - 第三天：spring中的aop和基于XML以及注解的AOP配置
 - 第四天：spring中的JdbcTemplate以及spring事物控制
-
+  - spring对JAVAEE api， JDBC，JAVAmail，远程调用进行封装，
