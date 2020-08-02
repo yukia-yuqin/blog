@@ -106,9 +106,52 @@ javaEE基础（共49小时的视频，4月20日开始）【上次45小时的6天
       - 核心容器两个接口
         - ApplicationContext是立即加载的，一度配置文件马上创建，读配置文件的时候创建对象，（单例对象适用），开发中采用此接口，可以在配置文件中表示是单例立即创建还是多例延迟创建
         - BeanFactory在构建核心容器的时候，是延迟加载的方式，（多例对象适用）
-    - bean在计算机英语中，有可重用组件的含义
+    - **bean在计算机英语中，有可重用组件的含义**（可以被反复使用（多个调用）的组件/类（**业务层/持久层都可以看作组件**，啥意思？））
+      
       - Spring Bean是被实例的，组装的及被Spring 容器管理的Java对象。
+      
+      - 工厂模式解耦
+      
+        ```java
+        public class BeanFactory {
+        //    读取properties文件
+             private static Properties props;
+        
+             static{
+                 props = new Properties();
+                 InputStream in = BeanFactory.class.getClassLoader().getResourceAsStream("bean.properties");
+                 try {
+                     props.load(in);
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                     throw new ExceptionInInitializerError("初始化失败");
+                 }
+             }
+        //     根据Bean的名称获取Bean对象
+            public static Object getBean(String beanName){
+                 Object bean = null;
+                try {
+                 String beanPath = props.getProperty(beanName);
+                    bean = Class.forName(beanPath).newInstance();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return bean;
+            }
+        }
+        ```
+      
+      - 直接创建对象和使用工厂模式创建对象的区别
+        
+        - 把自己找Dao的权利给了BeanFactory。削减耦合。
+          
+        - ```
+          //        IAccountServcie as = new AccountServiceImpl();
+                      IAccountServcie as = (IAccountServcie) BeanFactory.getBean("accountService");
+          ```
+        
       - 把对象创建交给spring来管理
+        
         - 创建Bean的三种方式
           - 使用默认构造函数创建
           - 使用普通工厂中的方法创建对象
@@ -164,4 +207,5 @@ javaEE基础（共49小时的视频，4月20日开始）【上次45小时的6天
   - class类型是字节码，返回字节码。
 - 第三天：spring中的aop和基于XML以及注解的AOP配置
 - 第四天：spring中的JdbcTemplate以及spring事物控制
-  - spring对JAVAEE api， JDBC，JAVAmail，远程调用进行封装，
+  
+  - spring对JAVAEE api， JDBC，JAVAmail，远程调用进行封装， 
