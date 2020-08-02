@@ -161,6 +161,7 @@ javaEE基础（共49小时的视频，4月20日开始）【上次45小时的6天
     - predestory \ postConstructor
   - 存在于Jar包中的类，用xml配省事；如果类是自己写的，那么用注解省事
   - junit单元测试没有main方法也能执行，是集成了一个main方法。junit无论是否使用spring都可以用@Test去执行测试。所以需要导入spring-junit整合的jar包。
+  - class类型是字节码，返回字节码。
 - 第三天：spring中的aop和基于XML以及注解的AOP配置
 - 第四天：spring中的JdbcTemplate以及spring事物控制
   - spring对JAVAEE api， JDBC，JAVAmail，远程调用进行封装，
