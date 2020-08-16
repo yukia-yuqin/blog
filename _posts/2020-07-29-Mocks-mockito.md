@@ -60,3 +60,4 @@ sonar / sonar scan (checksytle, findbugs, pmd静态代码检查和分析, error)
   每一个测试方法的调用顺序为： 
 
   @Before -> @Test -> @After; 
+
