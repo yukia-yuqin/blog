@@ -15,4 +15,6 @@ categories: java
   不可实施的，并且基本上没有文档说明的协议。由此得到一种语言之外的（ extralinguistic)机制：它无须调用构造器就可以创建对象。
 - 因为Java 支持协变返回类型（ covariant return type ） 。换句话说，目前覆盖方法的返回类型可以是被覆盖方法的返回类型的子类了。、
 - 这是个根本的问题： 就像序列化一样， Cloneable 架构与引用可变对象的final 域的正常用法是不相兼容的，
-
+- 泛型有子类型化（ subtyping ）的规则，
+  List<String ＞是原生态类型List 的一个子类型，而不是参数化类型List<Object>
+  的子类型（详见第28 条）
