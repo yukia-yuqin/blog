@@ -5,8 +5,6 @@ tags: java spring
 categories: java
 ---
 
-
-
 ### 前言：@Configuration类和其他类不同的关键判断
 
 - ```

@@ -21,8 +21,6 @@ categories: C++
 
 - java beans 自省
 
-- <img src="C:\Users\wangyuqin\AppData\Roaming\Typora\typora-user-images\image-20210216142320246.png" alt="image-20210216142320246" style="zoom:50%;" />
-
 - 沙雕面试题- 什么是IoC ？
 
   - 答：简单地说，IoC 是反转控制，类似于好莱坞原则，主要有依赖查找
