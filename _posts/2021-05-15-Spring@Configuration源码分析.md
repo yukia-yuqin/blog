@@ -125,14 +125,15 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
 
    ![image-20210515180237571](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
 
-3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。**如果不增强的情况下，@Bean方法A希望在创建A的过程中调用@Bean方法B作为自身属性，那么必然是一个new的新对象B，无法保证单例B的存在，所以cglib后就是为了增加额外的判断保证单例
+3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回**。详解见[BeanMethodInterceptor][BeanMethodInterceptor] 。如果不增强的情况下，@Bean方法A希望在创建A的过程中调用@Bean方法B作为自身属性，那么必然是一个new的新对象B，无法保证单例B的存在，所以cglib后就是为了增加额外的判断保证单例
+   
    ```
    enhancer.enhance(configClass, this.beanClassLoader);
    newEnhancer()中有BeanMethodInterceptor()方法来增强@Configuration类，BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。
    ```
-
+   
    ![image-20210515181633163](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515181633163.png)
-
+   
     ![image-20210515190029647](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515190029647.png)
 
 
@@ -343,4 +344,6 @@ public static void invokeBeanFactoryPostProcessors(
 [很棒的参考 Spring IoC源码学习：invokeBeanFactoryPostProcessors 详解]:https://blog.csdn.net/v123411739/article/details/87741251
 
 [为什么增强之后才是单例]：https://www.jianshu.com/p/0822470c1b85?utm_campaign=shakespeare&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
+
+[BeanMethodInterceptor]:https://www.cnblogs.com/yourbatman/p/13280344.html#%E5%A4%9A%E6%AC%A1%E8%B0%83%E7%94%A8bean%E6%96%B9%E6%B3%95%E4%B8%BA%E4%BD%95%E4%B8%8D%E4%BC%9A%E4%BA%A7%E7%94%9F%E6%96%B0%E5%AE%9E%E4%BE%8B%EF%BC%9F
 
