@@ -7,7 +7,9 @@ categories: java
 
 ### 前言：@Configuration类和其他类不同的关键判断
 
-- ```java
+- 判断是否是full的配置
+  
+  ```java
   /**
    * Check the given metadata for a configuration class candidate
    * (or nested component class declared within a configuration/component class).
@@ -19,7 +21,7 @@ categories: java
      return (isFullConfigurationCandidate(metadata) || isLiteConfigurationCandidate(metadata));
   }
   ```
-
+  
 - full Configutaion class 指带有@code @configuration的类
 
   ```java
@@ -36,23 +38,22 @@ categories: java
   ```
   
 - lite Configuration 指带有@Component,@ComponentScan, @Import, @ImportResource的类
-
-```java
-	/**
-	 * Determine whether the given bean definition indicates a lite {@code @Configuration}
-	 * class, through checking {@link #checkConfigurationClassCandidate}'s metadata marker.
-	 */
-	public static boolean isLiteConfigurationClass(BeanDefinition beanDef) {
-		return CONFIGURATION_CLASS_LITE.equals(beanDef.getAttribute(CONFIGURATION_CLASS_ATTRIBUTE));
-	}
-	
-    static {
-		candidateIndicators.add(Component.class.getName());
-		candidateIndicators.add(ComponentScan.class.getName());
-		candidateIndicators.add(Import.class.getName());
-		candidateIndicators.add(ImportResource.class.getName());
-	}
-```
+    ```java
+        /**
+         * Determine whether the given bean definition indicates a lite {@code @Configuration}
+         * class, through checking {@link #checkConfigurationClassCandidate}'s metadata marker.
+         */
+        public static boolean isLiteConfigurationClass(BeanDefinition beanDef) {
+            return CONFIGURATION_CLASS_LITE.equals(beanDef.getAttribute(CONFIGURATION_CLASS_ATTRIBUTE));
+        }
+    
+        static {
+            candidateIndicators.add(Component.class.getName());
+            candidateIndicators.add(ComponentScan.class.getName());
+            candidateIndicators.add(Import.class.getName());
+            candidateIndicators.add(ImportResource.class.getName());
+        }
+    ```
 
 - 如果类上有candidateIndicators这个Set中定义的注解的话（@Component，@ComponentScan，@Import，@ImportResource）那么就是一个简化配置类，如果不是上面两种情况，那么有@Bean注解修饰的方法也是简化配置类。
 
@@ -109,7 +110,7 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
    invokeBeanFactoryPostProcessors(postProcessors,beanFactory), 这里调用所有bf的后置处理器，此时会调用BeanDefinitionRegistryPostProcessor接口，该接口只有ConfigurationClassPostProcessor一个默认实现类，使用这个postProcessor类的postProcessBeanFactory方法会调用enhanceConfigurationClass()方法
    ```
    
-   ![image-20210515175739813](https://github.com/yukia-yuqin/blog/blob/master/img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175739813.png)
+   ![image-20210515175739813](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175739813.png)
    
    ![image-20210515175528043](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175528043.png)
    
@@ -122,20 +123,21 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
    configBeanDefs.put(beanName, (AbstractBeanDefinition) beanDef);  存到一个map中。
    ```
 
-   ![image-20210515180237571](https://github.com/yukia-yuqin/blog/blob/master/img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
+   ![image-20210515180237571](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
 
-3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。**
-
+3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。**如果不增强的情况下，@Bean方法A希望在创建A的过程中调用@Bean方法B作为自身属性，那么必然是一个new的新对象B，无法保证单例B的存在，所以cglib后就是为了增加额外的判断保证单例
    ```
    enhancer.enhance(configClass, this.beanClassLoader);
    newEnhancer()中有BeanMethodInterceptor()方法来增强@Configuration类，BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。
    ```
-   
+
    ![image-20210515181633163](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515181633163.png)
 
-![image-20210515190029647](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515190029647.png)
+    ![image-20210515190029647](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515190029647.png)
 
-- 调用bf的后置处理器的流程
+
+
+### 附：调用bf的后置处理器的流程
 
 ```java
 public static void invokeBeanFactoryPostProcessors(
@@ -341,6 +343,4 @@ public static void invokeBeanFactoryPostProcessors(
 [很棒的参考 Spring IoC源码学习：invokeBeanFactoryPostProcessors 详解]:https://blog.csdn.net/v123411739/article/details/87741251
 
 [为什么增强之后才是单例]：https://www.jianshu.com/p/0822470c1b85?utm_campaign=shakespeare&utm_content=note&utm_medium=seo_notes&utm_source=recommendation
-
-如果不增强的情况下，@Bean方法A希望在创建A的过程中调用@Bean方法B作为自身属性，那么必然是一个new的新对象B，无法保证单例B的存在，所以cglib后就是为了增加额外的判断保证单例
 
