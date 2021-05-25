@@ -11,6 +11,10 @@ categories: C++
 
 ![image-20200725222616398](C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20200725222616398.png)
 
+### 控制反转的理解：
+
+- 控制反转是关于一个对象如何获取它所依赖的对象的引用。通过使用IOC容器，对象依赖关系的管理被反转了，转到IOC容器中了。Spring通过依赖注入和AOP切面增强了为JavaBean这样的POJO对象赋予事务管理、生命周期管理等基本功能。
+
 ## IOC重新认识
 
 - POJO 贫血模式

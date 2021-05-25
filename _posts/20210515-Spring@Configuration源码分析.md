@@ -1,25 +1,13 @@
 ---
 layout: post
-title: spring @Bean 源码分析
+title: spring @Configuration源码分析
 tags: java spring
 categories: java
-
 ---
 
-###  
 
-- 控制反转的理解：
-  - 控制反转是关于一个对象如何获取它所依赖的对象的引用。通过使用IOC容器，对象依赖关系的管理被反转了，转到IOC容器中了。Spring通过依赖注入和AOP切面增强了为JavaBean这样的POJO对象赋予事务管理、生命周期管理等基本功能。
 
-### SpringIoc容器的设计
-
-![image-20210515095916095](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515095916095.png)
-
-- refresh模版方法,这也是spring源码里最关键的一个方法了,spring xml管理bean也是从refresh开始的,所以我们还可以知道,spring-boot最后也是走到refresh去完成升级的。（升级？-_-||）
-
-- 众所周知Spring源码的风格有一个特点,真正干事情的就是do Prefix Method。
-
-- 
+### 前言：@Configuration类和其他类不同的关键判断
 
 - ```
   /**
@@ -51,6 +39,25 @@ categories: java
   }
   ```
   
+- lite Configuration 指带有@Component,@ComponentScan, @Import, @ImportResource的类
+
+```
+	/**
+	 * Determine whether the given bean definition indicates a lite {@code @Configuration}
+	 * class, through checking {@link #checkConfigurationClassCandidate}'s metadata marker.
+	 */
+	public static boolean isLiteConfigurationClass(BeanDefinition beanDef) {
+		return CONFIGURATION_CLASS_LITE.equals(beanDef.getAttribute(CONFIGURATION_CLASS_ATTRIBUTE));
+	}
+	
+    static {
+		candidateIndicators.add(Component.class.getName());
+		candidateIndicators.add(ComponentScan.class.getName());
+		candidateIndicators.add(Import.class.getName());
+		candidateIndicators.add(ImportResource.class.getName());
+	}
+```
+
 - 如果类上有candidateIndicators这个Set中定义的注解的话（@Component，@ComponentScan，@Import，@ImportResource）那么就是一个简化配置类，如果不是上面两种情况，那么有@Bean注解修饰的方法也是简化配置类。
 
 ## 相关概念
@@ -93,24 +100,24 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
 
 一个抽象类公开定义了执行它的方法的方式/模板。它的子类可以按需要重写方法实现,但调用将以抽象类中定义的方式进行。
 
-### spring源码之 @Configuration 配置类处理 与 CGLIB代理，单例源码
+### spring源码之 @Configuration 配置类处理 与 CGLIB代理
 
-0. Spring将被@Configuration注解的配置类定义为full configuration, 而将没有被@Configuration注解的配置类定义为lite configuration。full configuration能重定向从跨方法的引用，从而保证@Configuration代码中的bean是一个单例.
+结论：**Spring将被@Configuration注解的配置类定义为full configuration, 而将没有被@Configuration注解的配置类定义为lite configuration。full configuration能重定向从跨方法的引用，从而保证@Configuration代码中的bean是一个单例.**
 
 1. 当一个类上面加了注解 @Configuration 时候，初始化ApplicationContext 的时候， invokeBeanDefinitionRegistryPostProcessors 方法解析此类
 
    ```
    refresh()     模板方法，创建一个spring的上下文，产生Bean definitions
    invokeBeanFactoryPostProcessors()     实例化所有注册为BeanFactoryPostProcessor的Bean
-   PostProcessorRegistrationDelegate.invokeBeanFactoryPostProcessors() 
-   invokeBeanDefinitionRegistryPostProcessors(postProcess,registry) 
+   invokeBeanDefinitionRegistryPostProcessors(postProcess,registry)  首先调用bfr的后置处理器 
+   invokeBeanFactoryPostProcessors(postProcessors,beanFactory), 这里调用所有bf的后置处理器，此时会调用BeanDefinitionRegistryPostProcessor接口，该接口只有ConfigurationClassPostProcessor一个默认实现类，使用这个postProcessor类的postProcessBeanFactory方法会调用enhanceConfigurationClass()方法
    ```
    
    ![image-20210515175739813](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175739813.png)
    
    ![image-20210515175528043](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175528043.png)
    
-2. 接下来 调用 invokeBeanFactoryPostPorcessors ,此方法遍历所有的BeanFactoryPostPorcessors， 在遍历中会调用到enhanceConfigurationClass ，此方法中获取regist里面的所有类，遍历判断 实例化的bean是否是有@configuration注解，如果有则存到一个map中，为lite则不存，若map为null ，则返回之后直接new 对象；若map 不为null，则去完成cglib代理的实现。
+2. 调用到enhanceConfigurationClass() ，此方法获取registry里面的所有类，遍历判断实例化的bean是否是有@configuration注解，如果有则存到一个map中，为lite则不存，若map为null ，则返回之后直接new 对象；若map 不为null，则去完成cglib代理的实现。
 
    ```
    static void invokeBeanFactoryPostProcessors(postProcessors, beanfactory)
@@ -119,24 +126,20 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
    configBeanDefs.put(beanName, (AbstractBeanDefinition) beanDef);  存到一个map中。
    ```
 
-   ![image-20210515180029541](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180029541.png)
-
    ![image-20210515180237571](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
 
-3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。
+3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。**
 
    ```
    enhancer.enhance(configClass, this.beanClassLoader);
-   private Enhancer newEnhancer(Class<?> configSuperClass, @Nullable ClassLoader classLoader) {
-   		Enhancer enhancer = new Enhancer();
-   	}
+   newEnhancer()中有BeanMethodInterceptor()方法来增强@Configuration类，BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。
    ```
-
+   
    ![image-20210515181633163](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515181633163.png)
 
 ![image-20210515190029647](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515190029647.png)
 
-- invoke
+- 调用bf的后置处理器的流程
 
 ```java
 public static void invokeBeanFactoryPostProcessors(
