@@ -7,7 +7,7 @@ categories: java
 
 ### 前言：@Configuration类和其他类不同的关键判断
 
-- ```
+- ```java
   /**
    * Check the given metadata for a configuration class candidate
    * (or nested component class declared within a configuration/component class).
@@ -20,11 +20,9 @@ categories: java
   }
   ```
 
-  
-  
 - full Configutaion class 指带有@code @configuration的类
 
-  ```
+  ```java
   /** 
    * Check the given metadata for a full configuration class candidate
    * (i.e. a class annotated with {@code @Configuration}).
@@ -39,7 +37,7 @@ categories: java
   
 - lite Configuration 指带有@Component,@ComponentScan, @Import, @ImportResource的类
 
-```
+```java
 	/**
 	 * Determine whether the given bean definition indicates a lite {@code @Configuration}
 	 * class, through checking {@link #checkConfigurationClassCandidate}'s metadata marker.
@@ -111,7 +109,7 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
    invokeBeanFactoryPostProcessors(postProcessors,beanFactory), 这里调用所有bf的后置处理器，此时会调用BeanDefinitionRegistryPostProcessor接口，该接口只有ConfigurationClassPostProcessor一个默认实现类，使用这个postProcessor类的postProcessBeanFactory方法会调用enhanceConfigurationClass()方法
    ```
    
-   ![image-20210515175739813](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175739813.png)
+   ![image-20210515175739813](https://github.com/yukia-yuqin/blog/blob/master/img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175739813.png)
    
    ![image-20210515175528043](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515175528043.png)
    
@@ -124,7 +122,7 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
    configBeanDefs.put(beanName, (AbstractBeanDefinition) beanDef);  存到一个map中。
    ```
 
-   ![image-20210515180237571](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
+   ![image-20210515180237571](https://github.com/yukia-yuqin/blog/blob/master/img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
 
 3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回。**
 
