@@ -5,7 +5,11 @@ tags: C++
 categories: C++
 ---
 
-## spring Framework 总览
+
+
+
+
+## 《极客时间》spring Framework 总览 Not good
 
 ![image-20200725222616398](../img/2021-02-16-SpringFramework.asserts/image-20200725223335787.png)
 
@@ -117,7 +121,7 @@ categories: C++
 
 - 沙雕面试题- 如何注册一个Spring Bean？
 
-  - 答：通过BeanDefinition 和外部单体对象来注册
+  - 答：通过BeanDefinition **和外部单体对象来注册**
 
 - 996 面试题- 什么是Spring BeanDefinition？
 
@@ -130,4 +134,19 @@ categories: C++
 
 ## 第五章：Spring IoC依赖查找（Dependency Lookup） (9讲)
 
-- 
+- 依赖注入的模式和类型
+
+## SpringIOC依赖注入
+
+- 模式区分
+  - 手动模式
+  - 自动模式
+    - autowiring（自动绑定）
+- 类型区分
+  - setter
+  - 构造器
+  - 字段
+  - 方法，参数注入
+  - 接口回调
+- 自动绑定
+  - 
