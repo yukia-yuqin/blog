@@ -125,7 +125,7 @@ beanFactory有**存放bean，生成bean**的功能，但它只是一个接口，
 
    ![image-20210515180237571](../img/20210515-Spring@Bean%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90.asserts/image-20210515180237571.png)
 
-3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回**。详解见[BeanMethodInterceptor][BeanMethodInterceptor] 。如果不增强的情况下，@Bean方法A希望在创建A的过程中调用@Bean方法B作为自身属性，那么必然是一个new的新对象B，无法保证单例B的存在，所以cglib后就是为了增加额外的判断保证单例
+3. `cglib`代理的实现：调用`enhance()` ，判断该类是否实现`EnhancedConfiguration` ，完成代理则会让该类去实现此接口；若没有被代理则去实现代理 `enhancer.create()`创建代码对象。**BeanMethodInterceptor会根据方法名去IOC找到Bean并返回**。详解见[BeanMethodInterceptor][BeanMethodInterceptor] 。如果不增强的情况下，@Bean方法A希望在创建A的过程中调用@Bean方法B作为自身属性，那么必然是一个new的新对象B，无法保证单例B的存在**，所以cglib后就是为了增加额外的判断保证单例**
    
    ```
    enhancer.enhance(configClass, this.beanClassLoader);

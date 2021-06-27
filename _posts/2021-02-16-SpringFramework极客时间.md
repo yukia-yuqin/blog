@@ -5,15 +5,7 @@ tags: C++
 categories: C++
 ---
 
-
-
-
-
 ## 《极客时间》spring Framework 总览 Not good
-
-![image-20200725222616398](../img/2021-02-16-SpringFramework.asserts/image-20200725223335787.png)
-
-![image-20200725222616398](C:/Users/admin/AppData/Roaming/Typora/typora-user-images/image-20200725222616398.png)
 
 ### 控制反转的理解：
 
