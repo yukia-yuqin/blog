@@ -39,10 +39,18 @@
 
 ## logback accesss?
 
-
 Logback Access 是 Logback 日志框架的一个模块，专门用于处理 Web 应用中的访问日志（access log）。通常，这种访问日志用于记录 Web 服务器接收到的 HTTP 请求和响应的详细信息，例如请求的路径、HTTP 方法、响应状态码、响应时间等。
 
 Logback Access 主要包括两个主要部分：
 
 1. **logback-access 模块：** 这是 Logback Access 的核心模块，提供了处理 Web 访问日志的功能。它包含了一些用于记录 HTTP 请求和响应信息的布局模式（Layout Pattern）以及与 Servlet 容器集成的组件。
 2. **logback-access-servlet模块：** 这个模块提供了与 Servlet 容器（如 Tomcat、Jetty 等）的集成支持。通过在 Servlet 容器中配置 Logback Access，你可以让 Logback 记录 Web 应用的访问日志。
+
+
+## logback依赖
+
+Logback-classic module requires the presence of slf4j-api.jar and logback-core.jar in addition to logback-classic.jar on the classpath.
+
+This logger is named "chapters.introduction.HelloWorld1".
+
+In most cases, as far as logging is concerned, your classes will only need to import SLF4J classes.
