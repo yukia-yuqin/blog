@@ -1,8 +1,8 @@
 ---
-layout post
-title idea快捷键+maven+git+sql语句+jetty+restAPI
-tags 工具
-categories 工具
+layout: post
+title: idea快捷键+maven+git+sql语句+jetty+restAPI
+tags: 工具
+categories: 工具
 ---
 
 ## idea快捷键
